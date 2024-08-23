@@ -57,3 +57,5 @@
 /PoseEstimation/ZED/ZED_Body_Tracking_OSC/__pycache__
 /PoseEstimation/ZED/ZED_Body_Tracking_OSC/cv_viewer/__pycache__
 /PoseEstimation/ZED/ZED_Body_Tracking_OSC/ogl_viewer/__pycache__
+/MocapAnalysisPython/__pycache__
+/MocapAnalysisPython/.spyproject
