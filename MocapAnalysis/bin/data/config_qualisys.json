@@ -1,0 +1,8 @@
+{
+    "jointWeights": "data/joint_weights_qualisys.json",
+    "jointFilters": "data/joint_body_part_filters_qualisys.json",
+    "jointConnectivity": "data/joint_connectivity_qualisys.json",
+    "oscReceivePort": 23456,
+    "oscSendAddress": "127.0.0.1",
+    "oscSendPort": 9004
+}

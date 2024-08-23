@@ -1,0 +1,1647 @@
+<?xml version="1.0"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<ClCompile Include="src\ofApp.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\main.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_messenger.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_plot.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_proc.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_proc_combine.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_proc_derivative.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_proc_derivative_euler.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_proc_derivative_quat.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_proc_filter.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_proc_flow_effort.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_proc_input.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_proc_lowpass.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_proc_lowpass_quat.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_proc_pos_global_to_local.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_proc_quat_euler.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_proc_rot_global_to_local.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_proc_rot_local_to_global.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_proc_scalar.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_proc_scale.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_proc_space_effort.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_proc_space_effort_2.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_proc_time_effort.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_proc_weight_effort.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_receiver.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_data_sender.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\dab_json_helper.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\main.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\ofApp.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabBase\src\dab_array.cpp">
+			<Filter>addons\ofxDabBase\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabBase\src\dab_buffer.cpp">
+			<Filter>addons\ofxDabBase\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabBase\src\dab_exception.cpp">
+			<Filter>addons\ofxDabBase\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabBase\src\dab_file_io.cpp">
+			<Filter>addons\ofxDabBase\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabBase\src\dab_listener.cpp">
+			<Filter>addons\ofxDabBase\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabBase\src\dab_parameter.cpp">
+			<Filter>addons\ofxDabBase\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabBase\src\dab_singleton.cpp">
+			<Filter>addons\ofxDabBase\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabBase\src\dab_tokenizer.cpp">
+			<Filter>addons\ofxDabBase\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabBase\src\dab_value.cpp">
+			<Filter>addons\ofxDabBase\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\src\dab_math.cpp">
+			<Filter>addons\ofxDabMath\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\src\dab_math_field_algorithm.cpp">
+			<Filter>addons\ofxDabMath\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\src\dab_math_roesseler_field_algorithm.cpp">
+			<Filter>addons\ofxDabMath\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\src\dab_math_vec.cpp">
+			<Filter>addons\ofxDabMath\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\src\dab_osc_arg.cpp">
+			<Filter>addons\ofxDabOsc\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\src\dab_osc_message.cpp">
+			<Filter>addons\ofxDabOsc\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\src\dab_osc_messenger.cpp">
+			<Filter>addons\ofxDabOsc\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\src\dab_osc_receiver.cpp">
+			<Filter>addons\ofxDabOsc\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\src\dab_osc_sender.cpp">
+			<Filter>addons\ofxDabOsc\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\src\dab_osc_utils.cpp">
+			<Filter>addons\ofxDabOsc\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\libs\oscpack\src\ip\IpEndpointName.cpp">
+			<Filter>addons\ofxDabOsc\libs\oscpack\src\ip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\libs\oscpack\src\ip\win32\NetworkingUtils.cpp">
+			<Filter>addons\ofxDabOsc\libs\oscpack\src\ip\win32</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\libs\oscpack\src\ip\win32\UdpSocket.cpp">
+			<Filter>addons\ofxDabOsc\libs\oscpack\src\ip\win32</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\libs\oscpack\src\osc\OscOutboundPacketStream.cpp">
+			<Filter>addons\ofxDabOsc\libs\oscpack\src\osc</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\libs\oscpack\src\osc\OscPrintReceivedElements.cpp">
+			<Filter>addons\ofxDabOsc\libs\oscpack\src\osc</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\libs\oscpack\src\osc\OscReceivedElements.cpp">
+			<Filter>addons\ofxDabOsc\libs\oscpack\src\osc</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\libs\oscpack\src\osc\OscTypes.cpp">
+			<Filter>addons\ofxDabOsc\libs\oscpack\src\osc</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\core\ofxDatGuiComponent.cpp">
+			<Filter>addons\ofxDatGui\src\core</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\libs\ofxSmartFont\ofxSmartFont.cpp">
+			<Filter>addons\ofxDatGui\src\libs\ofxSmartFont</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\ofxDatGui.cpp">
+			<Filter>addons\ofxDatGui\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxGrafica\src\ofxGAxis.cpp">
+			<Filter>addons\ofxGrafica\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxGrafica\src\ofxGAxisLabel.cpp">
+			<Filter>addons\ofxGrafica\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxGrafica\src\ofxGHistogram.cpp">
+			<Filter>addons\ofxGrafica\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxGrafica\src\ofxGLayer.cpp">
+			<Filter>addons\ofxGrafica\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxGrafica\src\ofxGPlot.cpp">
+			<Filter>addons\ofxGrafica\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxGrafica\src\ofxGPoint.cpp">
+			<Filter>addons\ofxGrafica\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxGrafica\src\ofxGTitle.cpp">
+			<Filter>addons\ofxGrafica\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\src\BaseEngine.cpp">
+			<Filter>addons\ofxImGui\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\src\DefaultTheme.cpp">
+			<Filter>addons\ofxImGui\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\src\EngineGLFW.cpp">
+			<Filter>addons\ofxImGui\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\src\EngineOpenGLES.cpp">
+			<Filter>addons\ofxImGui\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\src\EngineVk.cpp">
+			<Filter>addons\ofxImGui\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\src\Gui.cpp">
+			<Filter>addons\ofxImGui\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\src\ImHelpers.cpp">
+			<Filter>addons\ofxImGui\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\src\ofxImGuiLoggerChannel.cpp">
+			<Filter>addons\ofxImGui\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\libs\imgui\src\imgui.cpp">
+			<Filter>addons\ofxImGui\libs\imgui\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\libs\imgui\src\imgui_demo.cpp">
+			<Filter>addons\ofxImGui\libs\imgui\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\libs\imgui\src\imgui_draw.cpp">
+			<Filter>addons\ofxImGui\libs\imgui\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\libs\imgui\src\imgui_widgets.cpp">
+			<Filter>addons\ofxImGui\libs\imgui\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxJSON\src\ofxJSONElement.cpp">
+			<Filter>addons\ofxJSON\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxJSON\libs\jsoncpp\src\jsoncpp.cpp">
+			<Filter>addons\ofxJSON\libs\jsoncpp\src</Filter>
+		</ClCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<Filter Include="src">
+			<UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons">
+			<UniqueIdentifier>{71834F65-F3A9-211E-73B8-DC85}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabBase">
+			<UniqueIdentifier>{49413D03-D51A-C656-609D-9AEC}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabBase\src">
+			<UniqueIdentifier>{710D5C65-D3C7-D4D4-34B5-C860}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath">
+			<UniqueIdentifier>{87EAA940-86FC-B82E-27C8-DCE0}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\src">
+			<UniqueIdentifier>{E576CCBC-FF7A-725D-9DF1-A2C3}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs">
+			<UniqueIdentifier>{86D36A39-FC69-3234-40B2-ECD9}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3">
+			<UniqueIdentifier>{1287D036-9638-2690-8941-92AD}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include">
+			<UniqueIdentifier>{1A8CDABB-5AA3-E839-FA15-F851}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen">
+			<UniqueIdentifier>{59BB6068-1594-3552-181E-4041}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src">
+			<UniqueIdentifier>{F9787164-7357-D258-98E0-EDA7}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\Cholesky">
+			<UniqueIdentifier>{819194B9-213D-D835-5014-F40A}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\CholmodSupport">
+			<UniqueIdentifier>{3DBD96D8-0151-99C9-73BC-9EFF}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core">
+			<UniqueIdentifier>{5FA7D2CA-A3A6-9242-A301-B213}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch">
+			<UniqueIdentifier>{3EE5F409-734D-D1B8-86C1-047A}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AltiVec">
+			<UniqueIdentifier>{58F2CF5E-A25F-C8D2-D28E-83B3}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AVX">
+			<UniqueIdentifier>{F1AC8736-639E-6C59-3578-71AD}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AVX512">
+			<UniqueIdentifier>{85818399-75FD-DBC0-D688-1DD4}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\CUDA">
+			<UniqueIdentifier>{6BFE9C2A-9FA8-5998-7CC2-1CF4}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\Default">
+			<UniqueIdentifier>{BC29716F-10D9-0FAA-A495-E161}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\NEON">
+			<UniqueIdentifier>{E7D4974A-111C-D217-24BA-6B8E}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\SSE">
+			<UniqueIdentifier>{33AEF3F2-9254-4B65-F15E-6397}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\ZVector">
+			<UniqueIdentifier>{A638B83F-65BE-3D06-19BA-A0AE}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\functors">
+			<UniqueIdentifier>{35084649-843C-A065-696C-65A4}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products">
+			<UniqueIdentifier>{C7189069-3600-7864-D574-BFB2}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util">
+			<UniqueIdentifier>{76D7EDA8-BD4C-9C7F-F7B6-873A}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues">
+			<UniqueIdentifier>{7EC27EF9-1D0A-9086-2CC1-4AE1}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry">
+			<UniqueIdentifier>{4FDAF6B1-371A-9619-5A09-F388}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry\arch">
+			<UniqueIdentifier>{E48D0D0D-C6DF-0286-BF69-D439}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\Householder">
+			<UniqueIdentifier>{8643EAE6-8334-2C8B-FA74-E6C8}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\IterativeLinearSolvers">
+			<UniqueIdentifier>{1A97ECE1-0271-38C3-C4FE-8AE3}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\Jacobi">
+			<UniqueIdentifier>{21F18C2C-9E9C-45B7-903B-5806}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\LU">
+			<UniqueIdentifier>{BE2C161B-D989-736C-7964-FE4C}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\LU\arch">
+			<UniqueIdentifier>{5EB630CF-2AB3-26B4-5D86-C5DB}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\MetisSupport">
+			<UniqueIdentifier>{91CEEF40-CFD5-7659-C79E-9737}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\misc">
+			<UniqueIdentifier>{0D2ABD01-2DA1-B134-91EA-E965}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\OrderingMethods">
+			<UniqueIdentifier>{58B41CF5-4B4B-741B-B0B6-B63D}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\PardisoSupport">
+			<UniqueIdentifier>{9476C3E4-D4B4-CDD5-66F4-BF69}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\PaStiXSupport">
+			<UniqueIdentifier>{835140B1-3D7C-273C-CF08-AE1E}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\plugins">
+			<UniqueIdentifier>{C87BC22E-8F8D-B5F8-9041-6802}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\QR">
+			<UniqueIdentifier>{DEEC9047-6CAC-F7F2-5B54-FB5A}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCholesky">
+			<UniqueIdentifier>{4E3D24E8-7975-25D1-2E86-692E}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore">
+			<UniqueIdentifier>{585C5D70-090D-9077-C593-3252}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU">
+			<UniqueIdentifier>{8F666D55-DF5F-CA46-0A48-292E}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseQR">
+			<UniqueIdentifier>{DD30850B-B098-7B8D-AC43-E4F8}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\SPQRSupport">
+			<UniqueIdentifier>{36E2CAA2-47BC-59FC-5A29-835A}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\StlSupport">
+			<UniqueIdentifier>{8CA54084-8F6F-E1D4-E233-4FC7}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\SuperLUSupport">
+			<UniqueIdentifier>{359CB1E3-5DF3-1B1F-E97F-051D}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\SVD">
+			<UniqueIdentifier>{F925CDB0-70A9-40E8-180B-F0CB}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabMath\libs\eigen3\include\Eigen\src\UmfPackSupport">
+			<UniqueIdentifier>{3BA10568-14FD-E1F3-52A2-45B5}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabOsc">
+			<UniqueIdentifier>{C25D68AD-AA74-49F2-251E-81BC}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabOsc\src">
+			<UniqueIdentifier>{7C2B7DD4-E9D8-7CFC-CE55-AF7F}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabOsc\libs">
+			<UniqueIdentifier>{D6DFA116-41C7-9EB4-0CB5-883A}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabOsc\libs\oscpack">
+			<UniqueIdentifier>{6D169CDB-D8C7-7FF0-39CF-7BF4}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabOsc\libs\oscpack\src">
+			<UniqueIdentifier>{287A6784-7B79-AE8D-3FE5-F888}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabOsc\libs\oscpack\src\ip">
+			<UniqueIdentifier>{499BBFA5-521C-968C-DA6A-B8A9}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabOsc\libs\oscpack\src\ip\win32">
+			<UniqueIdentifier>{AEA20CF8-2BE7-15A2-1FC6-A4A8}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDabOsc\libs\oscpack\src\osc">
+			<UniqueIdentifier>{D62B2FA1-EED8-E93C-8C56-1B9E}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDatGui">
+			<UniqueIdentifier>{B36B06DF-1AA4-00D4-5A1B-6893}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDatGui\src">
+			<UniqueIdentifier>{CAA2E9BA-611F-99B2-780A-B8BA}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDatGui\src\components">
+			<UniqueIdentifier>{8EFE15E2-401E-A657-3818-AD66}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDatGui\src\core">
+			<UniqueIdentifier>{6835CAB6-404A-D3AD-148B-CD60}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDatGui\src\libs">
+			<UniqueIdentifier>{ABAEF2A2-DCDC-DB83-4614-EB2B}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDatGui\src\libs\ofxSmartFont">
+			<UniqueIdentifier>{A694AB8C-4705-277A-3AC8-2B8E}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDatGui\src\themes">
+			<UniqueIdentifier>{2646318C-49AB-44C5-70D8-23E6}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxGrafica">
+			<UniqueIdentifier>{178C872E-C185-6173-096E-B36B}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxGrafica\src">
+			<UniqueIdentifier>{C7A60214-C6FB-CCCE-2622-8935}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxImGui">
+			<UniqueIdentifier>{0CD6A942-69FF-3BAA-3AF1-ADD1}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxImGui\src">
+			<UniqueIdentifier>{18028A43-13D3-1DD5-471A-BE87}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxImGui\libs">
+			<UniqueIdentifier>{BE2F957E-7DA7-055C-DC70-3070}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxImGui\libs\imgui">
+			<UniqueIdentifier>{296AD70B-2F2E-1462-9E7C-6030}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxImGui\libs\imgui\src">
+			<UniqueIdentifier>{5962BF19-1468-EB82-01C0-2E72}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxJSON">
+			<UniqueIdentifier>{CF86E01B-D8D7-A112-88F3-5883}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxJSON\src">
+			<UniqueIdentifier>{CE83AFE9-FE4A-682E-D5C9-50B4}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxJSON\libs">
+			<UniqueIdentifier>{5302B3F8-ECDD-0465-334A-F39E}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxJSON\libs\jsoncpp">
+			<UniqueIdentifier>{87D6C548-39D9-FD9F-093E-9F4E}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxJSON\libs\jsoncpp\include">
+			<UniqueIdentifier>{0B6CA981-484E-6E8C-776C-7298}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxJSON\libs\jsoncpp\include\json">
+			<UniqueIdentifier>{5FF260B2-1497-3EFE-19D5-40DB}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxJSON\libs\jsoncpp\src">
+			<UniqueIdentifier>{6D569A5B-6719-AEFD-C08E-5CE5}</UniqueIdentifier>
+		</Filter>
+	</ItemGroup>
+	<ItemGroup>
+		<ClInclude Include="src\ofApp.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_messenger.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_plot.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_proc.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_proc_combine.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_proc_derivative.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_proc_derivative_euler.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_proc_derivative_quat.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_proc_filter.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_proc_flow_effort.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_proc_input.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_proc_lowpass.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_proc_lowpass_quat.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_proc_pos_global_to_local.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_proc_quat_euler.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_proc_rot_global_to_local.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_proc_rot_local_to_global.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_proc_scalar.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_proc_scale.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_proc_space_effort.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_proc_space_effort_2.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_proc_time_effort.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_proc_weight_effort.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_receiver.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_data_sender.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\dab_json_helper.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\ofApp.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabBase\src\dab_array.h">
+			<Filter>addons\ofxDabBase\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabBase\src\dab_buffer.h">
+			<Filter>addons\ofxDabBase\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabBase\src\dab_exception.h">
+			<Filter>addons\ofxDabBase\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabBase\src\dab_file_io.h">
+			<Filter>addons\ofxDabBase\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabBase\src\dab_index_map.h">
+			<Filter>addons\ofxDabBase\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabBase\src\dab_listener.h">
+			<Filter>addons\ofxDabBase\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabBase\src\dab_parameter.h">
+			<Filter>addons\ofxDabBase\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabBase\src\dab_ringbuffer.h">
+			<Filter>addons\ofxDabBase\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabBase\src\dab_singleton.h">
+			<Filter>addons\ofxDabBase\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabBase\src\dab_tokenizer.h">
+			<Filter>addons\ofxDabBase\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabBase\src\dab_value.h">
+			<Filter>addons\ofxDabBase\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\src\dab_math.h">
+			<Filter>addons\ofxDabMath\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\src\dab_math_field_algorithm.h">
+			<Filter>addons\ofxDabMath\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\src\dab_math_roesseler_field_algorithm.h">
+			<Filter>addons\ofxDabMath\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\src\dab_math_vec.h">
+			<Filter>addons\ofxDabMath\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\src\dab_math_vector_field.h">
+			<Filter>addons\ofxDabMath\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Cholesky\LDLT.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Cholesky</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Cholesky\LLT.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Cholesky</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Cholesky\LLT_LAPACKE.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Cholesky</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\CholmodSupport\CholmodSupport.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\CholmodSupport</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AltiVec\Complex.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AltiVec</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AltiVec\MathFunctions.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AltiVec</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AltiVec\PacketMath.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AltiVec</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AVX\Complex.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AVX</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AVX\MathFunctions.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AVX</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AVX\PacketMath.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AVX</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AVX\TypeCasting.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AVX</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AVX512\MathFunctions.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AVX512</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AVX512\PacketMath.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\AVX512</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\CUDA\Complex.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\CUDA</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\CUDA\Half.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\CUDA</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\CUDA\MathFunctions.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\CUDA</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\CUDA\PacketMath.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\CUDA</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\CUDA\PacketMathHalf.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\CUDA</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\CUDA\TypeCasting.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\CUDA</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\Default\Settings.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\Default</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\NEON\Complex.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\NEON</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\NEON\MathFunctions.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\NEON</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\NEON\PacketMath.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\NEON</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\SSE\Complex.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\SSE</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\SSE\MathFunctions.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\SSE</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\SSE\PacketMath.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\SSE</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\SSE\TypeCasting.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\SSE</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\ZVector\Complex.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\ZVector</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\ZVector\MathFunctions.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\ZVector</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\ZVector\PacketMath.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\arch\ZVector</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Array.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\ArrayBase.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\ArrayWrapper.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Assign.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\AssignEvaluator.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Assign_MKL.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\BandMatrix.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Block.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\BooleanRedux.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\CommaInitializer.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\ConditionEstimator.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\CoreEvaluators.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\CoreIterators.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\CwiseBinaryOp.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\CwiseNullaryOp.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\CwiseTernaryOp.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\CwiseUnaryOp.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\CwiseUnaryView.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\DenseBase.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\DenseCoeffsBase.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\DenseStorage.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Diagonal.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\DiagonalMatrix.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\DiagonalProduct.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Dot.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\EigenBase.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\ForceAlignedAccess.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\functors\AssignmentFunctors.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\functors</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\functors\BinaryFunctors.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\functors</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\functors\NullaryFunctors.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\functors</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\functors\StlFunctors.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\functors</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\functors\TernaryFunctors.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\functors</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\functors\UnaryFunctors.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\functors</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Fuzzy.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\GeneralProduct.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\GenericPacketMath.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\GlobalFunctions.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Inverse.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\IO.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Map.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\MapBase.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\MathFunctions.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\MathFunctionsImpl.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Matrix.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\MatrixBase.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\NestByValue.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\NoAlias.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\NumTraits.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\PermutationMatrix.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\PlainObjectBase.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Product.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\ProductEvaluators.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\GeneralBlockPanelKernel.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\GeneralMatrixMatrix.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\GeneralMatrixMatrixTriangular.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\GeneralMatrixMatrixTriangular_BLAS.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\GeneralMatrixMatrix_BLAS.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\GeneralMatrixVector.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\GeneralMatrixVector_BLAS.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\Parallelizer.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\SelfadjointMatrixMatrix.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\SelfadjointMatrixMatrix_BLAS.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\SelfadjointMatrixVector.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\SelfadjointMatrixVector_BLAS.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\SelfadjointProduct.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\SelfadjointRank2Update.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\TriangularMatrixMatrix.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\TriangularMatrixMatrix_BLAS.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\TriangularMatrixVector.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\TriangularMatrixVector_BLAS.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\TriangularSolverMatrix.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\TriangularSolverMatrix_BLAS.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products\TriangularSolverVector.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\products</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Random.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Redux.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Ref.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Replicate.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\ReturnByValue.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Reverse.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Select.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\SelfAdjointView.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\SelfCwiseBinaryOp.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Solve.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\SolverBase.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\SolveTriangular.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\StableNorm.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Stride.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Swap.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Transpose.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Transpositions.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\TriangularMatrix.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util\BlasUtil.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util\Constants.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util\DisableStupidWarnings.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util\ForwardDeclarations.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util\Macros.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util\Memory.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util\Meta.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util\MKL_support.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util\NonMPL2.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util\ReenableStupidWarnings.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util\StaticAssert.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util\XprHelper.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\util</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\VectorBlock.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\VectorwiseOp.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core\Visitor.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues\ComplexEigenSolver.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues\ComplexSchur.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues\ComplexSchur_LAPACKE.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues\EigenSolver.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues\GeneralizedEigenSolver.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues\GeneralizedSelfAdjointEigenSolver.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues\HessenbergDecomposition.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues\MatrixBaseEigenvalues.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues\RealQZ.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues\RealSchur.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues\RealSchur_LAPACKE.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues\SelfAdjointEigenSolver.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues\SelfAdjointEigenSolver_LAPACKE.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues\Tridiagonalization.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Eigenvalues</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry\AlignedBox.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry\AngleAxis.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry\arch\Geometry_SSE.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry\arch</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry\EulerAngles.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry\Homogeneous.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry\Hyperplane.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry\OrthoMethods.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry\ParametrizedLine.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry\Quaternion.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry\Rotation2D.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry\RotationBase.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry\Scaling.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry\Transform.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry\Translation.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry\Umeyama.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Geometry</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Householder\BlockHouseholder.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Householder</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Householder\Householder.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Householder</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Householder\HouseholderSequence.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Householder</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\IterativeLinearSolvers\BasicPreconditioners.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\IterativeLinearSolvers</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\IterativeLinearSolvers\BiCGSTAB.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\IterativeLinearSolvers</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\IterativeLinearSolvers\ConjugateGradient.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\IterativeLinearSolvers</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\IterativeLinearSolvers\IncompleteCholesky.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\IterativeLinearSolvers</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\IterativeLinearSolvers\IncompleteLUT.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\IterativeLinearSolvers</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\IterativeLinearSolvers\IterativeSolverBase.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\IterativeLinearSolvers</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\IterativeLinearSolvers\LeastSquareConjugateGradient.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\IterativeLinearSolvers</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\IterativeLinearSolvers\SolveWithGuess.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\IterativeLinearSolvers</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\Jacobi\Jacobi.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\Jacobi</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\LU\arch\Inverse_SSE.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\LU\arch</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\LU\Determinant.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\LU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\LU\FullPivLU.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\LU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\LU\InverseImpl.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\LU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\LU\PartialPivLU.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\LU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\LU\PartialPivLU_LAPACKE.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\LU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\MetisSupport\MetisSupport.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\MetisSupport</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\misc\blas.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\misc</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\misc\Image.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\misc</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\misc\Kernel.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\misc</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\misc\lapack.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\misc</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\misc\lapacke.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\misc</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\misc\lapacke_mangling.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\misc</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\misc\RealSvd2x2.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\misc</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\OrderingMethods\Amd.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\OrderingMethods</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\OrderingMethods\Eigen_Colamd.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\OrderingMethods</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\OrderingMethods\Ordering.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\OrderingMethods</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\PardisoSupport\PardisoSupport.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\PardisoSupport</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\PaStiXSupport\PaStiXSupport.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\PaStiXSupport</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\plugins\ArrayCwiseBinaryOps.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\plugins</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\plugins\ArrayCwiseUnaryOps.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\plugins</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\plugins\BlockMethods.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\plugins</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\plugins\CommonCwiseBinaryOps.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\plugins</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\plugins\CommonCwiseUnaryOps.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\plugins</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\plugins\MatrixCwiseBinaryOps.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\plugins</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\plugins\MatrixCwiseUnaryOps.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\plugins</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\QR\ColPivHouseholderQR.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\QR</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\QR\ColPivHouseholderQR_LAPACKE.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\QR</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\QR\CompleteOrthogonalDecomposition.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\QR</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\QR\FullPivHouseholderQR.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\QR</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\QR\HouseholderQR.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\QR</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\QR\HouseholderQR_LAPACKE.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\QR</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCholesky\SimplicialCholesky.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCholesky</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCholesky\SimplicialCholesky_impl.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCholesky</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\AmbiVector.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\CompressedStorage.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\ConservativeSparseSparseProduct.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\MappedSparseMatrix.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseAssign.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseBlock.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseColEtree.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseCompressedBase.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseCwiseBinaryOp.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseCwiseUnaryOp.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseDenseProduct.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseDiagonalProduct.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseDot.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseFuzzy.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseMap.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseMatrix.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseMatrixBase.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparsePermutation.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseProduct.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseRedux.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseRef.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseSelfAdjointView.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseSolverBase.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseSparseProductWithPruning.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseTranspose.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseTriangularView.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseUtil.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseVector.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\SparseView.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore\TriangularSolver.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU\SparseLU.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU\SparseLUImpl.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU\SparseLU_column_bmod.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU\SparseLU_column_dfs.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU\SparseLU_copy_to_ucol.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU\SparseLU_gemm_kernel.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU\SparseLU_heap_relax_snode.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU\SparseLU_kernel_bmod.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU\SparseLU_Memory.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU\SparseLU_panel_bmod.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU\SparseLU_panel_dfs.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU\SparseLU_pivotL.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU\SparseLU_pruneL.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU\SparseLU_relax_snode.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU\SparseLU_Structs.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU\SparseLU_SupernodalMatrix.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU\SparseLU_Utils.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseLU</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseQR\SparseQR.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SparseQR</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SPQRSupport\SuiteSparseQRSupport.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SPQRSupport</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\StlSupport\details.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\StlSupport</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\StlSupport\StdDeque.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\StlSupport</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\StlSupport\StdList.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\StlSupport</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\StlSupport\StdVector.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\StlSupport</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SuperLUSupport\SuperLUSupport.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SuperLUSupport</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SVD\BDCSVD.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SVD</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SVD\JacobiSVD.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SVD</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SVD\JacobiSVD_LAPACKE.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SVD</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SVD\SVDBase.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SVD</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\SVD\UpperBidiagonalization.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\SVD</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabMath\libs\eigen3\include\Eigen\src\UmfPackSupport\UmfPackSupport.h">
+			<Filter>addons\ofxDabMath\libs\eigen3\include\Eigen\src\UmfPackSupport</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\src\dab_osc_arg.h">
+			<Filter>addons\ofxDabOsc\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\src\dab_osc_includes.h">
+			<Filter>addons\ofxDabOsc\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\src\dab_osc_message.h">
+			<Filter>addons\ofxDabOsc\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\src\dab_osc_messenger.h">
+			<Filter>addons\ofxDabOsc\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\src\dab_osc_receiver.h">
+			<Filter>addons\ofxDabOsc\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\src\dab_osc_sender.h">
+			<Filter>addons\ofxDabOsc\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\src\dab_osc_types.h">
+			<Filter>addons\ofxDabOsc\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\src\dab_osc_utils.h">
+			<Filter>addons\ofxDabOsc\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\libs\oscpack\src\ip\IpEndpointName.h">
+			<Filter>addons\ofxDabOsc\libs\oscpack\src\ip</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\libs\oscpack\src\ip\NetworkingUtils.h">
+			<Filter>addons\ofxDabOsc\libs\oscpack\src\ip</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\libs\oscpack\src\ip\PacketListener.h">
+			<Filter>addons\ofxDabOsc\libs\oscpack\src\ip</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\libs\oscpack\src\ip\TimerListener.h">
+			<Filter>addons\ofxDabOsc\libs\oscpack\src\ip</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\libs\oscpack\src\ip\UdpSocket.h">
+			<Filter>addons\ofxDabOsc\libs\oscpack\src\ip</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\libs\oscpack\src\osc\MessageMappingOscPacketListener.h">
+			<Filter>addons\ofxDabOsc\libs\oscpack\src\osc</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\libs\oscpack\src\osc\OscException.h">
+			<Filter>addons\ofxDabOsc\libs\oscpack\src\osc</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\libs\oscpack\src\osc\OscHostEndianness.h">
+			<Filter>addons\ofxDabOsc\libs\oscpack\src\osc</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\libs\oscpack\src\osc\OscOutboundPacketStream.h">
+			<Filter>addons\ofxDabOsc\libs\oscpack\src\osc</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\libs\oscpack\src\osc\OscPacketListener.h">
+			<Filter>addons\ofxDabOsc\libs\oscpack\src\osc</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\libs\oscpack\src\osc\OscPrintReceivedElements.h">
+			<Filter>addons\ofxDabOsc\libs\oscpack\src\osc</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\libs\oscpack\src\osc\OscReceivedElements.h">
+			<Filter>addons\ofxDabOsc\libs\oscpack\src\osc</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDabOsc\libs\oscpack\src\osc\OscTypes.h">
+			<Filter>addons\ofxDabOsc\libs\oscpack\src\osc</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\components\ofxDatGui2dPad.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\components\ofxDatGuiButton.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\components\ofxDatGuiColorPicker.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\components\ofxDatGuiControls.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\components\ofxDatGuiFRM.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\components\ofxDatGuiGroups.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\components\ofxDatGuiLabel.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\components\ofxDatGuiMatrix.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\components\ofxDatGuiScrollView.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\components\ofxDatGuiSlider.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\components\ofxDatGuiTextInput.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\components\ofxDatGuiTextInputField.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\components\ofxDatGuiTimeGraph.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\core\ofxDatGuiComponent.h">
+			<Filter>addons\ofxDatGui\src\core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\core\ofxDatGuiConstants.h">
+			<Filter>addons\ofxDatGui\src\core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\core\ofxDatGuiEvents.h">
+			<Filter>addons\ofxDatGui\src\core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\core\ofxDatGuiIntObject.h">
+			<Filter>addons\ofxDatGui\src\core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\libs\ofxSmartFont\ofxSmartFont.h">
+			<Filter>addons\ofxDatGui\src\libs\ofxSmartFont</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\ofxDatGui.h">
+			<Filter>addons\ofxDatGui\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\themes\ofxDatGuiTheme.h">
+			<Filter>addons\ofxDatGui\src\themes</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxDatGui\src\themes\ofxDatGuiThemes.h">
+			<Filter>addons\ofxDatGui\src\themes</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxGrafica\src\ofxGAxis.h">
+			<Filter>addons\ofxGrafica\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxGrafica\src\ofxGAxisLabel.h">
+			<Filter>addons\ofxGrafica\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxGrafica\src\ofxGConstants.h">
+			<Filter>addons\ofxGrafica\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxGrafica\src\ofxGHistogram.h">
+			<Filter>addons\ofxGrafica\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxGrafica\src\ofxGLayer.h">
+			<Filter>addons\ofxGrafica\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxGrafica\src\ofxGPlot.h">
+			<Filter>addons\ofxGrafica\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxGrafica\src\ofxGPoint.h">
+			<Filter>addons\ofxGrafica\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxGrafica\src\ofxGrafica.h">
+			<Filter>addons\ofxGrafica\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxGrafica\src\ofxGTitle.h">
+			<Filter>addons\ofxGrafica\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\src\BaseEngine.h">
+			<Filter>addons\ofxImGui\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\src\BaseTheme.h">
+			<Filter>addons\ofxImGui\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\src\DefaultTheme.h">
+			<Filter>addons\ofxImGui\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\src\EngineGLFW.h">
+			<Filter>addons\ofxImGui\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\src\EngineOpenGLES.h">
+			<Filter>addons\ofxImGui\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\src\EngineVk.h">
+			<Filter>addons\ofxImGui\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\src\Gui.h">
+			<Filter>addons\ofxImGui\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\src\imconfig.h">
+			<Filter>addons\ofxImGui\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\src\ImHelpers.h">
+			<Filter>addons\ofxImGui\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\src\ofxImGui.h">
+			<Filter>addons\ofxImGui\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\src\ofxImGuiLoggerChannel.h">
+			<Filter>addons\ofxImGui\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\libs\imgui\src\imgui.h">
+			<Filter>addons\ofxImGui\libs\imgui\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\libs\imgui\src\imgui_internal.h">
+			<Filter>addons\ofxImGui\libs\imgui\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\libs\imgui\src\imstb_rectpack.h">
+			<Filter>addons\ofxImGui\libs\imgui\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\libs\imgui\src\imstb_textedit.h">
+			<Filter>addons\ofxImGui\libs\imgui\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxImGui\libs\imgui\src\imstb_truetype.h">
+			<Filter>addons\ofxImGui\libs\imgui\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxJSON\src\ofxJSON.h">
+			<Filter>addons\ofxJSON\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxJSON\src\ofxJSONElement.h">
+			<Filter>addons\ofxJSON\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxJSON\libs\jsoncpp\include\json\json-forwards.h">
+			<Filter>addons\ofxJSON\libs\jsoncpp\include\json</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\Programming\of_v0.11.2\addons\ofxJSON\libs\jsoncpp\include\json\json.h">
+			<Filter>addons\ofxJSON\libs\jsoncpp\include\json</Filter>
+		</ClInclude>
+	</ItemGroup>
+	<ItemGroup>
+		<ResourceCompile Include="icon.rc" />
+	</ItemGroup>
+</Project>

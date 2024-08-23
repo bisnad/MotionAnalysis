@@ -1,0 +1,8 @@
+{
+    "jointWeights": "data/joint_weights_xsens.json",
+    "jointFilters": "data/joint_body_part_filters_xsens.json",
+    "jointConnectivity": "data/joint_connectivity_xsens.json",
+    "oscReceivePort": 9004,
+    "oscSendAddress": "127.0.0.1",
+    "oscSendPort": 9005
+}

@@ -1,0 +1,8 @@
+{
+    "jointWeights": "data/joint_weights_motionbuilder.json",
+    "jointFilters": "data/joint_body_part_filters_motionbuilder.json",
+    "jointConnectivity": "data/joint_connectivity_motionbuilder.json",
+    "oscReceivePort": 9004,
+    "oscSendAddress": "127.0.0.1",
+    "oscSendPort": 9005
+}
