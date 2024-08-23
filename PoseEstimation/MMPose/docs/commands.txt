@@ -1,0 +1,44 @@
+Command Syntax:
+
+python demo/premiere_mmpose.py <path_to_movie or wecam> --pose2d <model_config> --pose3d <model_config>
+
+candidate pose2d model configs (that work in combination with pose3d):
+	ipr_res50_8xb64-210e_coco-256x256
+	ipr_res50_dsnt-8xb64-210e_coco-256x256
+	rtmpose-l_8xb256-420e_aic-coco-256x192
+	rtmpose-l_8xb256-420e_aic-coco-384x288
+	rtmpose-l_8xb256-420e_coco-256x192
+	rtmpose-m_8xb256-420e_aic-coco-256x192
+	rtmpose-m_8xb256-420e_aic-coco-384x288
+	rtmpose-m_8xb256-420e_coco-256x192
+	rtmpose-s_8xb256-420e_aic-coco-256x192
+	simcc_res50_8xb32-140e_coco-384x288
+	simcc_res50_8xb64-210e_coco-256x192
+	simcc_vipnas-mbv3_8xb64-210e_coco-256x192
+
+best pose2d model configs (that don't work in combination with pose3d):
+	rtmpose-l_8xb512-700e_body8-halpe26-256x192
+	rtmpose-l_8xb512-700e_body8-halpe26-384x288
+	rtmpose-l_8xb256-420e_body8-384x288
+	rtmpose-m_8xb256-420e_body8-384x288
+	rtmpose-m_8xb512-700e_body8-halpe26-256x192
+	rtmpose-m_8xb512-700e_body8-halpe26-384x288
+	rtmpose-l_8xb256-420e_humanart-256x192
+	td-hm_res101_8xb64-210e_aic-256x192
+
+candidate pose3d model configs:
+	image-pose-lift_tcn_8xb64-200e_h36m
+	motionbert_dstformer-243frm_8xb32-240e_h36m
+	motionbert_dstformer-ft-243frm_8xb32-120e_h36m
+	video-pose-lift_tcn-1frm-supv-cpn-ft_8xb128-160e_h36m
+	video-pose-lift_tcn-27frm-supv_8xb128-160e_h36m
+	video-pose-lift_tcn-81frm-supv_8xb128-160e_h36m
+	video-pose-lift_tcn-243frm-supv_8xb128-160e_h36m
+	video-pose-lift_tcn-243frm-supv-cpn-ft_8xb128-200e_h36m
+
+examples commands:
+
+python demo/premiere_mmpose.py D:\Data\video\dance\youtube\ArrivalOfTheBirds_HannahMartin.mp4 --pose2d ipr_res50_8xb64-210e_coco-256x256
+python demo/premiere_mmpose.py D:\Data\video\dance\youtube\ArrivalOfTheBirds_HannahMartin.mp4 --pose2d ipr_res50_8xb64-210e_coco-256x256 --pose3d image-pose-lift_tcn_8xb64-200e_h36m
+python demo/premiere_mmpose.py webcam --pose2d ipr_res50_8xb64-210e_coco-256x256
+python demo/premiere_mmpose.py webcam --pose2d ipr_res50_8xb64-210e_coco-256x256 --pose3d image-pose-lift_tcn_8xb64-200e_h36m
