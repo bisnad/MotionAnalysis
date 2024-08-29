@@ -32,6 +32,12 @@ import argparse
 
 import motion_sender
 
+# for some reson, the sequence of joints in live capture is not the same as in fbx
+# this is a remapping from live capture to fbx joint sequence
+#joint_map = [ 0, 1, 2, 10, 17, 18, 19, 20, 21, 22, 23, 3, 4, 5, 6, 7, 8, 9, 24, 25, 26, 27, 29, 30, 31, 32, 11, 12, 13, 14, 15, 16, 28, 33 ]
+
+joint_map = [ 0, 1, 2, 11, 12, 13, 14, 15, 16, 17, 3, 26, 27, 28, 29, 30, 31, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20, 21, 32, 22, 23, 24, 25, 33 ]
+
 def parse_args(init):
     if len(opt.input_svo_file)>0 and opt.input_svo_file.endswith(".svo"):
         init.set_from_svo_file(opt.input_svo_file)
@@ -105,11 +111,31 @@ def update_osc(_bodies, sender):
             print("root_pos_world s ", root_pos_world.shape)  
         """
         
-        sender.send(f"/mocap/{body_id}/joint/pos2d_world", joint_pos2d_world)
-        sender.send(f"/mocap/{body_id}/joint/pos_world", joint_pos3d_world)
-        sender.send(f"/mocap/{body_id}/joint/rot_local", joint_rot_local)
-        sender.send(f"/mocap/{body_id}/joint/pos_local", joint_pos_local)
-        sender.send(f"/mocap/{body_id}/joint/root_rot_world", root_rot_world)
+
+        joint_pos2d_world_osc = joint_pos2d_world[joint_map, :]
+        joint_pos3d_world_osc = joint_pos3d_world[joint_map, :]
+        joint_rot_local_osc = joint_rot_local[joint_map, :]
+        joint_pos_local_osc = joint_pos_local[joint_map, :]
+
+
+        # quat conversion from x y z w to w x y z
+        joint_rot_local_osc = np.roll(joint_rot_local_osc, 1, axis=1)
+        root_rot_world_osc = np.roll(root_rot_world, 1, axis=0)
+        
+        #print(joint_rot_local_osc)
+
+
+        #sender.send(f"/mocap/{body_id}/joint/pos2d_world", joint_pos2d_world)
+        #sender.send(f"/mocap/{body_id}/joint/pos_world", joint_pos3d_world)
+        #sender.send(f"/mocap/{body_id}/joint/rot_local", joint_rot_local)
+        #sender.send(f"/mocap/{body_id}/joint/pos_local", joint_pos_local)
+        
+        sender.send(f"/mocap/{body_id}/joint/pos2d_world", joint_pos2d_world_osc)
+        sender.send(f"/mocap/{body_id}/joint/pos_world", joint_pos3d_world_osc)
+        sender.send(f"/mocap/{body_id}/joint/rot_local", joint_rot_local_osc)
+        sender.send(f"/mocap/{body_id}/joint/pos_local", joint_pos_local_osc)
+        
+        sender.send(f"/mocap/{body_id}/joint/root_rot_world", root_rot_world_osc)
         sender.send(f"/mocap/{body_id}/joint/root_pos_world", root_pos_world)
         
 def main():
@@ -119,7 +145,7 @@ def main():
     """
     
     motion_sender.config["ip"] = "127.0.0.1"
-    motion_sender.config["port"] = 9004
+    motion_sender.config["port"] = 9007
     
     osc_sender = motion_sender.OscSender(motion_sender.config)
     

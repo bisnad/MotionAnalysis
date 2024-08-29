@@ -1,62 +1,10 @@
 import numpy as np
 
-from common import utils
-from common import bvh_tools as bvh
-from common import mocap_tools as mocap
+
 from matplotlib import pyplot as plt
 import numpy as np
-
-"""
-mocap_data_path = "D:/Data/mocap/ZacharyChant_Music_Improvisation.bvh"
-mocap_valid_frame_ranges = [ [ 1500, 29180 ] ]
-mocap_fps = 50
-mocap_excerpt_length = 200
-mocap_excerpt_offset = 50
-"""
-
-"""
-load mocap data
-"""
-
-"""
-bvh_tools = bvh.BVH_Tools()
-mocap_tools = mocap.Mocap_Tools()
-
-bvh_data = bvh_tools.load(mocap_data_path)
-mocap_data = mocap_tools.bvh_to_mocap(bvh_data)
-mocap_data["motion"]["rot_local"] = mocap_tools.euler_to_quat(mocap_data["motion"]["rot_local_euler"], mocap_data["rot_sequence"])
-mocap_data["motion"]["pos_world"], mocap_data["motion"]["rot_world"] = mocap_tools.local_to_world(mocap_data["motion"]["rot_local"], mocap_data["motion"]["pos_local"], mocap_data["skeleton"])
-
-joint_count = mocap_data["motion"]["rot_local"].shape[1]
-joint_dim = mocap_data["motion"]["rot_local"].shape[2]
-offsets = mocap_data["skeleton"]["offsets"].astype(np.float32)
-parents = mocap_data["skeleton"]["parents"]
-children = mocap_data["skeleton"]["children"]
-
-joint_weights = np.array([1.0] * joint_count) # todo: get proper joint weights
-
-torso_joint_indices = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-left_arm_joint_indices = [9, 10, 11, 12, 13]
-right_arm_joint_indices = [14, 15, 16, 17, 18]
-left_leg_indices = [19, 20, 21, 22, 23]
-right_leg_indices = [24, 25, 26, 27, 28]
-
-torso_joint_weights = joint_weights[torso_joint_indices]
-left_arm_joint_weights = joint_weights[left_arm_joint_indices]
-right_arm_joint_weights = joint_weights[right_arm_joint_indices]
-left_leg_weights = joint_weights[left_leg_indices]
-right_leg_weights = joint_weights[right_leg_indices]
-"""
-
-"""
-plot orginal data
-"""
-
-"""
-mocap_data["motion"]["pos_world"].shape
-
-plt.plot(mocap_data["motion"]["pos_world"][:, 0, 0])
-"""
+from scipy.signal import find_peaks
+from scipy.spatial import ConvexHull
 
 """
 smooth data
@@ -141,7 +89,7 @@ def smooth(data, window_length, window_type="hanning"):
     data_smooth = np.reshape(data_smooth, orig_shape)
     
     return data_smooth
-    
+
 def derivative(data, time_interval):
     """
     compute first order differences
@@ -177,15 +125,17 @@ def scalar(data, mode="average"):
 def curvature(accelerations, velocities, scalar_velocities):
     """
     input:
-        accelerations: T X J X 3
-        velocities: T X J X 3
+        accelerations: T X J X D
+        velocities: T X J X D
         scalar velocities: T X J X 1
     output:
         curv: T X 1
     """
     
-    accelerations = np.reshape(accelerations, (-1, 3))
-    velocities = np.reshape(velocities, (-1, 3))
+    joint_dim = accelerations.shape[-1]
+    
+    accelerations = np.reshape(accelerations, (-1, joint_dim))
+    velocities = np.reshape(velocities, (-1, joint_dim))
     scalar_velocities = np.reshape(scalar_velocities, (-1, 1))
     
     cross = np.cross(accelerations, velocities)
@@ -223,52 +173,96 @@ def quantity_of_motion(scalar_velocities, joint_weights):
 def bounding_box(positions):
     """
     input:
-        positions: T x J x 3
+        positions: T x J x D
     output:
-        bbox: T x 2 x 3
+        bbox: T x 2 x D
     """
-    
+
     seq_length = positions.shape[0]
     
-    bbox_min_x = np.min(positions[:, :, 0], axis=1, keepdims=True)
-    bbox_min_y = np.min(positions[:, :, 1], axis=1, keepdims=True)
-    bbox_min_z = np.min(positions[:, :, 2], axis=1, keepdims=True)
-    
-    bbox_max_x = np.max(positions[:, :, 0], axis=1, keepdims=True)
-    bbox_max_y = np.max(positions[:, :, 1], axis=1, keepdims=True)
-    bbox_max_z = np.max(positions[:, :, 2], axis=1, keepdims=True)
+    bbox_min = np.min(positions, axis=1)
+    bbox_max = np.max(positions, axis=1)
+ 
+    bbox = np.concatenate([bbox_min, bbox_max], axis=1)
+    bbox = np.reshape(bbox, (seq_length, 2, -1))
 
-    bbox = np.concatenate((bbox_min_x, bbox_min_y, bbox_min_z, bbox_max_x, bbox_max_y, bbox_max_z), axis=1)
-    bbox = np.reshape(bbox, (seq_length, 2, 3))
+    return bbox
+
+def bounding_box_rt(positions):
+    """
+    input:
+        positions: J x D
+    output:
+        bbox: 2 x D
+    """
+
+    
+    bbox_min = np.min(positions, axis=0)
+    bbox_max = np.max(positions, axis=0)
+    bbox = np.concatenate([bbox_min, bbox_max], axis=0)
 
     return bbox
 
 def bounding_sphere(positions):
     """
     input:
-        positions: T x J x 3
+        positions: T x J x D
     output:
-        sphere: T x 4
+        sphere: T x D + 1
     """
-
+    
+    #print("positions s ", positions.shape)
+    
     seq_length = positions.shape[0]
     joint_count = positions.shape[1]
 
     positions_mean = np.mean(positions, axis=1)
-    
     bsphere_center = positions_mean
     
-    positions_mean = np.repeat(np.expand_dims(positions_mean, axis=1), joint_count, axis=1)
+    #print("bsphere_center s ", bsphere_center.shape)
     
-    joint_distances = positions - positions_mean  
+    joint_distances = positions - np.expand_dims(positions_mean, axis=1)
+    
+    #print("joint_distances s ", joint_distances.shape)
     
     joint_distances = np.linalg.norm(joint_distances, axis=2)
-
-    max_distances = np.max(joint_distances, axis=1)
     
-    bsphere_radius = np.reshape(max_distances, (seq_length, 1))
+    #print("joint_distances 2 s ", joint_distances.shape)
+    
+    max_distance = np.max(joint_distances, axis=1)
+    bsphere_radius = max_distance
+    
+    #print("bsphere_radius s ", bsphere_radius.shape)
+    
+    bsphere_radius = np.expand_dims(bsphere_radius, axis=1)
+    
+    bsphere = np.concatenate([bsphere_center, bsphere_radius], axis=1)
+    
+    #print("bsphere s ", bsphere.shape)
 
-    bsphere = np.concatenate((bsphere_center, bsphere_radius), axis=1)
+    return bsphere
+
+
+def bounding_sphere_rt(positions):
+    """
+    input:
+        positions: J x D
+    output:
+        sphere: 4
+    """
+
+    joint_count = positions.shape[0]
+
+    positions_mean = np.mean(positions, axis=0)
+    bsphere_center = positions_mean
+    
+    joint_distances = positions - positions_mean  
+    joint_distances = np.linalg.norm(joint_distances, axis=1)
+    
+    max_distance = np.max(joint_distances)
+    bsphere_radius = max_distance
+    
+    bsphere = np.array([bsphere_center[0], bsphere_center[1], bsphere_center[2], bsphere_radius])
 
     return bsphere
     
@@ -280,6 +274,8 @@ def filter(data, indices):
     
     return np.copy(data[:, indices, :])
     
+# non realtime calculation of weight effort: calculate weight efforts for each position of a window that slides across the sequence
+# implementation based on Larboulette and Gibet Paper: A review of computable expressive descriptors of human motion
 def weight_effort(scalar_velocities, joint_weights, window_length):
     
     seq_length = scalar_velocities.shape[0]
@@ -325,7 +321,35 @@ def weight_effort(scalar_velocities, joint_weights, window_length):
     efforts = np.expand_dims(efforts, axis=1)
     
     return efforts
+
+# real-time calculation of weight effort: calculate single weight effort for entire sequence, without applying any windowing
+# implementation based on Larboulette and Gibet Paper: A review of computable expressive descriptors of human motion
+# expected parameters
+# scalar_velocities: time x joints
+# joint_weights: joints 
+def weight_effort_rt(scalar_velocities, joint_weights):
     
+    #print("scalar_velocities s ", scalar_velocities.shape)
+    #print("joint_weights s ", joint_weights.shape)
+    seq_length = scalar_velocities.shape[0]
+    
+    scalar_velocities = np.reshape(scalar_velocities, (seq_length, -1))
+    joint_weights = np.reshape(joint_weights, (1, -1))
+    
+    #print("joint_weights s ", joint_weights.shape)
+    
+    efforts_sum = np.sum(scalar_velocities * scalar_velocities * joint_weights, axis=1)
+
+    #print("efforts_sum s ", efforts_sum.shape)
+    
+    effort_max = np.max(efforts_sum)
+    effort_max = np.array([effort_max])
+
+    return effort_max
+
+
+# non realtime calculation of time effort: calculate time efforts for each position of a window that slides across the sequence
+# implementation based on Larboulette and Gibet Paper: A review of computable expressive descriptors of human motion
 def time_effort(scalar_accelerations, joint_weights, window_length):
     
     seq_length = scalar_accelerations.shape[0]
@@ -363,6 +387,25 @@ def time_effort(scalar_accelerations, joint_weights, window_length):
     
     return efforts
 
+# real-time calculation of time effort: calculate single time effort for entire sequence, without applying any windowing
+# implementation based on Larboulette and Gibet Paper: A review of computable expressive descriptors of human motion
+# expected parameters
+# scalar_accelerations: time x joints
+# joint_weights: joints 
+def time_effort_rt(scalar_accelerations, joint_weights):
+    
+    seq_length = scalar_accelerations.shape[0]
+    scalar_accelerations = np.reshape(scalar_accelerations, (seq_length, -1))
+    
+    time = np.sum(scalar_accelerations, axis=0) / seq_length
+    effort = np.sum(time * joint_weights)
+    
+    effort = np.array([effort])
+    
+    return effort
+
+# non realtime calculation of flow effort: calculate flow efforts for each position of a window that slides across the sequence
+# implementation based on Larboulette and Gibet Paper: A review of computable expressive descriptors of human motion
 def flow_effort(scalar_jerks, joint_weights, window_length):
     
     seq_length = scalar_jerks.shape[0]
@@ -381,7 +424,7 @@ def flow_effort(scalar_jerks, joint_weights, window_length):
     
     #print("accelerations_padded s ", accelerations_padded.shape)
     
-    time = np.zeros_like(scalar_jerks)
+    flow = np.zeros_like(scalar_jerks)
     
     #print("time s ", time.shape)
     
@@ -390,9 +433,9 @@ def flow_effort(scalar_jerks, joint_weights, window_length):
         
         #print("i ", i, " excerpt s ", excerpt.shape)
         
-        time[i] = np.sum(excerpt, axis=0) / window_length
+        flow[i] = np.sum(excerpt, axis=0) / window_length
         
-    efforts = np.sum(time * joint_weights, axis=1)
+    efforts = np.sum(flow * joint_weights, axis=1)
     
     efforts = np.expand_dims(efforts, axis=1)
     
@@ -400,6 +443,25 @@ def flow_effort(scalar_jerks, joint_weights, window_length):
     
     return efforts
 
+# real-time calculation of flow effort: calculate single flow effort for entire sequence, without applying any windowing
+# implementation based on Larboulette and Gibet Paper: A review of computable expressive descriptors of human motion
+# expected parameters
+# scalar_jerks: time x joints
+# joint_weights: joints 
+def flow_effort_rt(scalar_jerks, joint_weights):
+
+    seq_length = scalar_jerks.shape[0]
+    scalar_jerks = np.reshape(scalar_jerks, (seq_length, -1))
+    
+    flow = np.sum(scalar_jerks, axis=0) / seq_length
+    effort = np.sum(flow * joint_weights)
+    
+    effort = np.array([effort])
+    
+    return effort
+
+# non realtime calculation of flow effort: calculate flow efforts for each position of a window that slides across the sequence
+# implementation based on Larboulette and Gibet Paper: A review of computable expressive descriptors of human motion
 def space_effort(scalar_positions, joint_weights, window_length):
     
     seq_length = scalar_positions.shape[0]
@@ -439,9 +501,12 @@ def space_effort(scalar_positions, joint_weights, window_length):
     
     return efforts
     
+# non realtime calculation of flow effort: calculate flow efforts for each position of a window that slides across the sequence
+# own implementation that uses deviation between overall direction and individual direction for each time step as basis for space effort
 def space_effort_v2(positions, joint_weights, window_length):
     
     seq_length = positions.shape[0]
+    joint_dim = positions.shape[-1]
     joint_weights = np.reshape(joint_weights, (1, -1))
     
     #print("positions s ", positions.shape)
@@ -469,7 +534,7 @@ def space_effort_v2(positions, joint_weights, window_length):
         start_end_length = np.linalg.norm(start_end_diff, axis=-1) 
         start_end_dir = start_end_diff / np.expand_dims(start_end_length, axis=1)
         start_end_dir = np.repeat(np.expand_dims(start_end_dir, axis=0), window_length - 1, axis=0)
-        start_end_dir = np.reshape(start_end_dir, (-1, 3))
+        start_end_dir = np.reshape(start_end_dir, (-1, joint_dim))
         
         #print("start_end_diff s ", start_end_diff.shape)
         #print("start_end_length s ", start_end_length.shape)
@@ -487,7 +552,7 @@ def space_effort_v2(positions, joint_weights, window_length):
         
         #print("step_dirs s ", step_dirs.shape)
         
-        step_dirs = np.reshape(step_dirs, (-1, 3))
+        step_dirs = np.reshape(step_dirs, (-1, joint_dim))
         
         #print("step_dirs s ", step_dirs.shape)
         
@@ -519,54 +584,270 @@ def space_effort_v2(positions, joint_weights, window_length):
     
     return efforts
 
-"""
-mocap_data["motion"]["pos_world_m"] = mocap_data["motion"]["pos_world"] / 100.0
-mocap_data["motion"]["pos_world_smooth"] = smooth(mocap_data["motion"]["pos_world_m"], 25)
-mocap_data["motion"]["pos_scalar"] = scalar(mocap_data["motion"]["pos_world_smooth"], "norm")
+# real-time calculation of space effort: calculate space flow effort for entire sequence, without applying any windowing
+# own implementation that uses deviation between overall direction and individual direction for each time step as basis for space effort
+# expected parameters
+# positions: time x joints x D
+# joint_weights: joints
+def space_effort_v2_rt(positions, joint_weights):
+    
+    #print("positions s ", positions.shape)
+    #print("joint_weights s ", joint_weights.shape)
+    
+    seq_length = positions.shape[0]
+    joint_dim = positions.shape[-1]
+    
+    #joint_weights = np.reshape(joint_weights, (1, -1))
+ 
+    #print("i ", i, " excerpt s ", excerpt.shape)
+    
+    start_end_diff = positions[-1, ...] - positions[0, ...]
+    
+    #print("start_end_diff s ", start_end_diff.shape)
+    
+    start_end_length = np.linalg.norm(start_end_diff, axis=-1) 
+    
+    #print("start_end_length s ", start_end_length.shape)
+    
+    start_end_dir = start_end_diff / np.expand_dims(start_end_length, axis=1)
+    start_end_dir = np.repeat(np.expand_dims(start_end_dir, axis=0), seq_length - 1, axis=0)
+    start_end_dir = np.reshape(start_end_dir, (-1, joint_dim))
+    
+    #print("start_end_diff s ", start_end_diff.shape)
+    #print("start_end_length s ", start_end_length.shape)
+    #print("start_end_dir s ", start_end_dir.shape)
+    
+    step_diffs = positions[1:, ...] - positions[:-1, ...]
 
-plt.plot(mocap_data["motion"]["pos_world_m"][:100, 0, 0])
-plt.plot(mocap_data["motion"]["pos_world_smooth"][:100, 0, 0])
-plt.plot(mocap_data["motion"]["pos_scalar"][:100, 0, 0])
+    #print("step_diffs s ", step_diffs.shape)
+    
+    step_lengths = np.linalg.norm(step_diffs, axis=-1) 
+    
+    #print("step_lengths s ", step_lengths.shape)
+    
+    step_dirs = step_diffs / np.expand_dims(step_lengths + 0.0001, axis=2)
+    
+    #print("step_dirs s ", step_dirs.shape)
+    
+    step_dirs = np.reshape(step_dirs, (-1, joint_dim))
+    
+    #print("step_dirs s ", step_dirs.shape)
+    
+    step_dots = np.einsum('ij,ij->i',step_dirs, start_end_dir)
+    
+    #print("step_dots s ", step_dots.shape)
+    
+    step_dots = np.reshape(step_dots, (seq_length  - 1, -1))
+    
+    #print("step_dots s ", step_dots.shape)
+    
+    #step_dots = np.dot(step_dirs, start_end_dir)
+    step_deviations = (step_dots * -1.0 + 1.0) * 0.5
+    step_deviations *= step_lengths
+    
+    #print("step_deviations s ", step_deviations.shape)
+    
+    space = np.sum(step_deviations, axis=0)
+    
+    #print("space s ", space.shape)
+    
+    effort = np.sum(space * joint_weights)
+    effort = np.array([effort])
+    
+    return effort
 
-mocap_data["motion"]["vel_world"] = derivative(mocap_data["motion"]["pos_world_smooth"], 1.0 / 50.0)
-mocap_data["motion"]["vel_world_smooth"] = smooth(mocap_data["motion"]["vel_world"], 25)
-mocap_data["motion"]["vel_world_scalar"] = scalar(mocap_data["motion"]["vel_world_smooth"], "norm")
+def joint_distance(joint1, joint2):
+    """
+    calculate distance between two joints (time x joint_dimension)
+    joint1: time x joint_dimension
+    joint2: time x joint_dimension
+    """
+    return np.linalg.norm(joint1 - joint2, axis=1, keepdims=True)
+    
+def joint_level(joint, joint1, joint2):
+    """
+    calculates joint level with regards to two other joints
+    level 1: joint is above joint1
+    level 2: joint is between joint2 and joint1
+    level 3: joint is below joint2
+    
+    joint: time x joint_dimension
+    joint1: time x joint_dimension
+    joint2: time x joint_dimension
+    """
+    
+    above = joint[:, 1] > joint1[:, 1]
+    below = joint[:, 1] < joint2[:, 1]
+    between = np.logical_not(np.logical_or(above, below))
+    level = above.astype(int) * 1 + between.astype(int) * 2 + below.astype(int) * 3
+    level = np.expand_dims(level, axis=1)
+    
+    return level
 
-plt.plot(mocap_data["motion"]["vel_world"][:100, 0, 0])
-plt.plot(mocap_data["motion"]["vel_world_smooth"][:100, 0, 0])
-plt.plot(mocap_data["motion"]["vel_world_scalar"][:100, 0, 0])
+def joint_travel_distance(joints):
+    """
+    Calculates the distance travel by joints
+    
+    joints: time x joint_count x joint_dimension or time x joint_dimension
+    
+    TODO: change so it works with an analysis window
+    """
 
-mocap_data["motion"]["accel_world"] = derivative(mocap_data["motion"]["vel_world_smooth"], 1.0 / 50.0)
-mocap_data["motion"]["accel_world_smooth"] = smooth(mocap_data["motion"]["accel_world"], 25)
-mocap_data["motion"]["accel_world_scalar"] = scalar(mocap_data["motion"]["accel_world_smooth"], "norm")
+    directions = joints[1:, ...] - joints[:-1, ...]
+    lengths = np.linalg.norm(directions, axis = 2 if len(joints.shape) == 3 else 1, keepdims=True)
+    
+    return lengths
 
-plt.plot(mocap_data["motion"]["accel_world"][:100, 0, 0])
-plt.plot(mocap_data["motion"]["accel_world_smooth"][:100, 0, 0])
-plt.plot(mocap_data["motion"]["accel_world_scalar"][:100, 0, 0])
+def windowed_joint_travel_distance(joints, window_size):
+    """
+    Calculates the distance travel by joints
+    joints: time x joint_count x joint_dimension or time x joint_dimension
+    
+    the distances are averaged within each window
+    """
+    
+    # calc travel lengths for each time-step and joint
+    directions = joints[1:, ...] - joints[:-1, ...]
+    lengths = np.linalg.norm(directions, axis = 2 if len(joints.shape) == 3 else 1, keepdims=True)
+    
+    # prepend zero length
+    lengths = np.concatenate([np.zeros([1] + list(lengths.shape[1:])), lengths], axis=0)
+    
+    windowed_lengths = []
+    
+    for tI in range(lengths.shape[0] - window_size):
+        length_excerpt = lengths[tI:tI + window_size]
+        windowed_value = np.mean(length_excerpt, axis=0, keepdims=True)
+        windowed_lengths.append(windowed_value)
+        
+    windowed_lengths = np.concatenate(windowed_lengths, axis=0)
 
-mocap_data["motion"]["jerk_world"] = derivative(mocap_data["motion"]["accel_world_smooth"], 1.0 / 50.0)
-mocap_data["motion"]["jerk_world_smooth"] = smooth(mocap_data["motion"]["jerk_world"], 25)
-mocap_data["motion"]["jerk_world_scalar"] = scalar(mocap_data["motion"]["jerk_world_smooth"], "norm")
+    return windowed_lengths
 
-plt.plot(mocap_data["motion"]["jerk_world"][:100, 0, 0])
-plt.plot(mocap_data["motion"]["jerk_world_smooth"][:100, 0, 0])
-plt.plot(mocap_data["motion"]["jerk_world_scalar"][:100, 0, 0])
+def joint_volume(joints):
+    """
+    Calculates the volume occupied by joints
+    first by deriving the convex hull and then obtaining the volume from the hull
+    joints can be provided either as a time series of poses or as a single pose
+    
+    joints: either time x joint_count x joint_dimension or joint_count x joint_dimension
+    """
+    
+    joints = np.reshape(joints, [-1, joints.shape[-1]])
+    
+    volumes = []
+    volumes.append(ConvexHull(joints).volume)
+    
+    volumes = np.array(volumes, dtype=np.float32)
+    volumes = np.expand_dims(volumes, axis=1)
+    
+    return volumes
 
+def windowed_joint_volume(joints, window_size):
+    """
+    same as joint_volume but calculates the volume for each time window
+    """
+    
+    joints = np.reshape(joints, [-1, joints.shape[-1]])
+    
+    windowed_volumes = []
+    
+    for tI in range(joints.shape[0] - window_size):
+        joint_excerpt = joints[tI:tI + window_size]
+        
+        windowed_volumes.append(ConvexHull(joint_excerpt).volume)
 
-mocap_data["motion"]["curvature"] = curvature(mocap_data["motion"]["accel_world_smooth"], mocap_data["motion"]["vel_world_smooth"], mocap_data["motion"]["vel_world_scalar"])
-mocap_data["motion"]["qom"] = quantity_of_motion(mocap_data["motion"]["vel_world_scalar"], joint_weights)
+    windowed_volumes = np.array(windowed_volumes, dtype=np.float32)
+    windowed_volumes = np.expand_dims(windowed_volumes, axis=1)
 
-plt.plot(mocap_data["motion"]["curvature"])
+    return windowed_volumes
 
-mocap_data["motion"]["weight_effort"] = weight_effort(mocap_data["motion"]["vel_world_scalar"], joint_weights, 11)
-mocap_data["motion"]["time_effort"] = time_effort(mocap_data["motion"]["accel_world_scalar"], joint_weights, 11)
-mocap_data["motion"]["flow_effort"] = flow_effort(mocap_data["motion"]["jerk_world_scalar"], joint_weights, 11)
-mocap_data["motion"]["space_effort"] = space_effort_v2(mocap_data["motion"]["pos_world_smooth"], joint_weights, 11)
+def joint_volumes(joints):
+    """
+    Calculates the volume occupied by joints
+    differs from joint_volume in that this function calculates multiple volumes, one for each pose
+    in a time series
+    joints: either time x joint_count x joint_dimension or joint_count x joint_dimension
+    """
+    
+    volumes = []
+    
+    if len(joints.shape) == 2: # single pose
+        volumes.append(ConvexHull(joints).volume)
+    else:
+        for tI in range(joints.shape[0]):
+            volumes.append(ConvexHull(joints[tI]).volume)
+            
+    volumes = np.array(volumes, dtype=np.float32)
+    volumes = np.expand_dims(volumes, axis=1)
+    
+    return volumes
 
-plt.plot(mocap_data["motion"]["weight_effort"])
-plt.plot(mocap_data["motion"]["time_effort"])
-plt.plot(mocap_data["motion"]["flow_effort"])
-plt.plot(mocap_data["motion"]["space_effort"])
-"""
+def windowed_min(time_series, window_size):
+    
+    time_series_shape = time_series.shape
+    time_series = np.reshape(time_series, [time_series_shape[0], -1])
+    
+    values = []
+    
+    for tI in range(time_series_shape[0] - window_size):
+        time_series_window = time_series[tI:tI + window_size]
+        value = np.min(time_series_window, axis=0, keepdims=True)
+        #value = np.reshape(value, time_series_shape[1:])
+        values.append(value)
+        
+    values = np.concatenate(values, axis=0)
 
+    return values
 
+def windowed_max(time_series, window_size):
+    
+    time_series_shape = time_series.shape
+    time_series = np.reshape(time_series, [time_series_shape[0], -1])
+
+    values = []
+    
+    for tI in range(time_series_shape[0] - window_size):
+        time_series_window = time_series[tI:tI + window_size]
+        value = np.max(time_series_window, axis=0, keepdims=True)
+        #value = np.reshape(value, time_series_shape[1:])
+        values.append(value)
+        
+    values = np.concatenate(values, axis=0)
+
+    return values
+
+def windowed_mean(time_series, window_size):
+    
+    time_series_shape = time_series.shape
+    time_series = np.reshape(time_series, [time_series_shape[0], -1])
+    
+    values = []
+    
+    for tI in range(time_series_shape[0] - window_size):
+        time_series_window = time_series[tI:tI + window_size]
+        value = np.mean(time_series_window, axis=0, keepdims=True)
+        #value = np.reshape(value, time_series_shape[1:])
+        values.append(value)
+        
+    values = np.concatenate(values, axis=0)
+    
+    return values
+
+def windowed_std(time_series, window_size):
+    
+    time_series_shape = time_series.shape
+    time_series = np.reshape(time_series, [time_series_shape[0], -1])
+
+    values = []
+    
+    for tI in range(time_series_shape[0] - window_size):
+        time_series_window = time_series[tI:tI + window_size]
+        value = np.std(time_series_window, axis=0, keepdims=True)
+        #value = np.reshape(value, time_series_shape[1:])
+        values.append(value)
+        
+    values = np.concatenate(values, axis=0)
+
+    return values
+    

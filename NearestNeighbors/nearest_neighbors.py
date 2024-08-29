@@ -4,6 +4,7 @@ imports
 
 from common import utils
 from common import bvh_tools as bvh
+from common import fbx_tools as fbx
 from common import mocap_tools as mocap
 import motion_analysis as ma
 
@@ -18,32 +19,18 @@ import numpy as np
 Mocap Settings
 """
 
-"""
-mocap_file_path = "../../../../../Data/mocap/stocos/solos/"
-mocap_files = [ "Muriel_Take1.bvh",
-               "Muriel_Take2.bvh",
-               "Muriel_Take3.bvh",
-               "Muriel_Take4.bvh",
-               "Muriel_Take6.bvh",
-               "Muriel_Take7.bvh"]
-
-mocap_valid_frame_ranges = [ [ 0, 16709 ],
-                            [ 0, 11540 ],
-                            [ 0, 12374 ],
-                            [ 0, 5006 ],
-                            [ 0, 27629 ],
-                            [ 0, 12381 ] ]
-"""
-
-mocap_file_path = "../../../../../Data/mocap/stocos/solos/"
-mocap_files = [ "Muriel_Take4.bvh" ]
-
-mocap_valid_frame_ranges = [ [ 0, 5006 ] ]
-
+mocap_file_path = "D:/data/mocap/stocos/Solos/Canal_14-08-2023/fbx_50hz"
+mocap_files = ["Muriel_Embodied_Machine_variation.fbx"]
+mocap_valid_frame_ranges = [ [ 200, 6400 ] ]
+mocap_pos_scale = 1.0
 mocap_fps = 50
+
 mocap_excerpt_length = 80 # 80
 mocap_excerpt_offset = 40 # 40
 mocap_smooth_length = 25 # 25
+
+"""
+# joint weight percentages for XSens data (BVH) (without gloves)
 mocap_joint_weight_percentages = [
     14.28, #Hips
     10.7, #RightUpLeg
@@ -74,6 +61,35 @@ mocap_joint_weight_percentages = [
     5.3124, #Head
     0.0076, #Head_Nub
     ]
+"""
+
+# joint weight percentages for XSens data (FBX) (without gloves)
+mocap_joint_weight_percentages = [
+    14.3, # Hips
+    10.7, # RightUpLeg
+    4.6, # RightLeg
+    1.3, # RightFoot
+    0.4, # RightToeBase
+    10.7, # LeftUpLeg
+    4.6, # LeftLeg
+    1.3, # LeftFoot
+    0.4, # LeftToeBase
+    4.8, # Spine
+    5.2, # Spine1
+    5.2, # Spine2
+    5.7, # Spine3
+    6.1, # LeftShoulder
+    3.0, # LeftArm
+    1.8, # LeftForeArm
+    0.7, # LeftHand
+    6.1, # RightShoulder
+    3.0, # RightArm
+    1.8, # RightForeArm
+    0.7, # RightHand
+    2.3, # Neck
+    5.3 # Head
+    ]
+
 mocap_body_weight = 60
 
 motion_feature_names = ["pos_world_smooth"]
@@ -97,6 +113,7 @@ Load Mocap Data
 """
 
 bvh_tools = bvh.BVH_Tools()
+fbx_tools = fbx.FBX_Tools()
 mocap_tools = mocap.Mocap_Tools()
 
 all_mocap_data = []
@@ -105,9 +122,25 @@ for mocap_file in mocap_files:
     
     print("process file ", mocap_file)
     
-    bvh_data = bvh_tools.load(mocap_file_path + "/" + mocap_file)
-    mocap_data = mocap_tools.bvh_to_mocap(bvh_data)
-    mocap_data["motion"]["rot_local"] = mocap_tools.euler_to_quat(mocap_data["motion"]["rot_local_euler"], mocap_data["rot_sequence"])
+    if mocap_file.endswith(".bvh") or mocap_file.endswith(".BVH"):
+        bvh_data = bvh_tools.load(mocap_file_path + "/" + mocap_file)
+        mocap_data = mocap_tools.bvh_to_mocap(bvh_data)
+    elif mocap_file.endswith(".fbx") or mocap_file.endswith(".FBX"):
+        fbx_data = fbx_tools.load(mocap_file_path + "/" + mocap_file)
+        mocap_data = mocap_tools.fbx_to_mocap(fbx_data)[0] # first skeleton only
+    
+    mocap_data["skeleton"]["offsets"] *= mocap_pos_scale
+    mocap_data["motion"]["pos_local"] *= mocap_pos_scale
+    
+    # set x and z offset of root joint to zero
+    mocap_data["skeleton"]["offsets"][0, 0] = 0.0 
+    mocap_data["skeleton"]["offsets"][0, 2] = 0.0 
+    
+    if mocap_file.endswith(".bvh") or mocap_file.endswith(".BVH"):
+        mocap_data["motion"]["rot_local"] = mocap_tools.euler_to_quat_bvh(mocap_data["motion"]["rot_local_euler"], mocap_data["rot_sequence"])
+    elif mocap_file.endswith(".fbx") or mocap_file.endswith(".FBX"):
+        mocap_data["motion"]["rot_local"] = mocap_tools.euler_to_quat(mocap_data["motion"]["rot_local_euler"], mocap_data["rot_sequence"])
+        
     mocap_data["motion"]["pos_world"], mocap_data["motion"]["rot_world"] = mocap_tools.local_to_world(mocap_data["motion"]["rot_local"], mocap_data["motion"]["pos_local"], mocap_data["skeleton"])
 
     all_mocap_data.append(mocap_data)
@@ -534,12 +567,16 @@ def forward_kinematics(rotations, root_positions):
 
     return torch.stack(positions_world, dim=3).permute(0, 1, 3, 2)
 
-def create_gif_anim(file_name):
-
-    joint_rot_sequence = torch.tensor(np.expand_dims(gen_motion, axis=0), dtype=torch.float32)
-    root_pos_sequence = torch.tensor(np.zeros((1, joint_rot_sequence.shape[1], 3)), dtype=torch.float32)
+def export_sequence_anim(pose_sequence, file_name):
     
-    skel_sequence = forward_kinematics(joint_rot_sequence, root_pos_sequence)
+    pose_count = pose_sequence.shape[0]
+    pose_sequence = np.reshape(pose_sequence, (pose_count, joint_count, joint_dim))
+    
+    
+    pose_sequence = torch.tensor(np.expand_dims(pose_sequence, axis=0)).to(torch.float32)
+    zero_trajectory = torch.tensor(np.zeros((1, pose_count, 3))).to(torch.float32)
+    
+    skel_sequence = forward_kinematics(pose_sequence, zero_trajectory)
     
     skel_sequence = skel_sequence.detach().cpu().numpy()
     skel_sequence = np.squeeze(skel_sequence)    
@@ -548,22 +585,43 @@ def create_gif_anim(file_name):
     skel_images = poseRenderer.create_pose_images(skel_sequence, view_min, view_max, view_ele, view_azi, view_line_width, view_size, view_size)
     skel_images[0].save(file_name, save_all=True, append_images=skel_images[1:], optimize=False, duration=33.0, loop=0)
 
-# export gen motion as gif anim
-#create_gif_anim("test.gif")
+def export_sequence_bvh(pose_sequence, file_name):
+    
+    pose_count = pose_sequence.shape[0]
 
-# export gen motion as bvh file
-mocap_data = all_mocap_data[0]
+    pred_dataset = {}
+    pred_dataset["frame_rate"] = mocap_data["frame_rate"]
+    pred_dataset["rot_sequence"] = mocap_data["rot_sequence"]
+    pred_dataset["skeleton"] = mocap_data["skeleton"]
+    pred_dataset["motion"] = {}
+    pred_dataset["motion"]["pos_local"] = np.repeat(np.expand_dims(pred_dataset["skeleton"]["offsets"], axis=0), pose_count, axis=0)
+    pred_dataset["motion"]["rot_local"] = pose_sequence
+    pred_dataset["motion"]["rot_local_euler"] = mocap_tools.quat_to_euler_bvh(pred_dataset["motion"]["rot_local"], pred_dataset["rot_sequence"])
 
-pred_dataset = {}
-pred_dataset["frame_rate"] = mocap_data["frame_rate"]
-pred_dataset["rot_sequence"] = mocap_data["rot_sequence"]
-pred_dataset["skeleton"] = mocap_data["skeleton"]
-pred_dataset["motion"] = {}
-pred_dataset["motion"]["pos_local"] = np.repeat(np.expand_dims(pred_dataset["skeleton"]["offsets"], axis=0), gen_motion_pose_count, axis=0)
-pred_dataset["motion"]["rot_local"] = gen_motion
-pred_dataset["motion"]["rot_local_euler"] = mocap_tools.quat_to_euler(pred_dataset["motion"]["rot_local"], pred_dataset["rot_sequence"])
+    pred_bvh = mocap_tools.mocap_to_bvh(pred_dataset)
+    
+    bvh_tools.write(pred_bvh, file_name)
 
-pred_bvh = mocap_tools.mocap_to_bvh(pred_dataset)
+def export_sequence_fbx(pose_sequence, file_name):
+    
+    pose_count = pose_sequence.shape[0]
+    
+    pred_dataset = {}
+    pred_dataset["frame_rate"] = mocap_data["frame_rate"]
+    pred_dataset["rot_sequence"] = mocap_data["rot_sequence"]
+    pred_dataset["skeleton"] = mocap_data["skeleton"]
+    pred_dataset["motion"] = {}
+    pred_dataset["motion"]["pos_local"] = np.repeat(np.expand_dims(pred_dataset["skeleton"]["offsets"], axis=0), pose_count, axis=0)
+    pred_dataset["motion"]["rot_local"] = pose_sequence
+    pred_dataset["motion"]["rot_local_euler"] = mocap_tools.quat_to_euler(pred_dataset["motion"]["rot_local"], pred_dataset["rot_sequence"])
+    
+    pred_fbx = mocap_tools.mocap_to_fbx([pred_dataset])
+    
+    fbx_tools.write(pred_fbx, file_name)
 
-bvh_tools.write(pred_bvh, "results/bvh/nearest_neighbors.bvh")
+# export gen motion
+export_sequence_anim(gen_motion, "nearest_neighbors.gif")
+export_sequence_bvh(gen_motion,  "nearest_neighbors.bvh")
+export_sequence_fbx(gen_motion,  "nearest_neighbors.fbx")
+
 

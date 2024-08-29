@@ -4,7 +4,7 @@ from pythonosc.udp_client import SimpleUDPClient
 
 config = {
     "ip": "127.0.0.1",
-    "port": 9005
+    "port": 9005,
     }
 
 class OscSender():

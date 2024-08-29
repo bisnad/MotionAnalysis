@@ -112,11 +112,14 @@ class MotionGui(QtWidgets.QWidget):
         self.synth_pose_wpos = self.synthesis.synth_pose_wpos
         self.synth_pose_wrot = self.synthesis.synth_pose_wrot
         
+    """
     def update_osc(self):
         
+
         # convert from left handed bvh coordinate system to right handed standard coordinate system
         self.synth_pose_wpos_rh = np.copy(self.synth_pose_wpos)
 
+        
         self.synth_pose_wpos_rh[:, 0] = self.synth_pose_wpos[:, 0] / 100.0
         self.synth_pose_wpos_rh[:, 1] = -self.synth_pose_wpos[:, 2] / 100.0
         self.synth_pose_wpos_rh[:, 2] = self.synth_pose_wpos[:, 1] / 100.0
@@ -129,6 +132,12 @@ class MotionGui(QtWidgets.QWidget):
 
         self.sender.send("/mocap/joint/pos_world", self.synth_pose_wpos_rh)
         self.sender.send("/mocap/joint/rot_world", self.synth_pose_wrot_rh)
+    """
+        
+    def update_osc(self):
+        
+        self.sender.send("/mocap/joint/pos_world", self.synth_pose_wpos)
+        self.sender.send("/mocap/joint/rot_world", self.synth_pose_wrot)
 
     def update_seq_plot(self):
         
