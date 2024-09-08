@@ -77,3 +77,6 @@ PoseEstimation/ZED/ZED_Body_Export_FBX/build/Release/2024-8-4-14-29-2.fbx
 /NearestNeighbors/__pycache__
 /NearestNeighbors/common/__pycache__
 /NearestNeighbors/common/__pycache__
+/MocapClassifier/.spyproject
+/MocapClassifier_Interactive/.spyproject
+/MocapClassifier/results
