@@ -262,7 +262,11 @@ def bounding_sphere_rt(positions):
     max_distance = np.max(joint_distances)
     bsphere_radius = max_distance
     
-    bsphere = np.array([bsphere_center[0], bsphere_center[1], bsphere_center[2], bsphere_radius])
+    bsphere_radius = np.array([bsphere_radius])
+
+    bsphere = np.concatenate([bsphere_center, bsphere_radius], axis=0)
+    
+    #bsphere = np.array([bsphere_center[0], bsphere_center[1], bsphere_center[2], bsphere_radius])
 
     return bsphere
     

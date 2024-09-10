@@ -6,7 +6,12 @@ class MotionPipeline():
     def __init__(self, oscReceiver, jointWeigths, updateInterval):
             
         self.pos = oscReceiver.data[0]
-        self.rot = oscReceiver.data[1]
+        self.posDim = self.pos.shape[-1]
+
+        if len(oscReceiver.data) > 1:
+            self.rot = oscReceiver.data[1]
+        else:
+            self.rot = None
         self.jointWeigths = jointWeigths
         self.updateInterval = updateInterval
         self.jointCount = len(self.jointWeigths)
@@ -41,14 +46,14 @@ class MotionPipeline():
         self.quom = np.array([0.0])
         
         # bbox
-        self.bbox = np.zeros([2, 3])
+        self.bbox = np.zeros([2, self.posDim])
         
         # bsphere
-        self.bsphere = np.array([4])
+        self.bsphere = np.array([self.posDim + 1])
         
         # ring buffers
         self.ringSize = 25
-        self.posRing = np.zeros([self.ringSize, self.jointCount, 3])
+        self.posRing = np.zeros([self.ringSize, self.jointCount, self.posDim])
         self.velScalarRing = np.zeros([self.ringSize, self.jointCount])
         self.accelScalarRing = np.zeros([self.ringSize, self.jointCount])
         self.jerkScalarRing = np.zeros([self.ringSize, self.jointCount])

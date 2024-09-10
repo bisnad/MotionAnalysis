@@ -84,6 +84,7 @@ class Pose2DCanvas(QtWidgets.QWidget):
         self.pose_topology = pose2d_topology # should come from config
         
     def updateImage(self, image):
+        
         self.image = QtGui.QImage(image.data, image.shape[1], image.shape[0], image.strides[0], QtGui.QImage.Format_BGR888)
         self.pixmap = QtGui.QPixmap.fromImage(self.image)
         
@@ -224,6 +225,8 @@ class MotionGui(QtWidgets.QWidget):
         self.pose2d_keypoints_visible = None
         self.pose3d_keypoint_scores = None
         
+        self.image_size = np.array([1080, 1920]) # height x width. this will be overwritten based on the size of the received image
+        
         """
         self.synthesis = config["synthesis"]
         self.sender = config["sender"]
@@ -326,6 +329,12 @@ class MotionGui(QtWidgets.QWidget):
         self.motion_model.update()
         
         self.input_image = self.motion_model.results["image"]
+        
+        self.image_size[0] != self.input_image.shape[0]
+        self.image_size[1] != self.input_image.shape[1]
+        
+        #print("self.input_image s ", self.input_image.shape)
+        
         pose2d_results = self.motion_model.results["pose2d_results"]
         pose3d_results = self.motion_model.results["pose3d_results"]
         
@@ -365,7 +374,12 @@ class MotionGui(QtWidgets.QWidget):
                 keypoints = self.pose2d_keypoints[pI]
                 visibility = self.pose2d_keypoints_visible[pI]
                 
-                self.sender.send(f"/mocap/{pI}/joint/pos2d_world", keypoints)
+                #print("keypoints s ", keypoints.shape)
+                
+                keypoints_norm = keypoints / self.image_size[1]
+                
+                self.sender.send(f"/mocap/{pI}/joint/pos2d_world", keypoints_norm)
+                #self.sender.send(f"/mocap/{pI}/joint/pos2d_world", keypoints)
                 self.sender.send(f"/mocap/{pI}/joint/visibility", visibility)
 
         if self.pose3d_keypoints is not None:

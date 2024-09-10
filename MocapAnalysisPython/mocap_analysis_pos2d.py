@@ -29,29 +29,32 @@ Mocap Settings
 
 #mocap_joint_weights_path = "configs/joint_weights_xsens_fbx.json"
 #mocap_joint_weights_path = "configs/joint_weights_captury_fbx.json"
-mocap_joint_weights_path = "configs/joint_weights_zed34_fbx.json"
+#mocap_joint_weights_path = "configs/joint_weights_zed34_fbx.json"
 #mocap_joint_weights_path = "configs/joint_weights_qualisys_hands_bvh.json"
+mocap_joint_weights_path = "configs/joint_weights_coco.json"
 mocap_fps = 50
 
-# load weights 
-with open(mocap_joint_weights_path) as json_data:
-    mocap_joint_weights = json.load(json_data)["jointWeights"]
-mocap_joint_weights = np.array(mocap_joint_weights, dtype=np.float32)
-
-mocap_joint_count = len(mocap_joint_weights)
+# load joint weights 
+if mocap_joint_weights_path is None: # 
+    mocap_joint_count = 17 # COCO
+    mocap_joint_weights = [1] * mocap_joint_count
+else:
+    with open(mocap_joint_weights_path) as json_data:
+        mocap_joint_weights = json.load(json_data)["jointWeights"]
+    mocap_joint_weights = np.array(mocap_joint_weights, dtype=np.float32)
+    
+    mocap_joint_count = len(mocap_joint_weights)
 
 """
 OSC Receiver
 """
 
-input_pos_data = np.zeros((mocap_joint_count, 3), dtype=np.float32)
-input_rot_data = np.zeros((mocap_joint_count, 4), dtype=np.float32)
+input_pos_data = np.zeros((mocap_joint_count, 2), dtype=np.float32)
 
 motion_receiver.config["ip"] = "127.0.0.1"
-motion_receiver.config["port"] = 9007
-motion_receiver.config["data"] = [ input_pos_data, input_rot_data ]
-#motion_receiver.config["messages"] = ["/mocap/0/joint/pos_world", "/mocap/0/joint/rot_world"]
-motion_receiver.config["messages"] = ["/mocap/0/joint/pos_world"]
+motion_receiver.config["port"] = 9004
+motion_receiver.config["data"] = [ input_pos_data ]
+motion_receiver.config["messages"] = ["/mocap/0/joint/pos2d_world"]
 
 osc_receiver = motion_receiver.MotionReceiver(motion_receiver.config)
 

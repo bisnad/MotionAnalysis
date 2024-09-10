@@ -24,6 +24,7 @@ class MotionReceiver():
         self.motion_data = {}
         
         for message in self.messages:
+            
             self.dispatcher.map(message, self.receive)
             self.motion_data["message"] = None
             
@@ -41,7 +42,7 @@ class MotionReceiver():
         self.server.server_close()            
             
     def receive(self, address, *args):
-        
+
         values = np.array(args)
         data_index = self.messages.index(address)
         data_shape = self.data[data_index].shape

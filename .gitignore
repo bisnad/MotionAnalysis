@@ -80,3 +80,5 @@ PoseEstimation/ZED/ZED_Body_Export_FBX/build/Release/2024-8-4-14-29-2.fbx
 /MocapClassifier/.spyproject
 /MocapClassifier_Interactive/.spyproject
 /MocapClassifier/results
+/PoseEstimation/MMPose/.spyproject
+PoseEstimation/Yolo/yolov8x-pose.pt
