@@ -351,9 +351,19 @@ class MotionModel():
         self.call_args = config["call_args"]
 
         self.model = MMPoseInferencer(**self.init_args)
+        #self.generator = self.model(**self.call_args)
+        
+        self.generator = None
+
+    def start(self):
+        
         self.generator = self.model(**self.call_args)
         
     def update(self):
+        
+        if self.generator is None:
+            return
+        
         self.results = next(self.generator)
         
         #print("self.results ", self.results)

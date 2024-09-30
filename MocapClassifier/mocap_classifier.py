@@ -222,8 +222,7 @@ print("batch_y s ", batch_y.shape)
 """
 Create Model
 """
-
-# create model
+W
 class Classifier(nn.Module):
     def __init__(self, input_dim, hidden_dim, layer_count, class_count):
         super().__init__()
@@ -264,6 +263,10 @@ print("batch_yhat s ", batch_yhat.shape)
 if load_weights and load_weights_epoch > 0:
     classifier.load_state_dict(torch.load("results/weights/classifier_epoch_{}".format(load_weights_epoch)))
 
+"""
+Training
+"""
+
 class_loss = nn.NLLLoss()
 optimizer = optim.Adam(classifier.parameters(), lr=1e-3, weight_decay=0.0001)
 scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.5) # reduce the learning every 20 epochs by a factor of 10
@@ -271,8 +274,6 @@ scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.5) # redu
 data_mean = torch.tensor(data_mean, dtype=torch.float32).reshape(1, 1, -1).to(device)
 data_std = torch.tensor(data_std, dtype=torch.float32).reshape(1, 1, -1).to(device)
 
-
-# training
 def train_step(batch_x, batch_y):
     
     batch_x_norm = (batch_x - data_mean) / data_std 
@@ -375,6 +376,9 @@ def train(train_dataloader, test_dataloader, epochs):
 # fit model
 loss_history = train(trainloader, testloader, epochs)
 
+"""
+Save Training
+"""
 
 def save_loss_as_csv(loss_history, csv_file_name):
     with open(csv_file_name, 'w') as csv_file:
@@ -405,8 +409,8 @@ def save_loss_as_image(loss_history, image_file_name):
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
     plt.legend()
-    plt.show()
     plt.savefig(image_file_name)
+    plt.show()
     
 save_loss_as_csv(loss_history, "results/histories/history_{}.csv".format(epochs))
 save_loss_as_image(loss_history, "results/histories/history_{}.png".format(epochs))
@@ -421,4 +425,4 @@ batch_yhat = classifier(batch_x.to(device))
 _, pred_labels = torch.max(batch_yhat, 1)
 
 for i in range(batch_size):
-    print("image {} pred class {} true class {}".format(i, pred_labels[i], batch_y[i]))
+    print("motion {} pred class {} true class {}".format(i, pred_labels[i], batch_y[i]))

@@ -294,6 +294,9 @@ class MotionGui(QtWidgets.QWidget):
         self.setWindowTitle("Motion Capture")
     
     def start(self):
+        
+        self.motion_model.start()
+        
         self.pose_thread_event = Event()
         self.pose_thread = Thread(target = self.update)
         
@@ -311,16 +314,17 @@ class MotionGui(QtWidgets.QWidget):
             self.update_motion()
             self.update_display()
 
-            end_time = time.time()   
-            time_diff = end_time - start_time
-            time_fps = 1.0 / time_diff
-            self.q_fps_label.setText("fps {:10.2f}".format(time_fps))
             
             #print("update time ", end_time - start_time, " interval ", self.pose_thread_interval)
             
             self.update_osc()
             
-            next_update_interval = max(self.pose_thread_interval - (end_time - start_time), 0.0)
+            end_time = time.time()   
+            time_diff = end_time - start_time
+            time_fps = 1.0 / time_diff
+            self.q_fps_label.setText("fps {:10.2f}".format(time_fps))
+            
+            next_update_interval = max(self.pose_thread_interval - time_diff, 0.0)
             
             sleep(next_update_interval)
 

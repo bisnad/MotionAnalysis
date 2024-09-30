@@ -1,0 +1,61 @@
+mmpose pose3d performance measurements
+example command: python demo/inferencer_demo.py webcam --pose2d ipr_res50_8xb64-210e_coco-256x256 --pose3d video-pose-lift_tcn-1frm-supv-cpn-ft_8xb128-160e_h36m2
+
+
+python demo/premiere_mmpose.py "C:\Users\dbisig\Programming\machine-learning\pyTorch_Canonical\mmpose\demo\resources\Contemporary Duet _I Won't.mp4" --pose2d ipr_res50_8xb64-210e_coco-256x256 --pose3d image-pose-lift_tcn_8xb64-200e_h36m
+
+candidate checkpoints for pose2d: 
+
+ipr_res50_8xb64-210e_coco-256x256
+ipr_res50_dsnt-8xb64-210e_coco-256x256
+rtmpose-l_8xb256-420e_aic-coco-256x192
+rtmpose-l_8xb256-420e_aic-coco-384x288
+rtmpose-l_8xb256-420e_coco-256x192
+rtmpose-m_8xb256-420e_aic-coco-256x192
+rtmpose-m_8xb256-420e_aic-coco-384x288
+rtmpose-m_8xb256-420e_coco-256x192
+rtmpose-s_8xb256-420e_aic-coco-256x192
+simcc_res50_8xb32-140e_coco-384x288
+simcc_res50_8xb64-210e_coco-256x192
+simcc_vipnas-mbv3_8xb64-210e_coco-256x192
+
+location of configs
+mmpose/configs/body_3d_keypoint
+
+model configs in: image_pose_lift/h36m
+
+	config: image-pose-lift_tcn_8xb64-200e_h36m
+	fps: 29
+	quality: medium-
+
+model configs in: motionbert/h36m
+
+	config: motionbert_dstformer-243frm_8xb32-240e_h36m
+	fps: 40
+	quality: low 
+
+	config: motionbert_dstformer-ft-243frm_8xb32-120e_h36m
+	fps: 43
+	quality: low
+
+model configs in: video_pose_lift/h36m
+
+	config: video-pose-lift_tcn-1frm-supv-cpn-ft_8xb128-160e_h36m
+	fps: 35
+	quality: low
+
+	>> config: video-pose-lift_tcn-27frm-supv_8xb128-160e_h36m
+	fps: 34
+	quality: low
+
+	config: video-pose-lift_tcn-81frm-supv_8xb128-160e_h36m
+	fps: 35
+	quality: low
+
+	config: video-pose-lift_tcn-243frm-supv_8xb128-160e_h36m
+	fps: 35
+	quality: low
+
+	config: video-pose-lift_tcn-243frm-supv-cpn-ft_8xb128-200e_h36m
+	fps: 35
+	quality: low

@@ -1,0 +1,906 @@
+mmpose pose2d performance measurements
+example command: python demo/inferencer_demo.py webcam --pose2d simcc_mobilenetv2_wo-deconv-8xb64-210e_coco-256x192
+
+
+python demo/inferencer_demo.py webcam --pose2d simcc_mobilenetv2_wo-deconv-8xb64-210e_coco-256x192
+
+location of configs
+mmpose/configs/body_2d_keypoint
+
+model configs in: associative_embedding/coco
+
+	config: ae_hrnet-w32_8xb24-300e_coco-512x512
+	fps: 3
+	quality: medium
+
+model configs in: cid/coco
+
+	config: cid_hrnet-w32_8xb20-140e_coco-512x512
+	fps: 3
+	quality: low
+
+	config: cid_hrnet-w48_8xb20-140e_coco-512x512
+	fps: 6
+	quality: low
+
+model configs in: dekr/coco
+
+	config: dekr_hrnet-w32_8xb10-140e_coco-512x512
+	fps: 8
+	quality: low
+
+	config: dekr_hrnet-w48_8xb10-140e_coco-640x6402
+	fps: 5
+	quality: low
+
+model configs in: dekr/crowdpose
+
+	config: dekr_hrnet-w32_8xb10-300e_crowdpose-512x512
+	fps: 10
+	quality: very low
+
+	config: dekr_hrnet-w48_8xb5-300e_crowdpose-640x640
+	fps: 8
+	quality: low
+
+model configs in: edpose/coco
+
+	config: edpose_res50_8xb2-50e_coco-800x1333
+	fps: 5
+	quality: low
+
+model configs in: integral_regression/coco
+
+	>> config: ipr_res50_8xb64-210e_coco-256x256
+	fps: 66
+	quality: medium
+
+	>> config: ipr_res50_dsnt-8xb64-210e_coco-256x256
+	fps: 66
+	quality: medium
+
+model configs in: rtmo/body7
+
+	config: rtmo-l_16xb16-600e_body7-640x640
+	fps: 32
+	quality: medium
+
+	config: rtmo-m_16xb16-600e_body7-640x640
+	fps: 30
+	quality: medium
+
+	config: rtmo-s_8xb32-600e_body7-640x640
+	fps: 20
+	quality: low
+
+	config: rtmo-t_8xb32-600e_body7-416x416
+	fps: 20
+	quality: low
+
+model configs in: rtmo/coco
+
+	config: rtmo-l_16xb16-600e_coco-640x640
+	fps: 32
+	quality: medium
+
+	config: rtmo-m_16xb16-600e_coco-640x640
+	fps: 33
+	quality: medium
+
+	config: rtmo-s_8xb32-600e_coco-640x640
+	fps: 33
+	quality: low
+
+model configs in: rtmo/crowdpose
+
+	config: rtmo-l_16xb16-700e_body7-crowdpose-640x640
+	fps: 33
+	quality: low
+
+	config: rtmo-l_16xb16-700e_crowdpose-640x640
+	fps: 30
+	quality: low 
+
+	config: rtmo-s_8xb32-700e_crowdpose-640x640
+	fps: 30
+	quality: low
+
+model configs in: rtmpose/body8
+
+	config: rtmpose-l_8xb256-420e_body8-256x192
+	fps: 44
+	quality: medium
+
+	>> config: rtmpose-l_8xb256-420e_body8-384x288
+	fps: 38
+	quality: medium+
+	
+	>>> config: rtmpose-l_8xb512-700e_body8-halpe26-256x192
+	fps: 41
+	quality: good
+
+	config: rtmpose-l_8xb512-700e_body8-halpe26-384x288
+	fps: 41
+	quality: good
+
+	config: rtmpose-m_8xb256-420e_body8-256x192
+	fps: 48
+	quality: medium
+
+	config: rtmpose-m_8xb256-420e_body8-384x288
+	fps: 52
+	quality: medium+
+
+	config: rtmpose-m_8xb512-700e_body8-halpe26-256x192
+	fps: 54
+	quality: medium+
+
+	config: rtmpose-m_8xb512-700e_body8-halpe26-384x288
+	fps: 53
+	quality: medium+
+
+	config: rtmpose-s_8xb256-420e_body8-256x192
+	fps: 65
+	quality: low
+
+	config: rtmpose-s_8xb1024-700e_body8-halpe26-256x192
+	fps: 65
+	quality: low
+
+	config: rtmpose-t_8xb256-420e_body8-256x192
+	fps: 72
+	quality: low 
+
+	config: rtmpose-t_8xb1024-700e_body8-halpe26-256x192
+	fps: 72
+	quality: low  
+
+	config: rtmpose-x_8xb256-700e_body8-halpe26-384x288
+	fps: 32
+	quality: medium
+
+model configs in: rtmpose/coco
+
+	config: rtmpose-l_8xb256-420e_aic-coco-256x192
+	fps: 47
+	quality: medium
+
+	config: rtmpose-l_8xb256-420e_aic-coco-384x288
+	fps: 42
+	quality: medium
+
+	config: rtmpose-l_8xb256-420e_coco-256x192
+	fps: 45
+	quality: medium
+
+	config: rtmpose-m_8xb256-420e_aic-coco-256x192
+	fps: 54
+	quality: medium
+
+	config: rtmpose-m_8xb256-420e_aic-coco-384x288
+	fps: 54
+	quality: medium
+
+	config: rtmpose-m_8xb256-420e_coco-256x192
+	fps: 52
+	quality: medium
+
+	>> config: rtmpose-s_8xb256-420e_aic-coco-256x192
+	fps: 66
+	quality: medium
+
+	config: rtmpose-s_8xb256-420e_coco-256x192
+	fps: 66
+	quality: low
+
+	config: rtmpose-t_8xb256-420e_aic-coco-256x192
+	fps: 73
+	quality: low
+
+	config: rtmpose-t_8xb256-420e_coco-256x192
+	fps: 75
+	quality: low
+
+model configs in: rtmpose/humanart
+
+	config: rtmpose-l_8xb256-420e_humanart-256x192
+	fps: 43
+	quality: medium+
+
+	config: rtmpose-m_8xb256-420e_humanart-256x192
+	fps: 53
+	quality: medium
+
+	config: rtmpose-s_8xb256-420e_humanart-256x192
+	fps: 65
+	quality: low
+
+	config: rtmpose-t_8xb256-420e_humanart-256x192
+	fps: 73
+	quality: low
+
+model configs in: rtmpose/mpii
+
+	config: rtmpose-m_8xb64-210e_mpii-256x256
+	fps: 52
+	quality: medium
+
+model configs in: simcc/coco
+
+	config: simcc_mobilenetv2_wo-deconv-8xb64-210e_coco-256x192
+	fps: 65
+	quality: low
+
+	config: simcc_res50_8xb32-140e_coco-384x288
+	fps: 54
+	qualiy: medium
+
+	config: simcc_res50_8xb64-210e_coco-256x192
+	fps: 60
+	qualiy: medium
+
+	config: simcc_vipnas-mbv3_8xb64-210e_coco-256x192
+	fps: 37
+	qualiy: medium
+
+model configs in: topdown_heatmap/aic
+
+	config: td-hm_hrnet-w32_8xb64-210e_aic-256x192
+	fps: 14
+	qualiy: medium
+
+	config: td-hm_res101_8xb64-210e_aic-256x192
+	fps: 39
+	qualiy: medium+
+
+model configs in: topdown_heatmap/coco
+
+	config: cspnext-l_udp_8xb256-210e_coco-256x192
+	fps: 40
+	qualiy: medium
+
+	config: cspnext-m_udp_8xb256-210e_coco-256x192
+	fps: 48
+	qualiy: low
+
+	config: cspnext-s_udp_8xb256-210e_coco-256x192
+	fps: 59
+	qualiy: low
+
+	config: cspnext-tiny_udp_8xb256-210e_coco-256x192
+	fps: 64
+	qualiy: low
+
+	config: td-hm_2xmspn50_8xb32-210e_coco-256x192 
+	fps: 30
+	qualiy: medium-
+
+	config: td-hm_2xrsn50_8xb32-210e_coco-256x192
+	fps: 8
+	qualiy: low
+
+	config: td-hm_3xmspn50_8xb32-210e_coco-256x192
+	fps: 19
+	qualiy: medium- 
+
+	config: td-hm_3xrsn50_8xb32-210e_coco-256x192
+	fps: 6
+	qualiy: low
+
+	config: td-hm_4xmspn50_8xb32-210e_coco-256x192
+	fps: 14
+	qualiy: medium-
+
+	config: td-hm_alexnet_8xb64-210e_coco-256x192
+	fps: 210
+	qualiy: super low
+
+	config: td-hm_cpm_8xb32-210e_coco-384x288
+	fps: 19
+	qualiy: low
+
+	config: td-hm_cpm_8xb64-210e_coco-256x192
+	fps: 37
+	qualiy: medium-
+
+	config: td-hm_hourglass52_8xb32-210e_coco-256x256
+	fps: 46
+	qualiy: low
+
+	config: td-hm_hourglass52_8xb32-210e_coco-384x384
+	fps: 46
+	qualiy: low
+
+	config: td-hm_hrformer-base_8xb32-210e_coco-256x192
+	fps: 8
+	qualiy: medium-
+
+	config: td-hm_hrformer-base_8xb32-210e_coco-384x288
+	fps: 7
+	qualiy: medium-
+
+	config: td-hm_hrformer-small_8xb32-210e_coco-256x192
+	fps: 8
+	qualiy: medium-
+
+	config: td-hm_hrformer-small_8xb32-210e_coco-384x288
+	fps: 8
+	qualiy: low
+
+	config: td-hm_hrnet-w32_8xb64-210e_coco-256x192
+	fps: 12
+	qualiy: low
+
+	config: td-hm_hrnet-w32_8xb64-210e_coco-384x288
+	fps: 13
+	qualiy: medium-
+
+	config: td-hm_hrnet-w32_coarsedropout-8xb64-210e_coco-256x192
+	fps: 14
+	qualiy: medium
+
+	config: td-hm_hrnet-w32_dark-8xb64-210e_coco-256x192
+	fps: 13
+	qualiy: low
+
+	config: td-hm_hrnet-w32_dark-8xb64-210e_coco-384x288
+	fps: 13
+	qualiy: medium-
+
+	config: td-hm_hrnet-w32_fp16-8xb64-210e_coco-256x192
+	fps: 13
+	qualiy: medium-
+
+	config: td-hm_hrnet-w32_gridmask-8xb64-210e_coco-256x192
+	fps: 13
+	qualiy: medium-
+
+	config: td-hm_hrnet-w32_photometric-8xb64-210e_coco-256x192
+	fps: 13
+	qualiy: medium-
+
+	config: td-hm_hrnet-w32_udp-8xb64-210e_coco-256x192
+	fps: 13
+	qualiy: medium-
+
+	config: td-hm_hrnet-w32_udp-8xb64-210e_coco-384x288
+	fps: 13
+	qualiy: medium-
+
+	config: td-hm_hrnet-w32_udp-regress-8xb64-210e_coco-256x192
+	fps: 13
+	qualiy: very low
+
+	config: td-hm_hrnet-w48_8xb32-210e_coco-256x192
+	fps: 13
+	qualiy: medium-
+
+	config: td-hm_hrnet-w48_8xb32-210e_coco-384x288
+	fps: 12
+	qualiy: medium
+
+	config: td-hm_hrnet-w48_dark-8xb32-210e_coco-256x192
+	fps: 12
+	qualiy: medium
+
+	config: td-hm_hrnet-w48_dark-8xb32-210e_coco-384x288
+	fps: 12
+	qualiy: medium
+
+	config: td-hm_hrnet-w48_udp-8xb32-210e_coco-256x192
+	fps: 12
+	qualiy: medium
+
+	config: td-hm_hrnet-w48_udp-8xb32-210e_coco-384x288
+	fps: 12
+	qualiy: medium-
+
+	config: td-hm_litehrnet-18_8xb32-210e_coco-384x288
+	fps: 10
+	qualiy: low 
+
+	config: td-hm_litehrnet-18_8xb64-210e_coco-256x192
+	fps: 10
+	qualiy: low 
+
+	config: td-hm_litehrnet-30_8xb32-210e_coco-384x288
+	fps: 7
+	qualiy: low
+
+	config: td-hm_litehrnet-30_8xb64-210e_coco-256x192
+	fps: 7
+	qualiy: low
+
+	config: td-hm_mobilenetv2_8xb64-210e_coco-256x192
+	fps: 55
+	qualiy: low
+
+	config: td-hm_mobilenetv2_8xb64-210e_coco-384x288
+	fps: 52
+	qualiy: low
+
+	config: td-hm_mspn50_8xb32-210e_coco-256x192
+	fps: 44
+	qualiy: medium-
+
+	config: td-hm_pvt-s_8xb64-210e_coco-256x192
+	fps: 24
+	qualiy: medium-
+
+	config: td-hm_pvtv2-b2_8xb64-210e_coco-256x192
+	fps: 22
+	qualiy: medium
+
+	config: td-hm_res50_8xb64-210e_coco-256x192
+	fps: 56
+	qualiy: medium
+
+	config: td-hm_res50_8xb64-210e_coco-384x288
+	fps: 55
+	qualiy: medium-
+
+	config: td-hm_res50_dark-8xb64-210e_coco-256x192
+	fps: 50
+	qualiy: medium-
+
+	config: td-hm_res50_dark-8xb64-210e_coco-384x288
+	fps: 47
+	qualiy: medium-
+
+	config: td-hm_res50_fp16-8xb64-210e_coco-256x192
+	fps: 58
+	qualiy: medium-
+
+	config: td-hm_res101_8xb32-210e_coco-384x288
+	fps: 26
+	qualiy: medium-
+
+	config: td-hm_res101_8xb64-210e_coco-256x192
+	fps: 30
+	qualiy: medium-
+
+	config: td-hm_res101_dark-8xb64-210e_coco-256x192
+	fps: 20
+	qualiy: medium-
+
+	config: td-hm_res101_dark-8xb64-210e_coco-384x288
+	fps: 30
+	qualiy: medium-
+
+	config: td-hm_res152_8xb32-210e_coco-256x192
+	fps: 24
+	qualiy: medium-
+
+	config: td-hm_res152_8xb32-210e_coco-384x288
+	fps: 15
+	qualiy: medium
+
+	config: td-hm_res152_dark-8xb32-210e_coco-256x192
+	fps: 20
+	qualiy: medium
+
+	config: td-hm_res152_dark-8xb32-210e_coco-384x288
+	fps: 22
+	qualiy: medium
+
+	config: td-hm_resnest50_8xb64-210e_coco-256x192
+	fps: 31
+	qualiy: medium-
+
+	config: td-hm_resnest50_8xb64-210e_coco-384x288
+	fps: 29
+	qualiy: medium-
+
+	config: td-hm_resnest101_8xb32-210e_coco-384x288
+	fps: 13
+	qualiy: medium
+
+	config: td-hm_resnest101_8xb64-210e_coco-256x192
+	fps: 13
+	qualiy: medium
+
+	config: td-hm_resnest200_8xb16-210e_coco-384x288
+	fps: 8
+	qualiy: medium
+
+	config: td-hm_resnest200_8xb64-210e_coco-256x192
+	fps: 9
+	qualiy: medium
+
+	config: td-hm_resnest269_8xb16-210e_coco-384x288
+	fps: 8
+	qualiy: medium
+
+	config: td-hm_resnest269_8xb32-210e_coco-256x192
+	fps: 8
+	qualiy: medium
+
+	config: td-hm_resnetv1d50_8xb64-210e_coco-256x192
+	fps: 54
+	qualiy: medium-
+
+	config: td-hm_resnetv1d50_8xb64-210e_coco-384x288
+	fps: 54
+	qualiy: medium-
+
+	config: td-hm_resnetv1d101_8xb32-210e_coco-384x288
+	fps: 30
+	qualiy: medium-
+
+	config: td-hm_resnetv1d101_8xb64-210e_coco-256x192
+	fps: 32
+	qualiy: medium
+
+	config: td-hm_resnetv1d152_8xb32-210e_coco-256x192
+	fps: 20
+	qualiy: medium
+
+	config: td-hm_resnetv1d152_8xb48-210e_coco-384x288
+	fps: 22
+	qualiy: medium
+
+	config: td-hm_resnext50_8xb64-210e_coco-256x192
+	fps: 45
+	qualiy: medium-
+
+	config: td-hm_resnext50_8xb64-210e_coco-384x288
+	fps: 47
+	qualiy: low
+
+	config: td-hm_resnext101_8xb32-210e_coco-384x288
+	fps: 31
+	qualiy: medium-
+
+	config: td-hm_resnext101_8xb64-210e_coco-256x192
+	fps: 27
+	qualiy: medium-
+
+	config: td-hm_resnext152_8xb32-210e_coco-256x192
+	fps: 20
+	qualiy: medium-
+
+	config: td-hm_resnext152_8xb48-210e_coco-384x288
+	fps: 24
+	qualiy: medium-
+
+	config: td-hm_rsn18_8xb32-210e_coco-256x192
+	fps: 23
+	qualiy: low
+
+	config: td-hm_rsn50_8xb32-210e_coco-256x192
+	fps: 14
+	qualiy: low
+
+	config: td-hm_scnet50_8xb64-210e_coco-256x192
+	fps: 26
+	qualiy: low
+
+	config: td-hm_scnet101_8xb32-210e_coco-256x192
+	fps: 13
+	qualiy: medium-
+
+	config: td-hm_scnet101_8xb48-210e_coco-384x288
+	fps: 12
+	qualiy: medium-
+
+	config: td-hm_seresnet50_8xb64-210e_coco-256x192
+	fps: 36
+	qualiy: medium-
+
+	config: td-hm_seresnet50_8xb64-210e_coco-384x288
+	fps: 34
+	qualiy: medium-
+
+	config: td-hm_seresnet101_8xb32-210e_coco-384x288
+	fps: 20
+	qualiy: medium
+
+	config: td-hm_seresnet101_8xb64-210e_coco-256x192
+	fps: 23
+	qualiy: medium-
+
+	config: td-hm_seresnet152_8xb32-210e_coco-256x192
+	fps: 16
+	qualiy: medium-
+
+	config: td-hm_seresnet152_8xb48-210e_coco-384x288
+	fps: 15
+	qualiy: medium-
+
+	config: td-hm_shufflenetv1_8xb64-210e_coco-256x192
+	fps: 55
+	qualiy: very low
+
+	config: td-hm_shufflenetv1_8xb64-210e_coco-384x288
+	fps: 52
+	qualiy: very low
+
+	config: td-hm_shufflenetv2_8xb64-210e_coco-256x192
+	fps: 52
+	qualiy: very low
+
+	config: td-hm_shufflenetv2_8xb64-210e_coco-384x288
+	fps: 50
+	qualiy: very low
+
+	config: td-hm_swin-b-p4-w7_8xb32-210e_coco-256x192
+	fps: 14
+	qualiy: low+
+
+	config: td-hm_swin-b-p4-w7_8xb32-210e_coco-384x288
+	fps: 13
+	qualiy: medium-
+
+	config: td-hm_swin-l-p4-w7_8xb32-210e_coco-256x192
+	fps: 14
+	qualiy: medium
+
+	config: td-hm_swin-l-p4-w7_8xb32-210e_coco-384x288
+	fps: 12
+	qualiy: medium-
+
+	config: td-hm_swin-t-p4-w7_8xb32-210e_coco-256x192
+	fps: 23
+	qualiy: low
+
+	config: td-hm_vgg16-bn_8xb64-210e_coco-256x192
+	fps: 94
+	qualiy: low 
+
+	config: td-hm_vipnas-res50_8xb64-210e_coco-256x192
+	fps: 27
+	qualiy: low+
+
+model configs in: topdown_heatmap/crowdpose
+
+	config: cspnext-m_udp_8xb64-210e_crowpose-256x192
+	fps: 44
+	quality: low
+
+	config: td-hm_hrnet-w32_8xb64-210e_crowdpose-256x192
+	fps: 12
+	quality: low
+
+	config: td-hm_res50_8xb64-210e_crowdpose-256x192
+	fps: 54
+	quality: very low
+
+	config: td-hm_res101_8xb64-210e_crowdpose-256x192
+	fps: 30
+	quality: low
+
+	config: td-hm_res101_8xb64-210e_crowdpose-320x256
+	fps: 32
+	quality: low
+
+	config: td-hm_res152_8xb64-210e_crowdpose-256x192
+	fps: 23
+	quality: low
+
+model configs in: topdown_heatmap/exlpose
+
+	config: td-hm_hrnet-w32_8xb64-210e_exlpose-256x192
+	fps: 12
+	quality: abysimal
+
+model configs in: topdown_heatmap/humanart
+
+	config: td-hm_hrnet-w32_8xb64-210e_humanart-256x192
+	fps: 12
+	quality: good-
+
+	config: td-hm_hrnet-w48_8xb32-210e_humanart-256x192
+	fps: 12
+	quality: good-
+	
+model configs in: topdown_heatmap/jhmdb
+
+	config: td-hm_res50_8xb64-20e_jhmdb-sub1-256x256
+	fps: 60
+	quality: very low 
+
+	config: td-hm_res50_8xb64-20e_jhmdb-sub2-256x256
+	fps: 52
+	quality: very low
+
+	config: td-hm_res50_8xb64-20e_jhmdb-sub3-256x256
+	fps: 60
+	quality: very low
+
+model configs in: topdown_heatmap/mpii
+
+	config: cspnext-m_udp_8xb64-210e_mpii-256x256
+	fps: 76
+	quality: low
+
+	config: td-hm_cpm_8xb64-210e_mpii-368x368
+	fps: 18
+	quality: very low
+
+	config: td-hm_hourglass52_8xb32-210e_mpii-384x384
+	fps: 40
+	quality: very low
+
+	config: td-hm_hourglass52_8xb64-210e_mpii-256x256
+	fps: 40
+	quality: very low
+
+	config: td-hm_hrnet-w32_8xb64-210e_mpii-256x256
+	fps: 13
+	quality: low
+
+	config: td-hm_hrnet-w32_dark-8xb64-210e_mpii-256x256
+	fps: 11
+	quality: low
+
+	config: td-hm_hrnet-w48_8xb64-210e_mpii-256x256
+	fps: 13
+	quality: low+
+
+	config: td-hm_hrnet-w48_dark-8xb64-210e_mpii-256x256
+	fps: 10
+	quality: low 
+
+	config: td-hm_litehrnet-18_8xb64-210e_mpii-256x256
+	fps: 10
+	quality: very low 
+
+	config: td-hm_litehrnet-30_8xb64-210e_mpii-256x256
+	fps: 7
+	quality: very low
+
+	config: td-hm_mobilenetv2_8xb64-210e_mpii-256x256
+	fps: 57
+	quality: low
+
+	config: td-hm_res50_8xb64-210e_mpii-256x256
+	fps: 59
+	quality: low
+
+	config: td-hm_res101_8xb64-210e_mpii-256x256
+	fps: 35
+	quality: low
+
+	config: td-hm_res152_8xb32-210e_mpii-256x256
+	fps: 23
+	quality: low
+
+	config: td-hm_resnetv1d50_8xb64-210e_mpii-256x256
+	fps: 56
+	quality: low
+
+	config: td-hm_resnetv1d101_8xb64-210e_mpii-256x256
+	fps: 35
+	quality: low
+
+	config: td-hm_resnetv1d152_8xb64-210e_mpii-256x256
+	fps: 24
+	quality: low+
+
+	config: td-hm_resnext152_8xb32-210e_mpii-256x256
+	fps: 21
+	quality: low
+
+	config: td-hm_scnet50_8xb64-210e_mpii-256x256
+	fps: 27
+	quality: low
+
+	config: td-hm_scnet101_8xb64-210e_mpii-256x256
+	fps: 14
+	quality: low
+
+	config: td-hm_seresnet50_8xb64-210e_mpii-256x256
+	fps: 41
+	quality: low
+
+	config: td-hm_seresnet101_8xb64-210e_mpii-256x256
+	fps: 24
+	quality: low
+
+	config: td-hm_seresnet152_8xb32-210e_mpii-256x256
+	fps: 15
+	quality: low
+
+	config: td-hm_shufflenetv1_8xb64-210e_mpii-256x256
+	fps: 55
+	quality: very low
+
+	config: td-hm_shufflenetv2_8xb64-210e_mpii-256x256
+	fps: 48
+	quality: very low
+
+model configs in: topdown_heatmap/posetrack18
+
+	config: td-hm_hrnet-w32_8xb64-20e_posetrack18-256x192
+	fps: 12
+	quality: medium-
+
+	config: td-hm_hrnet-w32_8xb64-20e_posetrack18-384x288
+	fps: 12
+	quality: low
+
+	config: td-hm_hrnet-w48_8xb64-20e_posetrack18-256x192
+	fps: 12
+	quality: medium-
+
+	config: td-hm_hrnet-w48_8xb64-20e_posetrack18-384x288
+	fps: 12
+	quality: medium-
+
+	config: td-hm_res50_8xb64-20e_posetrack18-256x192
+	fps: 52
+	quality: low+
+
+model configs in: topdown_regression/coco
+
+	config: td-reg_mobilenetv2_rle-pretrained-8xb64-210e_coco-256x192
+	fps: 62
+	quality: very low
+
+	config: td-reg_res50_8xb64-210e_coco-256x192
+	fps: 66
+	quality: low
+
+	config: td-reg_res50_rle-8xb64-210e_coco-256x192
+	fps: 66
+	quality: low
+
+	config: td-reg_res50_rle-pretrained-8xb64-210e_coco-256x192
+	fps: 64
+	quality: low
+
+	config: td-reg_res101_8xb64-210e_coco-256x192
+	fps: 38
+	quality: low
+
+	config: td-reg_res101_rle-8xb64-210e_coco-256x192
+	fps: 33
+	quality: low
+
+	config: td-reg_res152_8xb64-210e_coco-256x192
+	fps: 23
+	quality: low
+
+	config: td-reg_res152_rle-8xb64-210e_coco-256x192
+	fps: 25
+	quality: low 
+
+	config: td-reg_res152_rle-8xb64-210e_coco-384x288
+	fps: 25
+	quality: low
+
+model configs in: topdown_regression/mpii
+
+	config: td-reg_res50_8xb64-210e_mpii-256x256
+	fps: 60
+	quality: low
+
+	config: td-reg_res50_rle-8xb64-210e_mpii-256x256
+	fps: 66
+	quality: very low
+
+	config: td-reg_res101_8xb64-210e_mpii-256x256
+	fps: 36
+	quality: low
+
+	config: td-reg_res152_8xb64-210e_mpii-256x256
+	fps: 26
+	quality: low
+
+model configs in: yoloxpose/coco
+
+	config: yoloxpose_l_8xb32-300e_coco-640
+	fps: 34
+	quality: low
+
+	config: yoloxpose_m_8xb32-300e_coco-640
+	fps: 37
+	quality: low
+
+	config: yoloxpose_s_8xb32-300e_coco-640
+	fps: 33
+	quality: low
+
+	config: yoloxpose_tiny_4xb64-300e_coco-416
+	fps: 29
+	quality: very low

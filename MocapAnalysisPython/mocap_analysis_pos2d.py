@@ -62,8 +62,10 @@ osc_receiver = motion_receiver.MotionReceiver(motion_receiver.config)
 OSC Sender
 """
 
-motion_sender.config["ip"] = "127.0.0.1"
-motion_sender.config["port"] = 9008
+#motion_sender.config["ip"] = "127.0.0.1"
+motion_sender.config["ip"] = "192.168.0.249"
+# motion_sender.config["port"] = 9008
+motion_sender.config["port"] = 10000
 
 osc_sender = motion_sender.OscSender(motion_sender.config)
 
@@ -72,6 +74,7 @@ Data Pipeline
 """
 
 pipeline = motion_pipeline.MotionPipeline(osc_receiver, mocap_joint_weights, 0.02)
+pipeline.posScale = 1.0
 
 """
 GUI
