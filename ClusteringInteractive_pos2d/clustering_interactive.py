@@ -40,6 +40,20 @@ import pickle
 Mocap Settings
 """
 
+
+mocap_file_path = "D:/Data/mocap/HannahMartin/pose2d"
+mocap_files = ["HannahMartin_ArrivalOfTheBirds.pkl"]
+mocap_sensor_id = "/mocap/0/joint/pos2d_world"
+mocap_joint_weight_file = "configs/joint_weights_halpe26_pkl.json"
+mocap_joint_connectivity_file = "configs/joint_connectivity_halpe26_pkl.json"
+mocap_joint_count = 26
+mocap_joint_dim = 2
+mocap_body_weight = 60
+mocap_seq_window_length = 48 # 8
+mocap_seq_window_overlap = 24 # 4
+
+
+"""
 mocap_file_path = "D:/Data/mocap/Isadora/pose2d"
 mocap_files = ["Isadora_time_1726157834.26688.pkl"]
 mocap_sensor_id = "/mocap/0/joint/pos2d_world"
@@ -50,6 +64,7 @@ mocap_joint_dim = 2
 mocap_body_weight = 60
 mocap_seq_window_length = 48 # 8
 mocap_seq_window_overlap = 24 # 4
+"""
 
 """
 Load Mocap Data
