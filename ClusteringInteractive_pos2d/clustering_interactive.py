@@ -21,6 +21,7 @@ from sklearn.cluster import DBSCAN
 import os, sys, time, subprocess
 import numpy as np
 import math
+import json
 
 from common import utils
 from common import bvh_tools as bvh
@@ -39,55 +40,14 @@ import pickle
 Mocap Settings
 """
 
-mocap_file_path = "C:/Users/dbisig/Projects/Premiere/Software_Git2/MotionUtilities/MocapRecorder/recordings"
-mocap_files = ["CCL_SaoPaulo_2024-09-10-16-27-19_pose2d.pkl"]
+mocap_file_path = "D:/Data/mocap/Isadora/pose2d"
+mocap_files = ["Isadora_time_1726157834.26688.pkl"]
 mocap_sensor_id = "/mocap/0/joint/pos2d_world"
+mocap_joint_weight_file = "configs/joint_weights_coco_pkl.json"
+mocap_joint_connectivity_file = "configs/joint_connectivity_coco_pkl.json"
 mocap_joint_count = 17
 mocap_joint_dim = 2
-
-mocap_joint_children = [
-    [1, 2],
-    [3],
-    [4],
-    [5],
-    [6],
-    [7, 11],
-    [8, 12],
-    [9],
-    [10],
-    [],
-    [],
-    [13],
-    [14],
-    [15],
-    [16],
-    [],
-    []
-    ]
-
-# joint weight percentages for COCO data
-mocap_joint_weight_percentages = [
-    2.28,
-    1.14,
-    1.14,
-    1.52,
-    1.52,
-    23.8,
-    23.8,
-    3,
-    1.8,
-    0.7,
-    3,
-    1.8,
-    0.7,
-    11.5,
-    5.4,
-    11.5,
-    5.4
-    ]
-
 mocap_body_weight = 60
-
 mocap_seq_window_length = 48 # 8
 mocap_seq_window_overlap = 24 # 4
 
@@ -95,6 +55,25 @@ mocap_seq_window_overlap = 24 # 4
 Load Mocap Data
 """
 
+# retrieve joint weight percentages
+
+with open(mocap_joint_weight_file) as fh:
+    mocap_joint_weight_percentages = json.load(fh)
+mocap_joint_weight_percentages = mocap_joint_weight_percentages["jointWeights"]
+
+# calc joint weights
+
+mocap_joint_weight_percentages = np.array(mocap_joint_weight_percentages)
+mocap_joint_weight_percentages_total = np.sum(mocap_joint_weight_percentages)
+joint_weights = mocap_joint_weight_percentages * mocap_body_weight / 100.0
+
+# retrieve joint connectivizy
+
+with open(mocap_joint_connectivity_file) as fh:
+    mocap_joint_children = json.load(fh)
+mocap_joint_children = mocap_joint_children["jointConnectivity"]
+
+# load mocap data
 
 all_mocap_data = []
 

@@ -21,6 +21,7 @@ from sklearn.cluster import DBSCAN
 import os, sys, time, subprocess
 import numpy as np
 import math
+import json
 
 from common import utils
 from common import bvh_tools as bvh
@@ -30,7 +31,6 @@ from common.quaternion import qmul, qrot, qnormalize_np, slerp, qfix
 #from common.quaternion_np import slerp
 from common.pose_renderer import PoseRenderer
 
-
 from matplotlib import pyplot as plt
 import numpy as np
 
@@ -38,77 +38,59 @@ import numpy as np
 Mocap Settings
 """
 
+"""
 mocap_file_path = "D:/data/mocap/stocos/Solos/Canal_14-08-2023/fbx_50hz"
 mocap_files = ["Muriel_Embodied_Machine_variation.fbx"]
-mocap_valid_frame_ranges = [ [ 200, 6400 ] ]
 mocap_pos_scale = 1.0
 mocap_fps = 50
-
-"""
-# joint weight percentages for XSens data (BVH) (without gloves)
-mocap_joint_weight_percentages = [
-    14.28, #Hips
-    10.7, #RightUpLeg
-    4.6, #RightLeg
-    1.28, #RightFoot
-    0.3184, #RightToeBase
-    0.0016, #RightToeBase_Nub
-    10.7, #LeftUpLeg
-    4.6, #LeftLeg
-    1.28, #LeftFoot
-    0.3184, #LeftToeBase
-    0.0016, #LeftToeBase_Nub
-    4.76, #Spine
-    5.236, #Spine1
-    5.236, #Spine2
-    5.712, #Spine3
-    6.188, #LeftShoulder
-    3, #LeftArm
-    1.8, #LeftForeArm
-    0.6993, #LeftHand
-    0.0007, #LeftHand_Nub
-    6.188, #RightShoulder
-    3, #RightArm
-    1.8, #LeftForeArm
-    0.6993, #RightHand
-    0.0007, #RightHand_Nub
-    2.28, #Neck
-    5.3124, #Head
-    0.0076, #Head_Nub
-    ]
-"""
-
-# joint weight percentages for XSens data (FBX) (without gloves)
-mocap_joint_weight_percentages = [
-    14.3, # Hips
-    10.7, # RightUpLeg
-    4.6, # RightLeg
-    1.3, # RightFoot
-    0.4, # RightToeBase
-    10.7, # LeftUpLeg
-    4.6, # LeftLeg
-    1.3, # LeftFoot
-    0.4, # LeftToeBase
-    4.8, # Spine
-    5.2, # Spine1
-    5.2, # Spine2
-    5.7, # Spine3
-    6.1, # LeftShoulder
-    3.0, # LeftArm
-    1.8, # LeftForeArm
-    0.7, # LeftHand
-    6.1, # RightShoulder
-    3.0, # RightArm
-    1.8, # RightForeArm
-    0.7, # RightHand
-    2.3, # Neck
-    5.3 # Head
-    ]
-
+mocap_joint_weight_file = "configs/joint_weights_xsens_fbx.json"
 mocap_body_weight = 60
-
 mocap_seq_window_length = 48 # 8
 mocap_seq_window_overlap = 24 # 4
+"""
+
+"""
+mocap_file_path = "D:/data/mocap/stocos/Solos/Canal_14-08-2023/bvh_50hz"
+mocap_files = ["Muriel_Embodied_Machine_variation.bvh"]
+mocap_pos_scale = 1.0
+mocap_fps = 50
+mocap_joint_weight_file = "configs/joint_weights_xsens_bvh.json"
+mocap_body_weight = 60
+mocap_seq_window_length = 48 # 8
+mocap_seq_window_overlap = 24 # 4
+"""
+
+"""
+mocap_file_path = "D:/Data/mocap/stocos/Solos/MovementQualities/fbx_50hz"
+mocap_files = ["polytopia_fullbody_take2.fbx"]
+mocap_pos_scale = 1.0
+mocap_fps = 50
+mocap_joint_weight_file = "configs/joint_weights_qualisys_fbx.json"
+mocap_body_weight = 60
+mocap_seq_window_length = 48 # 8
+mocap_seq_window_overlap = 24 # 4
+"""
+
+"""
+mocap_file_path = "D:/Data/mocap/stocos/Solos/MovementQualities/bvh_50hz"
+mocap_files = ["polytopia_fullbody_take2.bvh"]
+mocap_pos_scale = 1.0
+mocap_fps = 50
+mocap_joint_weight_file = "configs/joint_weights_qualisys_bvh.json"
+mocap_body_weight = 60
+mocap_seq_window_length = 48 # 8
+mocap_seq_window_overlap = 24 # 4
+"""
+
+mocap_file_path = "D:/Data/mocap/Daniel/Zed/fbx"
+mocap_files = ["daniel_zed_fluidity_rightarm.fbx"]
+mocap_pos_scale = 1.0
+mocap_fps = 50
+mocap_joint_weight_file = "configs/joint_weights_zed_body34_fbx.json"
+mocap_body_weight = 60
+mocap_seq_window_length = 48 # 8
+mocap_seq_window_overlap = 24 # 4
+
 
 """
 Load Mocap Data
@@ -157,6 +139,14 @@ pose_dim = joint_count * joint_dim
 offsets = mocap_data["skeleton"]["offsets"].astype(np.float32)
 parents = mocap_data["skeleton"]["parents"]
 children = mocap_data["skeleton"]["children"]
+
+# retrieve joint weight percentages
+
+with open(mocap_joint_weight_file) as fh:
+    mocap_joint_weight_percentages = json.load(fh)
+mocap_joint_weight_percentages = mocap_joint_weight_percentages["jointWeights"]
+
+# calc joint weights
 
 mocap_joint_weight_percentages = np.array(mocap_joint_weight_percentages)
 mocap_joint_weight_percentages_total = np.sum(mocap_joint_weight_percentages)
