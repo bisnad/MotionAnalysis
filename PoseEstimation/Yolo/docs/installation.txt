@@ -1,0 +1,17 @@
+Mac:
+
+conda create --name ultralytics python=3.8 -y
+conda activate ultralytics
+
+conda install -c pytorch -c conda-forge pytorch torchvision ultralytics
+pip install python-osc
+
+Windows:
+
+conda create --name ultralytics python=3.10 -y
+conda activate ultralytics
+
+conda install -c pytorch -c nvidia -c conda-forge pytorch torchvision pytorch-cuda=11.8 ultralytics
+pip install python-osc
+
+
