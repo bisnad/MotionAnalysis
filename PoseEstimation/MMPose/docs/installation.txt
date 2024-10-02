@@ -1,41 +1,26 @@
-Installation Instructions for Open MMPose / Windows 10
-
-conda create --name openmmlab python=3.8 -y
-conda activate openmmlab
-Mac: conda install pytorch==2.0.0 torchvision==0.15.0 torchaudio==2.0.0 pytorch-cuda=11.8 -c pytorch -c nvidia
-Windows: conda install pytorch==2.3.1 torchvision==0.18.1 torchaudio==2.3.1 pytorch-cuda=11.8 -c pytorch -c nvidia
-
-
-conda install spyder
-
-pip install -U openmim
-mim install mmengine
-
-in case this causes an error like: OMP: Error #15: Initializing libiomp5md.dll, but found libiomp5md.dll already initialized.
-
-	windows
-	set KMP_DUPLICATE_LIB_OK=True
-	linux
-	export KMP_DUPLICATE_LIB_OK=True
-
-	mim install mmengine
-
-mim install "mmcv>=2.0.1,<2.1.0"
-mim install "mmcv==2.0.1"
-
-
-mim install "mmdet>=3.1.0"
-
-
-
-mim install "mmpose>=1.1.0" --user
+Installation Instructions for MMPose (MacOS and Windows)
 
 Mac:
+
+conda create —name openmmlab python=3.8 -y
+conda activate openmmlab
+
+conda install pytorch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 -c pytorch
+conda install Spyder
+conda install pyqtgraph
+conda install pyopengl
+pip install python-osc
+
+pip install mmcv==2.1.0 -f https://download.openmmlab.com/mmcv/dist/cpu/torch2.1/index.html
+pip install "mmdet>=3.1.0"        
+pip install -U openmim            
+mim install "mmpose>=1.1.0"    
 
 Windows:
 
 conda create --name openmmlab python=3.8 -y
 conda activate openmmlab
+
 conda install pytorch==2.3.1 torchvision==0.18.1 torchaudio==2.3.1 pytorch-cuda=11.8 -c pytorch -c nvidia
 conda install spyder
 conda install pyqtgraph
@@ -47,4 +32,5 @@ mim install mmengine
 mim install "mmcv==2.1.0"
 mim install "mmdet>=3.1.0"
 mim install "mmpose>=1.1.0" --user
+
 
