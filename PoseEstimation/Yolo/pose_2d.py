@@ -4,6 +4,10 @@ import numpy as np
 
 import motion_sender
 
+#device="cpu"
+device="cuda"
+#defice="mps"
+
 motion_sender.config["ip"] = "127.0.0.1"
 motion_sender.config["port"] = 9004
 osc_sender = motion_sender.OscSender(motion_sender.config)
@@ -28,7 +32,7 @@ def on_predict_batch_end(predictor):
 
 
 # load a pretrained YOLOv8m model
-model = YOLO("yolov8x-pose.pt")
+model = YOLO("yolov8x-pose.pt").to(device)
 
 # Add the custom callback to the model
 model.add_callback("on_predict_batch_end", on_predict_batch_end)

@@ -16,6 +16,13 @@ pip install "mmdet>=3.1.0"
 pip install -U openmim            
 mim install "mmpose>=1.1.0"    
 
+Then edit file: ~/opt/anaconda3/envs/openmmlab/lib/python3.8/site-packages/mmcv/ops/nms.py
+Change line 127
+From: inds = NMSop.apply(boxes, scores, iou_threshold, offset, score_threshold,
+                       max_num)
+to: inds = NMSop.apply(boxes.to('cpu'), scores.to('cpu'), iou_threshold, offset, score_threshold,
+                       max_num)
+
 Windows:
 
 conda create --name openmmlab python=3.8 -y
