@@ -222,7 +222,7 @@ print("batch_y s ", batch_y.shape)
 """
 Create Model
 """
-W
+
 class Classifier(nn.Module):
     def __init__(self, input_dim, hidden_dim, layer_count, class_count):
         super().__init__()

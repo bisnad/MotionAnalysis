@@ -45,10 +45,11 @@ results = model.predict(source=im2, save=True, save_txt=True)  # save prediction
 #print("results ", results)
 """
 
+"""
 # Run inference from video
 source = "D:/Data/video/hannamartin/ArrivalOfTheBirds_HannahMartin.mp4"
 results = model(source=source, show=True, conf=0.3)
+"""
 
 # Run inference from webcam
-#results = model(source=0, show=True, conf=0.3, save=True)
-#results = model(source=0, show=True, conf=0.3)
+results = model(source=0, show=True, conf=0.3)
