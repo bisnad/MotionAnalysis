@@ -93,3 +93,6 @@ PoseEstimation/ZED/Incubatio_test.svo
 /MocapAnalysisExtendedNRT/common/__pycache__
 /MocapAnalysisExtendedNRT/results
 /NearestNeighbors/.spyproject
+/PoseEstimation/ZED_C++/body tracking_osc_v4.2/cpp/build/.vs
+/PoseEstimation/ZED_C++/body_tracking_multi-camera_osc_v4.2/cpp/build/.vs
+/PoseEstimation/ZED_C++/fbx_export_multi-camera_v4.2/cpp/build/.vs

@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\dbisig\Programming\testing\ZED\body tracking_osc_v4.2\cpp\src\GLViewer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\dbisig\Programming\testing\ZED\body tracking_osc_v4.2\cpp\src\TrackingViewer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\dbisig\Programming\testing\ZED\body tracking_osc_v4.2\cpp\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\oscpack\src\ip\IpEndpointName.cpp">
+      <Filter>libs\oscpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\oscpack\src\ip\win32\NetworkingUtils.cpp">
+      <Filter>libs\oscpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\oscpack\src\ip\win32\UdpSocket.cpp">
+      <Filter>libs\oscpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\oscpack\src\osc\OscOutboundPacketStream.cpp">
+      <Filter>libs\oscpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\oscpack\src\osc\OscPrintReceivedElements.cpp">
+      <Filter>libs\oscpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\oscpack\src\osc\OscReceivedElements.cpp">
+      <Filter>libs\oscpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\oscpack\src\osc\OscTypes.cpp">
+      <Filter>libs\oscpack</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\dbisig\Programming\testing\ZED\body tracking_osc_v4.2\cpp\include\GLViewer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\dbisig\Programming\testing\ZED\body tracking_osc_v4.2\cpp\include\TrackingViewer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\ip\IpEndpointName.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\ip\NetworkingUtils.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\ip\PacketListener.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\ip\TimerListener.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\ip\UdpSocket.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\osc\MessageMappingOscPacketListener.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\osc\OscException.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\osc\OscHostEndianness.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\osc\OscOutboundPacketStream.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\osc\OscPacketListener.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\osc\OscPrintReceivedElements.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\osc\OscReceivedElements.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\osc\OscTypes.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\dbisig\Programming\testing\ZED\body tracking_osc_v4.2\cpp\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{A00A8A08-AC05-3074-A361-AC2A5FA19DEF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{F8A789B4-E3D7-3399-9708-4C1B9EF9EC44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libs">
+      <UniqueIdentifier>{0befd87b-0db5-480b-bd1b-901abe659b26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libs\oscpack">
+      <UniqueIdentifier>{ccdf23b1-929b-4acb-862f-08e2c43330a2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

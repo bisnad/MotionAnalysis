@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\src\ClientPublisher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\src\GLViewer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\oscpack\src\ip\IpEndpointName.cpp">
+      <Filter>libs\oscpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\oscpack\src\ip\win32\NetworkingUtils.cpp">
+      <Filter>libs\oscpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\oscpack\src\ip\win32\UdpSocket.cpp">
+      <Filter>libs\oscpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\oscpack\src\osc\OscOutboundPacketStream.cpp">
+      <Filter>libs\oscpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\oscpack\src\osc\OscPrintReceivedElements.cpp">
+      <Filter>libs\oscpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\oscpack\src\osc\OscReceivedElements.cpp">
+      <Filter>libs\oscpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\oscpack\src\osc\OscTypes.cpp">
+      <Filter>libs\oscpack</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\include\ClientPublisher.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\include\GLViewer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\include\utils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\ip\IpEndpointName.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\ip\NetworkingUtils.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\ip\PacketListener.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\ip\TimerListener.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\ip\UdpSocket.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\osc\MessageMappingOscPacketListener.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\osc\OscException.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\osc\OscHostEndianness.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\osc\OscOutboundPacketStream.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\osc\OscPacketListener.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\osc\OscPrintReceivedElements.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\osc\OscReceivedElements.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\oscpack\src\osc\OscTypes.h">
+      <Filter>libs\oscpack</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{34E75D95-B253-33D4-AA03-A6C2C8CD2BE1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{20E416B8-78E1-36E3-8719-403F54216C5A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libs">
+      <UniqueIdentifier>{e48542f4-64e3-40d1-b864-eb3b407751cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libs\oscpack">
+      <UniqueIdentifier>{f827bf27-99eb-4244-9586-8d4f5a21cb98}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

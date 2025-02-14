@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\dbisig\Programming\testing\ZED\fbx_export_multi-camera_v4.2\cpp\build\CMakeFiles\f16dfaa4ad0fde216c3d39bed3d4330b\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{A204592B-09DE-3C76-BBBB-D9D8512FF2EF}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
