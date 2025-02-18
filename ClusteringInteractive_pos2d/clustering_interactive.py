@@ -40,31 +40,39 @@ import pickle
 Mocap Settings
 """
 
-
-mocap_file_path = "D:/Data/mocap/HannahMartin/pose2d"
-mocap_files = ["HannahMartin_ArrivalOfTheBirds.pkl"]
+# Example: MMPose 2D-Pose Estimation Recording
+mocap_file_path = "../../../Data/Mocap/Pose2D/HannahMartin/Solos/pkl"
+mocap_files = ["HannahMartin_Pos2D_Performance.pkl"]
 mocap_sensor_id = "/mocap/0/joint/pos2d_world"
 mocap_joint_weight_file = "configs/joint_weights_halpe26_pkl.json"
 mocap_joint_connectivity_file = "configs/joint_connectivity_halpe26_pkl.json"
 mocap_joint_count = 26
 mocap_joint_dim = 2
-mocap_body_weight = 60
-mocap_seq_window_length = 48 # 8
-mocap_seq_window_overlap = 24 # 4
 
+mocap_body_weight = 60
 
 """
-mocap_file_path = "D:/Data/mocap/Isadora/pose2d"
-mocap_files = ["Isadora_time_1726157834.26688.pkl"]
-mocap_sensor_id = "/mocap/0/joint/pos2d_world"
-mocap_joint_weight_file = "configs/joint_weights_coco_pkl.json"
-mocap_joint_connectivity_file = "configs/joint_connectivity_coco_pkl.json"
-mocap_joint_count = 17
-mocap_joint_dim = 2
-mocap_body_weight = 60
-mocap_seq_window_length = 48 # 8
-mocap_seq_window_overlap = 24 # 4
+Model Settings
 """
+
+cluster_count = 20
+cluster_random_state = 170
+sequence_length = 48 # 8
+sequence_overlap = 24 # 4
+
+"""
+OSC Settings
+"""
+
+osc_send_ip = "127.0.0.1"
+osc_send_port = 9004
+
+osc_receive_ip = "0.0.0.0"
+osc_receive_port = 9002
+
+
+
+
 
 """
 Load Mocap Data
@@ -161,15 +169,13 @@ mocap_features = {"qom": mocap_data["motion"]["qom"],
                   "time_effort": mocap_data["motion"]["time_effort"],
                   "flow_effort": mocap_data["motion"]["flow_effort"]}
 
-motion_model.config = {
-    "mocap_data": mocap_data["motion"]["pos_world"],
-    "features_data": mocap_features,
-    "mocap_window_length": mocap_seq_window_length,
-    "mocap_window_offset": mocap_seq_window_overlap,
-    "cluster_method": "kmeans",
-    "cluster_count": 20,
-    "cluster_random_state": 170
-    }
+motion_model.config["mocap_data"] = mocap_data["motion"]["pos_world"]
+motion_model.config["features_data"] = mocap_features
+motion_model.config["mocap_window_length"] = sequence_length
+motion_model.config["mocap_window_offset"] = sequence_overlap
+motion_model.config["cluster_method"] = "kmeans"
+motion_model.config["cluster_count"] = cluster_count
+motion_model.config["cluster_random_state"] = cluster_random_state
 
 clustering = motion_model.createModel(motion_model.config) 
 
@@ -177,12 +183,10 @@ clustering = motion_model.createModel(motion_model.config)
 Setup Motion Synthesis
 """
 
-
-motion_synthesis.config = {"skeleton": mocap_data["skeleton"],
-          "model": clustering,
-          "seq_window_length": mocap_seq_window_length,
-          "seq_window_overlap": mocap_seq_window_overlap
-          }
+motion_synthesis.config["skeleton"] = mocap_data["skeleton"]
+motion_synthesis.config["model"] = clustering
+motion_synthesis.config["seq_window_length"] = sequence_length
+motion_synthesis.config["seq_window_overlap"] = sequence_overlap
 
 synthesis = motion_synthesis.MotionSynthesis(motion_synthesis.config)
 
@@ -190,8 +194,8 @@ synthesis = motion_synthesis.MotionSynthesis(motion_synthesis.config)
 OSC Sender
 """
 
-motion_sender.config["ip"] = "127.0.0.1"
-motion_sender.config["port"] = 9004
+motion_sender.config["ip"] = osc_send_ip
+motion_sender.config["port"] = osc_send_port
 
 osc_sender = motion_sender.OscSender(motion_sender.config)
 
@@ -226,8 +230,8 @@ OSC Control
 motion_control.config["synthesis"] = synthesis
 motion_control.config["model"] = clustering
 motion_control.config["gui"] = gui
-motion_control.config["ip"] = "127.0.0.1"
-motion_control.config["port"] = 9002
+motion_control.config["ip"] = osc_receive_ip
+motion_control.config["port"] = osc_receive_port
 
 osc_control = motion_control.MotionControl(motion_control.config)
 

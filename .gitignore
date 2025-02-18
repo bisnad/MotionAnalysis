@@ -93,3 +93,25 @@ PoseEstimation/ZED/Incubatio_test.svo
 /MocapAnalysisExtendedNRT/common/__pycache__
 /MocapAnalysisExtendedNRT/results
 /NearestNeighbors/.spyproject
+/PoseEstimation/ZED_C++/body tracking_osc_v4.2/cpp/build/.vs
+/PoseEstimation/ZED_C++/body_tracking_multi-camera_osc_v4.2/cpp/build/.vs
+/PoseEstimation/ZED_C++/fbx_export_multi-camera_v4.2/cpp/build/.vs
+/PoseEstimation/ZED_C++/fbx_export_v4.x/cpp/build/.vs
+/PoseEstimation/ZED_C++/fbx_export_v4.x/cpp/build/.vs
+/PoseEstimation/ZED/ZED_MultiCam_Body_Tracking_OSC/cv_viewer/__pycache__
+/PoseEstimation/ZED/ZED_MultiCam_Body_Tracking_OSC/ogl_viewer/__pycache__
+/PoseEstimation/ZED_C++/body tracking_osc_v4.2/cpp/build/CMakeFiles
+/NearestNeighbors/common/__pycache__
+/PoseEstimation/ZED/ZED_MultiCam_Body_Tracking_OSC/__pycache__
+/PoseEstimation/ZED_C++/fbx_export_v4.x/cpp/build/ZED_Body_export_FBX.dir
+/PoseEstimation/ZED_C++/fbx_export_v4.x/cpp/build/x64/Release/ZERO_CHECK
+/PoseEstimation/ZED_C++/fbx_export_v4.x/cpp/build/CMakeFiles
+/PoseEstimation/ZED_C++/fbx_export_multi-camera_v4.2/cpp/build/ZED_BodyFusion.dir
+/PoseEstimation/ZED_C++/fbx_export_multi-camera_v4.2/cpp/build/x64/Release/ZERO_CHECK
+/PoseEstimation/ZED_C++/fbx_export_multi-camera_v4.2/cpp/build/CMakeFiles
+/PoseEstimation/ZED_C++/body_tracking_multi-camera_osc_v4.2/cpp/build/ZED_BodyFusion.dir
+/PoseEstimation/ZED/ZED_MultiCam_Body_Tracking_OSC/.spyproject
+/PoseEstimation/ZED_C++/body tracking_osc_v4.2/cpp/build/x64/Release/ZERO_CHECK
+/PoseEstimation/ZED_C++/body tracking_osc_v4.2/cpp/build/ZED_Body_Tracking_Viewer.dir
+/PoseEstimation/ZED_C++/body_tracking_multi-camera_osc_v4.2/cpp/build/CMakeFiles
+/PoseEstimation/ZED_C++/body_tracking_multi-camera_osc_v4.2/cpp/build/x64/Release/ZERO_CHECK

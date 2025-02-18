@@ -26,7 +26,7 @@ from PyQt5 import QtWidgets, QtCore
 from vispy import scene
 from vispy.app import use_app, Timer
 from vispy.scene import SceneCanvas, visuals
-
+import colorsys
 
 """
 Device
@@ -308,8 +308,9 @@ if __name__ == "__main__":
     #gui
     app = use_app("pyqt5")
     app.create()
-    
-    canvas = Canvas(((1.0, 0.0, 0.0, 1.0), (0.0, 1.0, 0.0, 1.0), (0.0, 0.0, 1.0, 1.0)), (400, 300))
+
+    bar_colors = [ colorsys.hsv_to_rgb(1.0 / class_count * cI, 1.0, 1.0) for cI in range(class_count) ]
+    canvas = Canvas(bar_colors, (400, 300))
     win = MainWindow(canvas)
     win.start_buttom.clicked.connect(sensor_receiver.start)
     win.stop_buttom.clicked.connect(sensor_receiver.stop)

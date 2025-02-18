@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\dbisig\Programming\testing\ZED\body tracking_osc_v4.2\cpp\build\CMakeFiles\dd1f3511f6efbe1a4912832ac1dd4ed9\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{7C5A3C0B-978B-3238-AB9C-7B27B3041181}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

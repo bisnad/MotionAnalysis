@@ -20,13 +20,19 @@ import json
 Mocap Settings
 """
 
-mocap_file_path = "D:/Data/mocap/stocos/Solos/MovementQualities/fbx_50hz"
+# Example: Qualisys Mocap Recording
+mocap_file_path = "../../../Data/Mocap/Qualisys/Stocos/Solos/fbx_50hz"
 mocap_files = ["polytopia_fullbody_take2.fbx"]
 mocap_valid_frame_ranges = [ [ 200, 6400 ] ]
 mocap_pos_scale = 1.0
 mocap_fps = 50
 mocap_joint_weight_file = "configs/joint_weights_qualisys_fbx.json"
+
 mocap_body_weight = 60
+
+"""
+Analysis Settings
+"""
 
 mocap_excerpt_length = 80 # 80
 mocap_excerpt_offset = 40 # 40

@@ -27,21 +27,7 @@ class MotionControl():
         
         self.dispatcher.map("/synth/clusterlabel", self.setClusterLabel)
         self.dispatcher.map("/synth/motionfeature", self.selectMotionFeature)
-        
-        
-        """
-        self.dispatcher.map("/mocap/frameindex1", self.setFrameIndex1)
-        self.dispatcher.map("/mocap/frameindex2", self.setFrameIndex2)
-        
-        self.dispatcher.map("/mocap/framerange1", self.setFrameRange1)
-        self.dispatcher.map("/mocap/framerange2", self.setFrameRange2)
-        
-        self.dispatcher.map("/mocap/frameincr1", self.setFrameIncrement1)
-        self.dispatcher.map("/mocap/frameincr2", self.setFrameIncrement2)        
-        
-        self.dispatcher.map("/synth/encodingmixfactor", self.setEncodingMixFactor)
-        self.dispatcher.map("/synth/encodingoffset", self.setEncodingOffset)    
-        """
+
     
         self.server = osc_server.ThreadingOSCUDPServer((self.ip, self.port), self.dispatcher)
                 

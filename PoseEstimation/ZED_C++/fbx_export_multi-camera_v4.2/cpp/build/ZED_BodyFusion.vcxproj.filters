@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\dbisig\Programming\testing\ZED\fbx_export_multi-camera_v4.2\cpp\src\ClientPublisher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\dbisig\Programming\testing\ZED\fbx_export_multi-camera_v4.2\cpp\src\GLViewer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\dbisig\Programming\testing\ZED\fbx_export_multi-camera_v4.2\cpp\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AnimationUtility.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Common.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GeometryUtility.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\dbisig\Programming\testing\ZED\fbx_export_multi-camera_v4.2\cpp\include\ClientPublisher.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\dbisig\Programming\testing\ZED\fbx_export_multi-camera_v4.2\cpp\include\GLViewer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\dbisig\Programming\testing\ZED\fbx_export_multi-camera_v4.2\cpp\include\utils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\fbx_export_v4.2\cpp\include\AnimationUtility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\fbx_export_v4.2\cpp\include\Common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\fbx_export_v4.2\cpp\include\GeometryUtility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\dbisig\Programming\testing\ZED\fbx_export_multi-camera_v4.2\cpp\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{94C47783-3074-3EF5-86CF-E88541BA041E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{903C77FB-EB59-3FB1-AA50-ABF4BFC3CD2C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

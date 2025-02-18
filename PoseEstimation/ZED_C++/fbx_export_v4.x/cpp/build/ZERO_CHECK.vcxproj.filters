@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\dbisig\Programming\testing\ZED\fbx_export_v4.x\cpp\build\CMakeFiles\0d1230b3d6fd528301f825c503494278\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{4950F578-F70B-3A75-B6E8-4DF79CC30B2C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
