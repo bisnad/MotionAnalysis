@@ -920,14 +920,14 @@ ofApp::setupOsc() throw (dab::Exception)
 		mDataMessenger->createSender("MocapProcSender", mOscSendAddress, mOscSendPort);
 
 		mDataMessenger->createDataSender(mJointPosData, "/mocap/0/joint/pos_world", "MocapProcSender");
-		mDataMessenger->createDataSender(mJointPosGlobalToLocalProc->data()[0], "/mocap/0/joint/locpos", "MocapProcSender");
+		mDataMessenger->createDataSender(mJointPosGlobalToLocalProc->data()[0], "/mocap/0/joint/pos_local", "MocapProcSender");
 		mDataMessenger->createDataSender(mJointVelocityProc->data()[0], "/mocap/0/joint/velocity", "MocapProcSender");
 		mDataMessenger->createDataSender(mJointAccelerationProc->data()[0], "/mocap/0/joint/acceleration", "MocapProcSender");
 		mDataMessenger->createDataSender(mJointJerkProc->data()[0], "/mocap/0/joint/jerk", "MocapProcSender");
-		mDataMessenger->createDataSender(mWeightEffortCombineProc->data()[0], "/mocap/0/joint/weight_effort", "MocapProcSender");
-		mDataMessenger->createDataSender(mTimeEffortCombineProc->data()[0], "/mocap/0/joint/time_effort", "MocapProcSender");
-		mDataMessenger->createDataSender(mFlowEffortCombineProc->data()[0], "/mocap/0/joint/flow_effort", "MocapProcSender");
-		mDataMessenger->createDataSender(mSpaceEffortCombineProc->data()[0], "/mocap/0/joint/space_effort", "MocapProcSender");
+		mDataMessenger->createDataSender(mWeightEffortCombineProc->data()[0], "/mocap/0/bodypart/weight_effort", "MocapProcSender");
+		mDataMessenger->createDataSender(mTimeEffortCombineProc->data()[0], "/mocap/0/bodypart/time_effort", "MocapProcSender");
+		mDataMessenger->createDataSender(mFlowEffortCombineProc->data()[0], "/mocap/0/bodypart/flow_effort", "MocapProcSender");
+		mDataMessenger->createDataSender(mSpaceEffortCombineProc->data()[0], "/mocap/0/bodypart/space_effort", "MocapProcSender");
 		mDataMessenger->createDataSender(mJointRotData, "/mocap/0/joint/rot_world", "MocapProcSender");
 
 		// additional senders for quaternion derivatives for debug reasons
@@ -935,18 +935,18 @@ ofApp::setupOsc() throw (dab::Exception)
 		mDataMessenger->createDataSender(mJointRotQuatAccelerationProc->data()[0], "/mocap/0/joint/rot_acceleration_quat", "MocapProcSender");
 		mDataMessenger->createDataSender(mJointRotQuatJerkProc->data()[0], "/mocap/0/joint/rot_jerk_quat", "MocapProcSender");
 		
-		mDataMessenger->createDataSender(mJointRotGlobalToLocalProc->data()[0], "/mocap/0/joint/locrot_quat", "MocapProcSender");
+		mDataMessenger->createDataSender(mJointRotGlobalToLocalProc->data()[0], "/mocap/0/joint/rot_local", "MocapProcSender");
 		//mDataMessenger->createDataSender(mJointLocRotInputProc->data()[0], "/mocap/joint/locrot_quat", "MocapProcSender");
 		//mDataMessenger->createDataSender(mJointLocRotData, "/mocap/joint/locrot_quat", "MocapProcSender");
 
-		mDataMessenger->createDataSender(mJointRotQuatEulerProc->data()[0], "/mocap/0/joint/rot", "MocapProcSender");
+		mDataMessenger->createDataSender(mJointRotQuatEulerProc->data()[0], "/mocap/0/joint/rot_euler", "MocapProcSender");
 		mDataMessenger->createDataSender(mJointRotQuatVelocityEulerProc->data()[0], "/mocap/0/joint/rot_velocity", "MocapProcSender");
 		mDataMessenger->createDataSender(mJointRotQuatAccelerationEulerProc->data()[0], "/mocap/0/joint/rot_acceleration", "MocapProcSender");
 		mDataMessenger->createDataSender(mJointRotQuatJerkEulerProc->data()[0], "/mocap/0/joint/rot_jerk", "MocapProcSender");
-		mDataMessenger->createDataSender(mRotWeightEffortCombineProc->data()[0], "/mocap/0/joint/rot_weight_effort", "MocapProcSender");
-		mDataMessenger->createDataSender(mRotTimeEffortCombineProc->data()[0], "/mocap/0/joint/rot_time_effort", "MocapProcSender");
-		mDataMessenger->createDataSender(mRotFlowEffortCombineProc->data()[0], "/mocap/0/joint/rot_flow_effort", "MocapProcSender");
-		mDataMessenger->createDataSender(mRotSpaceEffortCombineProc->data()[0], "/mocap/0/joint/rot_space_effort", "MocapProcSender");
+		mDataMessenger->createDataSender(mRotWeightEffortCombineProc->data()[0], "/mocap/0/bodypart/rot_weight_effort", "MocapProcSender");
+		mDataMessenger->createDataSender(mRotTimeEffortCombineProc->data()[0], "/mocap/0/bodypart/rot_time_effort", "MocapProcSender");
+		mDataMessenger->createDataSender(mRotFlowEffortCombineProc->data()[0], "/mocap/0/bodypart/rot_flow_effort", "MocapProcSender");
+		mDataMessenger->createDataSender(mRotSpaceEffortCombineProc->data()[0], "/mocap/0/bodypart/rot_space_effort", "MocapProcSender");
 
 		mDataMessenger->setDataSenderActive(mJointPosData, false);
 		mDataMessenger->setDataSenderActive(mJointPosGlobalToLocalProc->data()[0], false);
