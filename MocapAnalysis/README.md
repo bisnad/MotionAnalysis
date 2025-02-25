@@ -77,4 +77,4 @@ The following OSC messages can be chosen to be sent by the tool:
 
 ### Limitations and Bugs
 
-- The player only supports motion capture recordings that contain a single person.
+- The tool only supports motion capture recordings that contain a single person.
