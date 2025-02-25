@@ -49,7 +49,15 @@ mocap_fps = 50
 mocap_joint_weight_file = "configs/joint_weights_xsens_fbx.json"
 ```
 
-In this code, the string `"data/mocap/"` assigned to the variable  `mocap_file_path`  need to be replaced with the path to the root directory that contains the mocap file(s). The string `"Muriel_Take1.fbx"` between square brackets that is assigned to the variable `mocap_files` can be replaced by a single or multiple strings representing the names of the mocap file(s) to be loaded. The float value `1.0` that is assigned to the variable `mocap_pos_scale` represents a scaling factor for joint positions. This factor can be changed if the unit representing joint positions is not "cm". The integer value `50` that is assigned to the variable `mocap_fps` can be changed to match the "frames per seconds" of the recording. The string `"configs/joint_weights_xsens_fbx.json"` that is assigned to the variable `mocap_joint_weight_file` points to a configuration file that specifies the body part weights associated with skeleton joints. This string should point to the configuration file that matches the skeleton topology of the recording. Configurations have been prepared for the following mocap systems and recording formats: 
+The string value assigned to the variable  `mocap_file_path`  needs to be replaced with the path to the root directory that contains the mocap file(s).
+
+The list of string values assigned  to the variable  `mocap_files` need to be replaced by a single or multiple strings, each one representing the name of a mocap file to be loaded. 
+
+The float value assigned to the variable `mocap_pos_scale` represents a scaling factor for joint positions. This factor can be changed if the unit representing joint positions is not "cm". 
+
+The integer value assigned to the variable `mocap_fps` can be changed to match the "frames per seconds" of the recording. 
+
+The string value assigned to the variable `mocap_joint_weight_file` points to a configuration file that specifies the body part weights associated with skeleton joints. This configuration file should match the skeleton topology of the recording. Configuration files have been prepared for the following mocap systems and recording formats: 
 
 - configs/joint_weights_captury_bvh.json : [Captury](https://captury.com/) Mocap Recording without hand tracking, BVH Format
 - configs/joint_weights_captury_fbx.json : [Captury](https://captury.com/) Mocap Recording without hand tracking, FBX Format
