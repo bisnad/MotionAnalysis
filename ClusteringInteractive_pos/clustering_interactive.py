@@ -41,8 +41,8 @@ Mocap Settings
 """
 
 # Example: MMPose 2D-Pose Estimation Recording
-mocap_file_path = "../../../Data/Mocap/Pose2D/HannahMartin/Solos/pkl"
-mocap_files = ["HannahMartin_Pos2D_Performance.pkl"]
+mocap_file_path = "data/mocap"
+mocap_files = ["HannahMartin_ArrivalOfTheBirds_Pos2D.pkl"]
 mocap_sensor_id = "/mocap/0/joint/pos2d_world"
 mocap_joint_weight_file = "configs/joint_weights_halpe26_pkl.json"
 mocap_joint_connectivity_file = "configs/joint_connectivity_halpe26_pkl.json"
