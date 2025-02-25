@@ -38,33 +38,34 @@ import numpy as np
 Mocap Settings
 """
 
-# important: the skeleton needs to be identical in all mocap recordings
-
-"""
-# Example: ZED Mocap Recording
-mocap_file_path = "../../../Data/Mocap/Zed/Daniel/Solos/fbx_30hz/"
-mocap_files = ["daniel_zed_fluidity_rightarm.fbx"]
-mocap_pos_scale = 1.0
-mocap_fps = 50
-mocap_joint_weight_file = "configs/joint_weights_zed_body34_fbx.json"
-"""
+# important: the skeleton needs to be identical in all mocap recordings that are loaded simultaneously
 
 # Example: XSens Mocap Recording
-mocap_file_path = "../../../Data/Mocap/XSens/Stocos/Solos/fbx_50hz"
-mocap_files = ["Muriel_Embodied_Machine_variation.fbx"]
+mocap_file_path = "data/mocap"
+mocap_files = ["Muriel_Take1.fbx"]
 mocap_pos_scale = 1.0
 mocap_fps = 50
 mocap_joint_weight_file = "configs/joint_weights_xsens_fbx.json"
 
 """
 # Example: Qualisys Mocap Recording
-mocap_file_path = "../../../Data/Mocap/Qualisys/Stocos/Solos/fbx_50hz"
-mocap_files = ["polytopia_fullbody_take2.fbx"]
+mocap_file_path = "../../AIToolbox/Data/Mocap/Stocos/Solos/MovementQualities_Qualisys/fbx"
+mocap_files = ["polytopia_fullbody_take1.fbx"]
 mocap_pos_scale = 1.0
 mocap_fps = 50
 mocap_joint_weight_file = "configs/joint_weights_qualisys_fbx.json"
 """
 
+"""
+# Example: XSens Mocap Recording
+mocap_file_path = "../../AIToolbox/Data/Mocap/Stocos/Duets/Amsterdam_2024_XSens/fbx"
+mocap_files = ["Sherise_Take3.fbx"]
+mocap_pos_scale = 1.0
+mocap_fps = 50
+mocap_joint_weight_file = "configs/joint_weights_xsens_fbx.json"
+"""
+
+# total body weight (in kg)
 mocap_body_weight = 60
 
 """

@@ -136,8 +136,8 @@ class MotionGui(QtWidgets.QWidget):
         
     def update_osc(self):
         
-        self.sender.send("/mocap/joint/pos_world", self.synth_pose_wpos)
-        self.sender.send("/mocap/joint/rot_world", self.synth_pose_wrot)
+        self.sender.send("/mocap/0/joint/pos_world", self.synth_pose_wpos)
+        self.sender.send("/mocap/0/joint/rot_world", self.synth_pose_wrot)
 
     def update_seq_plot(self):
         
