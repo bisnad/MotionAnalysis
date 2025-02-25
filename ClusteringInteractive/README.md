@@ -81,8 +81,11 @@ sequence_overlap = 24
 ```
 
 The integer value assigned to the variable `cluster_count` specifies the number of clusters to be created for each chosen motion descriptor.
+
 The integer value assigned to the variable `cluster_random_state` specifies the initial seed for the K-Means clustering algorithm.
+
 The integer value assigned to the variable `sequence_length` specifies the number of frames and therefore the duration of each motion segment. 
+
 The integer value assigned to `sequence_overlap` specified the number of frames successive motion segments are overlapped and interpolated between.
 
 ##### Motion Descriptor Settings
