@@ -102,23 +102,41 @@ mocap_features = {"qom": mocap_data["motion"]["qom"],
 The variable `mocap_features` is a python dictionary that groups together the name and values of the motion descriptors that are used for clustering. The following name-value-pairs are available:
 
 `"pos_world_m": mocap_data["motion"]["pos_world_m"]` : 3D joint positions in world coordinates and meters
+
 `"pos_world_smooth": mocap_data["motion"]["pos_world_smooth"]` : smoothed 3D joint positions
+
 `"pos_scalar": mocap_data["motion"]["pos_scalar"]` : scalar joint positions as distances from root joint (typically the center of the hip)
+
 `"vel_world": mocap_data["motion"]["vel_world"]` : 3D joint velocities in meters / second
+
 `"vel_world_smooth": mocap_data["motion"]["vel_world_smooth"]` : smoothed  3D joint velocities
+
 `"vel_world_smooth": mocap_data["motion"]["vel_world_scalar"]` : scalar joint speeds
+
 `"vel_world_smooth": mocap_data["motion"]["accel_world"]` : 3D joint accelerations in meters / second^2
+
 `"accel_world_smooth": mocap_data["motion"]["accel_world_smooth"]` : smoothed  3D joint accelerations
+
 `"accel_world_scalar": mocap_data["motion"]["accel_world_scalar"]` : scalar joint accelerations
+
 `"jerk_world": mocap_data["motion"]["jerk_world"]` : 3D joint jerks in meters / second^3
+
 `"jerk_world_smooth": mocap_data["motion"]["jerk_world_smooth"]` : smoothed 3D joint jerks
+
 `"jerk_world_scalar": mocap_data["motion"]["jerk_world_scalar"]` : scalar joint jerks
+
 `"qom": mocap_data["motion"]["qom"]` : quantity of motion of all joints combined in kg * meters / seconds
+
 `"bbox": mocap_data["motion"]["bbox"]` : minimum and maximum 3D corner position of bounding box of all joints combined in meters
+
 `"bsphere": mocap_data["motion"]["bsphere"]` : 3D center position and radius of bounding sphere of all joints combined in meters
+
 `"weight_effort": mocap_data["motion"]["weight_effort"]` : scalar Laban Weight Effort of all joints combined
+
 `"space_effort": mocap_data["motion"]["space_effort"]` : scalar Laban Space Effort of all joints combined
+
 `"time_effort": mocap_data["motion"]["time_effort"]` : scalar Laban Time Effort of all joints combined
+
 `"flow_effort": mocap_data["motion"]["flow_effort"]` : scalar Laban Flow Effort of all joints combined
 
 ### Graphical User Interface
@@ -143,6 +161,7 @@ osc_send_port = 9004
 ```
 
 The string assigned to the variable `osc_send_ip` represents the IP address of the computer to which the tool sends OSC messages. 
+
 The integer assigned to the variable `osc_send_port` represents the port of the computer to which the tool sends OSC messages. 
 
 The software can be remote controlled by sending OSC messages to it. By default, the software receives OSC messages on port 9002. To change this port, the following source code in the file clustering_interactive.py has to be modified:
@@ -153,6 +172,7 @@ osc_receive_port = 9002
 ```
 
 The string assigned to the variable `osc_receive_ip` represents the IP address of the computer that sends OSC messages to the tool. 
+
 The string assigned to the variable `osc_receive_port` represents the port on which the tool is listening to incoming OSC messages.
 
 An example Max patch demonstrates the use of the remote control functionality. The following OSC messages can be used to remote control the software. 
