@@ -369,7 +369,7 @@ class MotionGui(QtWidgets.QWidget):
 
     def update_osc(self):
         
-        if self.pose2d_keypoints is not None:
+        if self.pose2d_keypoints is not None and self.pose3d_keypoints is None:
             
             pose_count = self.pose2d_keypoints.shape[0]
             
@@ -382,8 +382,8 @@ class MotionGui(QtWidgets.QWidget):
                 
                 keypoints_norm = keypoints / self.image_size[1]
                 
-                self.sender.send(f"/mocap/{pI}/joint/pos2d_world", keypoints_norm)
-                #self.sender.send(f"/mocap/{pI}/joint/pos2d_world", keypoints)
+                #self.sender.send(f"/mocap/{pI}/joint/pos2d_world", keypoints_norm)
+                self.sender.send(f"/mocap/{pI}/joint/pos_world", keypoints_norm)
                 self.sender.send(f"/mocap/{pI}/joint/visibility", visibility)
 
         if self.pose3d_keypoints is not None:
@@ -395,7 +395,8 @@ class MotionGui(QtWidgets.QWidget):
                 keypoints = self.pose3d_keypoints[pI]
                 scores = self.pose3d_keypoint_scores[pI]
                 
-                self.sender.send(f"/mocap/{pI}/joint/pos3d_world", keypoints)
+                #self.sender.send(f"/mocap/{pI}/joint/pos3d_world", keypoints)
+                self.sender.send(f"/mocap/{pI}/joint/pos_world", keypoints)
                 self.sender.send(f"/mocap/{pI}/joint/scores", scores)
     
     """

@@ -9,7 +9,7 @@ device="cuda"
 #defice="mps"
 
 motion_sender.config["ip"] = "127.0.0.1"
-motion_sender.config["port"] = 9004
+motion_sender.config["port"] = 9007
 osc_sender = motion_sender.OscSender(motion_sender.config)
 
 def on_predict_batch_end(predictor):
@@ -28,7 +28,7 @@ def on_predict_batch_end(predictor):
 
     for skel_index in range(keypoints_np.shape[0]):
 
-        osc_sender.send("/mocap/skel{}/joint/pos2d_world".format(skel_index), keypoints_np[skel_index])
+        osc_sender.send("/mocap/{}/joint/pos_world".format(skel_index), keypoints_np[skel_index])
 
 
 # load a pretrained YOLOv8m model

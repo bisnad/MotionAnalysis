@@ -5,7 +5,7 @@ setlocal EnableDelayedExpansion
 set ANACONDA_PATH=%USERPROFILE%\Anaconda3
 
 :: Set the name of your Conda environment
-set CONDA_ENV=mmpose
+set CONDA_ENV=openmmlab
 
 :: Activate the Conda environment
 call %ANACONDA_PATH%\Scripts\activate.bat %CONDA_ENV%

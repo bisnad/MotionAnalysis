@@ -43,6 +43,8 @@ class MotionReceiver():
             
     def receive(self, address, *args):
 
+        #print("receive address ", address)
+
         values = np.array(args)
         data_index = self.messages.index(address)
         data_shape = self.data[data_index].shape

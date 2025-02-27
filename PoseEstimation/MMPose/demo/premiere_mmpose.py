@@ -241,7 +241,7 @@ OSC Sender
 """
 
 motion_sender.config["ip"] = "127.0.0.1"
-motion_sender.config["port"] = 9004
+motion_sender.config["port"] = 9007
 
 osc_sender = motion_sender.OscSender(motion_sender.config)
 
