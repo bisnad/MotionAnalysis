@@ -214,15 +214,15 @@ class MotionGui(QtWidgets.QWidget):
         
  
         # send items
-        self.sendItems = {"position_scaled": False,
-                          "position_smooth": False,
+        self.sendItems = {"pos_scaled": False,
+                          "pos_smooth": False,
                           "velocity": False,
                           "velocity_smooth": False,
                           "acceleration": False,
                           "acceleration_smooth": False,
                           "jerk": False,
                           "jerk_smooth": False,
-                          "position_scalar": False,
+                          "pos_scalar": False,
                           "velocity_scalar": False,
                           "acceleration_scalar": False,
                           "jerk_scalar": False,
@@ -269,9 +269,7 @@ class MotionGui(QtWidgets.QWidget):
         
         self.sender_ip = sender_ip
         self.sender_port = sender_port
-        
-        print("sender_ip ", self.sender_ip)
-        
+  
         self.q_sender_ip = []
         for i in range(4):
             _w = QtWidgets.QSpinBox(self)
@@ -279,6 +277,7 @@ class MotionGui(QtWidgets.QWidget):
             _w.setMaximum(255)
             _w.setValue(self.sender_ip[i])
             _w.valueChanged.connect(lambda:self.change_sender_ip(_w))  
+
             self.q_sender_ip.append(_w)
         self.q_sender_port = QtWidgets.QSpinBox(self)
         self.q_sender_port.setMinimum(0)
@@ -293,7 +292,6 @@ class MotionGui(QtWidgets.QWidget):
         self.q_sender_grid.addWidget(self.q_sender_ip[2],0,3)
         self.q_sender_grid.addWidget(self.q_sender_ip[3],0,4)
         self.q_sender_grid.addWidget(self.q_sender_port,0,5)
-        
         
         self.q_grid = QtWidgets.QGridLayout()
         #self.q_grid.addWidget(self.pose_canvas,0,0)
@@ -353,63 +351,63 @@ class MotionGui(QtWidgets.QWidget):
 
     def update_osc(self):
         
-        if self.sendItems["position_scaled"] == True:
+        if self.sendItems["pos_scaled"] == True:
             osc_values = np.reshape(self.pipeline.posScaled, (-1)).tolist()
-            self.sender.send("/mocap/joint/position_scaled", osc_values)
-        if self.sendItems["position_smooth"] == True:
+            self.sender.send("/mocap/0/joint/pos_world", osc_values)
+        if self.sendItems["pos_smooth"] == True:
             osc_values = np.reshape(self.pipeline.posSmooth, (-1)).tolist()
-            self.sender.send("/mocap/joint/position_smooth", osc_values) 
+            self.sender.send("/mocap/0/joint/pos_smooth", osc_values) 
         if self.sendItems["velocity"] == True:
             osc_values = np.reshape(self.pipeline.vel, (-1)).tolist()
-            self.sender.send("/mocap/joint/velocity", osc_values) 
+            self.sender.send("/mocap/0/joint/velocity", osc_values) 
         if self.sendItems["velocity_smooth"] == True:
             osc_values = np.reshape(self.pipeline.velSmooth, (-1)).tolist()
-            self.sender.send("/mocap/joint/velocity_smooth", osc_values) 
+            self.sender.send("/mocap/0/joint/velocity_smooth", osc_values) 
         if self.sendItems["acceleration"] == True:
             osc_values = np.reshape(self.pipeline.accel, (-1)).tolist()
-            self.sender.send("/mocap/joint/accel", osc_values)             
+            self.sender.send("/mocap/0/joint/accel", osc_values)             
         if self.sendItems["acceleration_smooth"] == True:
             osc_values = np.reshape(self.pipeline.accelSmooth, (-1)).tolist()
-            self.sender.send("/mocap/joint/acceleration_smooth", osc_values)    
+            self.sender.send("/mocap/0/joint/acceleration_smooth", osc_values)    
         if self.sendItems["jerk"] == True:
             osc_values = np.reshape(self.pipeline.jerk, (-1)).tolist()
-            self.sender.send("/mocap/joint/jerk", osc_values)    
+            self.sender.send("/mocap/0/joint/jerk", osc_values)    
         if self.sendItems["jerk_smooth"] == True:
             osc_values = np.reshape(self.pipeline.jerkSmooth, (-1)).tolist()
-            self.sender.send("/mocap/joint/jerk_smooth", osc_values)   
-        if self.sendItems["position_scalar"] == True:
+            self.sender.send("/mocap/0/joint/jerk_smooth", osc_values)   
+        if self.sendItems["pos_scalar"] == True:
             osc_values = np.reshape(self.pipeline.pos_scalar, (-1)).tolist()
-            self.sender.send("/mocap/joint/position_scalar", osc_values)   
+            self.sender.send("/mocap/0/joint/position_scalar", osc_values)   
         if self.sendItems["velocity_scalar"] == True:
             osc_values = np.reshape(self.pipeline.vel_scalar, (-1)).tolist()
-            self.sender.send("/mocap/joint/velocity_scalar", osc_values)   
+            self.sender.send("/mocap/0/joint/velocity_scalar", osc_values)   
         if self.sendItems["acceleration_scalar"] == True:
             osc_values = np.reshape(self.pipeline.accel_scalar, (-1)).tolist()
-            self.sender.send("/mocap/joint/acceleration_scalar", osc_values)              
+            self.sender.send("/mocap/0/joint/acceleration_scalar", osc_values)              
         if self.sendItems["jerk_scalar"] == True:
             osc_values = np.reshape(self.pipeline.jerk_scalar, (-1)).tolist()
-            self.sender.send("/mocap/joint/jerk_scalar", osc_values)      
+            self.sender.send("/mocap/0/joint/jerk_scalar", osc_values)      
         if self.sendItems["qom"] == True:
             osc_values = np.reshape(self.pipeline.qom, (-1)).tolist()
-            self.sender.send("/mocap/qom", osc_values)
+            self.sender.send("/mocap/0/qom", osc_values)
         if self.sendItems["bbox"] == True:
             osc_values = np.reshape(self.pipeline.bbox, (-1)).tolist()
-            self.sender.send("/mocap/bbox", osc_values)
+            self.sender.send("/mocap/0/bbox", osc_values)
         if self.sendItems["bsphere"] == True:
             osc_values = np.reshape(self.pipeline.bsphere, (-1)).tolist()
-            self.sender.send("/mocap/bsphere", osc_values)
+            self.sender.send("/mocap/0/bsphere", osc_values)
         if self.sendItems["flow_effort"] == True:
             osc_values = np.reshape(self.pipeline.flow_effort, (-1)).tolist()
-            self.sender.send("/mocap/flow_effort", osc_values)
+            self.sender.send("/mocap/0/flow_effort", osc_values)
         if self.sendItems["time_effort"] == True:
             osc_values = np.reshape(self.pipeline.time_effort, (-1)).tolist()
-            self.sender.send("/mocap/time_effort", osc_values)
+            self.sender.send("/mocap/0/time_effort", osc_values)
         if self.sendItems["weight_effort"] == True:
             osc_values = np.reshape(self.pipeline.weight_effort, (-1)).tolist()
-            self.sender.send("/mocap/weight_effort", osc_values)
+            self.sender.send("/mocap/0/weight_effort", osc_values)
         if self.sendItems["space_effort"] == True:
             osc_values = np.reshape(self.pipeline.space_effort, (-1)).tolist()
-            self.sender.send("/mocap/space_effort", osc_values)
+            self.sender.send("/mocap/0/space_effort", osc_values)
 
     def update_view(self):
         
@@ -517,14 +515,16 @@ class MotionGui(QtWidgets.QWidget):
 
     def change_sender_ip(self, widget):
         
-        if widget == self.q_sender_ip[0]:
-            self.sender_ip[0] = widget.value()
-        elif widget == self.q_osc_ip[1]:
-            self.sender_ip[1] = widget.value()
-        elif widget == self.q_osc_ip[2]:
-            self.sender_ip[2] = widget.value()
+        sender_widget = super().sender()
+
+        if sender_widget == self.q_sender_ip[0]:
+            self.sender_ip[0] = sender_widget.value()
+        elif sender_widget == self.q_sender_ip[1]:
+            self.sender_ip[1] = sender_widget.value()
+        elif sender_widget == self.q_sender_ip[2]:
+            self.sender_ip[2] = sender_widget.value()
         else:
-            self.sender_ip[3] = widget.value()
+            self.sender_ip[3] = sender_widget.value()
             
         sender_active = self.sender.get_active()
         sender_ip = "{}.{}.{}.{}".format(self.sender_ip[0], self.sender_ip[1], self.sender_ip[2], self.sender_ip[3])
@@ -554,42 +554,3 @@ class MotionGui(QtWidgets.QWidget):
         if sender_active == True:
             self.sender.set_active(True)
             
-    # def update_pred_seq(self):
-        
-    #     self.synthesis.update()       
-    #     self.synth_pose_wpos = self.synthesis.synth_pose_wpos
-    #     self.synth_pose_wrot = self.synthesis.synth_pose_wrot
-        
-    # def update_osc(self):
-        
-    #     # convert from left handed bvh coordinate system to right handed standard coordinate system
-    #     self.synth_pose_wpos_rh = np.copy(self.synth_pose_wpos)
-
-    #     self.synth_pose_wpos_rh[:, 0] = self.synth_pose_wpos[:, 0] / 100.0
-    #     self.synth_pose_wpos_rh[:, 1] = -self.synth_pose_wpos[:, 2] / 100.0
-    #     self.synth_pose_wpos_rh[:, 2] = self.synth_pose_wpos[:, 1] / 100.0
-
-    #     self.synth_pose_wrot_rh = np.copy(self.synth_pose_wrot)
-        
-    #     self.synth_pose_wrot_rh[:, 1] = self.synth_pose_wrot[:, 1]
-    #     self.synth_pose_wrot_rh[:, 2] = -self.synth_pose_wrot[:, 3]
-    #     self.synth_pose_wrot_rh[:, 3] = self.synth_pose_wrot[:, 2]
-
-        
-    #     self.sender.send("/mocap/joint/pos_world", self.synth_pose_wpos_rh)
-    #     self.sender.send("/mocap/joint/rot_world", self.synth_pose_wrot_rh)
-
-    # def update_seq_plot(self):
-        
-    #     pose = self.synth_pose_wpos
-
-    #     points_data = pose
-    #     lines_data = pose[np.array(self.edges).flatten()]
-        
-    #     self.pose_canvas_lines.setData(pos=lines_data, mode="lines", color=(1.0, 1.0, 1.0, 0.5), width=self.view_line_width)
-    #     #self.pose_canvas_lines.setData(pos=lines_data, mode="lines", color=(0.0, 0.0, 0.0, 1.0), width=self.view_line_width)
-    #     #self.pose_canvas_points.setData(pos=pose, color=(1.0, 1.0, 1.0, 1.0))
-
-    #     #self.pose_canvas.show()
-        
-    #     #print(self.pose_canvas.cameraParams())

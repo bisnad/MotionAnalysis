@@ -10,17 +10,17 @@ This tool is a Python-based software for extracting motion segments from a motio
 
 ### Installation
 
-The software runs in the *premiere* anaconda environment. For this reason, this environment has to be setup beforehand.  Instructions how to setup the *premiere* environment are available as part of the [installation documentation ](https://github.com/bisnad/AIToolbox/tree/main/Installers) in the [AI Toolbox github repository](https://github.com/bisnad/AIToolbox). 
+The tool runs in the *premiere* anaconda environment. For this reason, this environment has to be setup beforehand.  Instructions how to setup the *premiere* environment are available as part of the [installation documentation ](https://github.com/bisnad/AIToolbox/tree/main/Installers) in the [AI Toolbox github repository](https://github.com/bisnad/AIToolbox). 
 
-The software can be downloaded by cloning the [MotionAnalysis Github repository](https://github.com/bisnad/MotionAnalysis). After cloning, the software is located in the MotionAnalysis / ClusteringInteractive directory.
+The tool can be downloaded by cloning the [MotionAnalysis Github repository](https://github.com/bisnad/MotionAnalysis). After cloning, the tool is located in the MotionAnalysis / ClusteringInteractive directory.
 
 ### Directory Structure
 
-ClusteringInteractive (contains software specific python scripts)
+ClusteringInteractive (contains tool specific python scripts)
 
 - common (contains python scripts for handling mocap data)
 - configs (contains estimates of body part weights for different skeleton representations)
-- controls (contains a MaxMSP patch to remote control the software)
+- controls (contains a MaxMSP patch to remote control the tool)
 - data 
   - media (contains media used in this Readme)
   - mocap (contains an example mocap recording)
@@ -29,7 +29,7 @@ ClusteringInteractive (contains software specific python scripts)
 
 #### Start
 
-The software can be started either by double clicking the clustering_interactive.bat (Windows) or clustering_interactive.sh (MacOS) shell scripts or by typing the following commands into the Anaconda terminal:
+The tool can be started either by double clicking the clustering_interactive.bat (Windows) or clustering_interactive.sh (MacOS) shell scripts or by typing the following commands into the Anaconda terminal:
 
 ```
 conda activate premiere
@@ -39,7 +39,7 @@ python clustering_interactive.py
 
 #### Default Mocap File
 
-When the software starts, it automatically reads an example motion capture file that is located in the ClusteringInteractive/data/mocap folder. An alternative  mocap file can be read when the software starts. To read a different mocap file during software startup, the following source code in the file clustering_interactive.py has to be modified:
+When the tool starts, it automatically reads an example motion capture file that is located in the ClusteringInteractive/data/mocap folder. An alternative  mocap file can be read when the tool starts. To read a different mocap file during tool startup, the following source code in the file clustering_interactive.py has to be modified:
 
 ```
 mocap_file_path = "data/mocap"
@@ -69,7 +69,7 @@ The string value assigned to the variable `mocap_joint_weight_file` points to a 
 
 #### Functionality
 
-This tool reads a chosen motion capture recording and splits it into a number of motion segments whose duration and overlap can be specified by the user. The segments are subsequently analysed and the following motion descriptors are extracted: 3D joint positions, scalar joint distance to root joint, 3D joint velocity, scalar joint speed, 3D joint acceleration, scalar joint acceleration, 3D joint jerk, scalar joint jerk, quantity of motion, bounding box, bounding sphere, and the four [Laban Effort Factors](https://en.wikipedia.org/wiki/Laban_movement_analysis): Laban Weight Effort, Laban Space Effort, Laban Time Effort, Laban Flow Effort. The user can chose any number of motion descriptors as basis for clustering as well as the number of clusters that should be created for each motion descriptor.  Clustering is based on the [K-Means method](https://en.wikipedia.org/wiki/K-means_clustering). This method is applied for each selected motion descriptor separately. Once clustering has been completed, the software plays the motion segments in a single cluster and displays them as an animation of a simple stick figure representation. The motion segments are played back in the sequence of their occurrence in the original motion capture recording and with a smooth interpolation between overlaps. Those settings that take effect when the software starts need to be configured in the source code. These settings are the corresponding code sections are described below.
+This tool reads a chosen motion capture recording and splits it into a number of motion segments whose duration and overlap can be specified by the user. The segments are subsequently analysed and the following motion descriptors are extracted: 3D joint positions, scalar joint distance to root joint, 3D joint velocity, scalar joint speed, 3D joint acceleration, scalar joint acceleration, 3D joint jerk, scalar joint jerk, quantity of motion, bounding box, bounding sphere, and the four [Laban Effort Factors](https://en.wikipedia.org/wiki/Laban_movement_analysis): Laban Weight Effort, Laban Space Effort, Laban Time Effort, Laban Flow Effort. The user can chose any number of motion descriptors as basis for clustering as well as the number of clusters that should be created for each motion descriptor.  Clustering is based on the [K-Means method](https://en.wikipedia.org/wiki/K-means_clustering). This method is applied for each selected motion descriptor separately. Once clustering has been completed, the tool plays the motion segments in a single cluster and displays them as an animation of a simple stick figure representation. The motion segments are played back in the sequence of their occurrence in the original motion capture recording and with a smooth interpolation between overlaps. Those settings that take effect when the tool starts need to be configured in the source code. These settings are the corresponding code sections are described below.
 
 ##### Mocap Settings
 
@@ -119,9 +119,9 @@ The variable `mocap_features` is a python dictionary that groups together the na
 
 `"vel_world_smooth": mocap_data["motion"]["vel_world_smooth"]` : smoothed  3D joint velocities
 
-`"vel_world_smooth": mocap_data["motion"]["vel_world_scalar"]` : scalar joint speeds
+`"vel_world_scalar": mocap_data["motion"]["vel_world_scalar"]` : scalar joint speeds
 
-`"vel_world_smooth": mocap_data["motion"]["accel_world"]` : 3D joint accelerations in meters / second^2
+`"accel_world": mocap_data["motion"]["accel_world"]` : 3D joint accelerations in meters / second^2
 
 `"accel_world_smooth": mocap_data["motion"]["accel_world_smooth"]` : smoothed  3D joint accelerations
 
@@ -149,19 +149,19 @@ The variable `mocap_features` is a python dictionary that groups together the na
 
 ### Graphical User Interface
 
-The software provides a minimal GUI  for starting and stopping the skeleton animation playback.
+The tool provides a minimal GUI  for starting and stopping the skeleton animation playback.
 
 ### OSC Communication
 
-The software sends the following OSC messages representing the joint positions and rotations of the currently displayed motion capture figure.
+The tool sends the following OSC messages representing the joint positions and rotations of the currently displayed motion capture figure.
 Each message contains all the joint positions and rotations grouped together. In the OSC messages described below, N represents the number of joints.
 
-The following OSC messages are sent by the software:
+The following OSC messages are sent by the tool:
 
 - joint positions as list of 3D vectors in world coordinates: `/mocap/0/joint/pos_world <float j1x> <float j1y> <float j1z> .... <float jNx> <float jNy> <float jNz>` 
 - joint rotations as list of Quaternions in world coordinates: `/mocap/0/joint/rot_world <float j1w> <float j1x> <float j1y> <float j1z> .... <float jNw> <float jNx> <float jNy> <float jNz>` 
 
-By default, the software sends its OSC messages to the local IP address and to port 9004. To change this port, the following source code in the file clustering_interactive.py has to be modified:
+By default, the tool sends its OSC messages to the local IP address and to port 9004. To change this port, the following source code in the file clustering_interactive.py has to be modified:
 
 ```
 osc_send_ip = "127.0.0.1"
@@ -172,7 +172,7 @@ The string assigned to the variable `osc_send_ip` represents the IP address of t
 
 The integer assigned to the variable `osc_send_port` represents the port of the computer to which the tool sends OSC messages. 
 
-The software can be remote controlled by sending OSC messages to it. By default, the software receives OSC messages on port 9002. To change this port, the following source code in the file clustering_interactive.py has to be modified:
+The tool can be remote controlled by sending OSC messages to it. By default, the tool receives OSC messages on port 9002. To change this port, the following source code in the file clustering_interactive.py has to be modified:
 
 ```
 osc_receive_ip = "0.0.0.0"
@@ -183,7 +183,7 @@ The string assigned to the variable `osc_receive_ip` represents the IP address o
 
 The string assigned to the variable `osc_receive_port` represents the port on which the tool is listening to incoming OSC messages.
 
-An example Max patch demonstrates the use of the remote control functionality. The following OSC messages can be used to remote control the software. 
+An example Max patch demonstrates the use of the remote control functionality. The following OSC messages can be used to remote control the tool. 
 
 - select a motion descriptor for clustering: `/synth/motionfeature <string name_of_motion_descriptor>`
 - select a cluster for playback: `/synth/clusterlabel <int cluster_index>`
