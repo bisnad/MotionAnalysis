@@ -39,15 +39,15 @@ print('Using {} device'.format(device))
 Data
 """
 
-data_norm_path = "../MocapClassifier/results/data/"
+data_path = "../../AIToolbox/Data/Models/MotionAnalysis/MocapClassifier/results_Stococs_Solos_MovementQualities_IMU"
 data_sensor_ids = ["/accelerometer", "/gyroscope"]
 data_sensor_dims = [3, 3]
 data_window_length = 60
 
 # load sensor dara mean and std
-with open(data_norm_path + "mean.pkl", 'rb') as f:
+with open(data_path + "/data/mean.pkl", 'rb') as f:
     data_mean = pickle.load(f)
-with open(data_norm_path + "std.pkl", 'rb') as f:
+with open(data_path + "/data/std.pkl", 'rb') as f:
     data_std = pickle.load(f)  
     
 """
@@ -58,7 +58,15 @@ input_dim = sum(data_sensor_dims)
 hidden_dim = 32
 layer_count = 3
 class_count = 3
-model_weights_file = "../MocapClassifier/results/weights/classifier_weights_epoch_100.pth"
+
+"""
+Training settings
+"""
+
+load_weights_epoch = 100
+
+model_weights_file = "{}/weights/classifier_weights_epoch_{}.pth".format(data_path, load_weights_epoch)
+
 
 """
 Create Model

@@ -262,7 +262,7 @@ batch_yhat = classifier(batch_x)
 print("batch_yhat s ", batch_yhat.shape)
 
 if load_weights and load_weights_epoch > 0:
-    classifier.load_state_dict(torch.load("results/weights/classifier_epoch_{}".format(load_weights_epoch)))
+    classifier.load_state_dict(torch.load("results/weights/classifier_epoch_{}.pth".format(load_weights_epoch)))
 
 """
 Training

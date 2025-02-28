@@ -1,32 +1,25 @@
-# AI-Toolbox - Motion Analysis - Mocap Classifier
+# AI-Toolbox - Motion Analysis - Mocap Classifier Interactive
 
 ![image-20250228163843296](data/media/MocapClassifier_screenshot.JPG)
 
-Figure 1. Screenshot of the MocapClassifier after training concluded. The window on the left shows the console output of the learning progress. The window depicts the learning progress as graph plot. 
+Figure 1. Screenshot of the MocapClassifier Interactive. The color bars in the graph represent the result of a classification that is conducted in real-time on incoming motion capture data. Each class is represented by a different color and the height of the bar is proportional to the class probability.
 
 ## Summary
 
-This Python-based tool implements a simple machine learning model that can be trained to classify short motion capture sequences. This tool is used exclusively for training the machine learning model. There exists a second tool named [Mocap Classifier Interactive](https://github.com/bisnad/MotionAnalysis/tree/main/MocapClassifier_Interactive) for using the trained model.  This second tool runs in real-time and is suitable for live performance scenarios. 
+This Python-based tool implements a simple machine learning model that has been trained to classify short motion capture sequences. This tool is meant to be used in live performance scenarios. It uses an already trained model and runs it in real-time to classify motion capture data that is incoming as [OSC](https://en.wikipedia.org/wiki/Open_Sound_Control) messages. The classification results are then sent by the tool as [OSC](https://en.wikipedia.org/wiki/Open_Sound_Control) messages to any other application. There exists a second tool named [Mocap Classifier](https://github.com/bisnad/MotionAnalysis/tree/main/MocapClassifier) that can be used for training models. This second tool is used for training only and does not run in real-time. 
 
 ### Installation
 
 The tool runs within the *premiere* anaconda environment. For this reason, this environment has to be setup beforehand.  Instructions how to setup the *premiere* environment are available as part of the [installation documentation ](https://github.com/bisnad/AIToolbox/tree/main/Installers) in the [AI Toolbox github repository](https://github.com/bisnad/AIToolbox). 
 
-The tool can be downloaded by cloning the [MotionAnalysis Github repository](https://github.com/bisnad/MotionAnalysis). After cloning, the tool is located in the MotionAnalysis / MocapClassifier directory.
-
-Alternatively, the tool is also provided as jupyter notebook that can be run online using [Google Colab](https://colab.research.google.com/) without the need for a local installation.
+The tool can be downloaded by cloning the [MotionAnalysis Github repository](https://github.com/bisnad/MotionAnalysis). After cloning, the tool is located in the MotionAnalysis / MocapClassifier_Interactive directory. 
 
 ### Directory Structure
 
-MocapClassifier (contains tool specific python scripts)
+MocapClassifier_Interactive (contains tool specific python scripts)
 
 - data
   - media (contains media used in this Readme)
-
-- results
-  - data (contains mean and standard deviation values to normalise motion capture sequences)
-  - histories (contains logs of the training process both as csv file and graph plot)
-  - weights (contains the weights of the trained model)
 
 
 ## Usage
@@ -36,11 +29,37 @@ The tool can be started either by double clicking the mocap_classifier.bat (Wind
 
 ```
 conda activate premiere
-cd MocapClassifier
+cd MocapClassifier_Interactive
 python mocap_classifier.py
 ```
 
+During startup, the tool loads both the model weights from a previous training run and the mean and standard deviation values that were calculated prior to training to normalise the motion capture data from files that are stored in the results directory of the MotionClassifer. By default, the tool loads these files from an example training run whose results are stored in the following folder relativ to the tool's own directory: ../../AIToolbox/Data/Models/MotionAnalysis/MocapClassifier/results_Stococs_Solos_MovementQualities_IMU. This training run used as motion capture data recordings of sensor data (acceleration and gyroscope) from a mobile phone. The model was trained on this data to recognise three different motion types. To load a different training run, the following source code has to be modified in the file `mocap_classifier.py.` 
+
+```
+data_path = "../../AIToolbox/Data/Models/MotionAnalysis/MocapClassifier/results_Stococs_Solos_MovementQualities_IMU"
+data_sensor_ids = ["/accelerometer", "/gyroscope"]
+data_sensor_dims = [3, 3]
+data_window_length = 60
+
+...
+
+input_dim = sum(data_sensor_dims)
+hidden_dim = 32
+layer_count = 3
+class_count = 3
+
+...
+
+load_weights_epoch = 100
+```
+
+
+
 #### Functionality
+
+
+
+
 
 The tool loads motion capture data in the form of recorded OSC messages that have been stored together with class labels in a python dictionary and exported to as a `.pkl` file . Such recordings can be created using the [MocapRecorder tool](https://github.com/bisnad/MotionUtilities/tree/main/MocapRecorder). 
 
@@ -84,7 +103,7 @@ load_weights = False
 load_weights_epoch = 100
 ```
 
-The float value assigned to the variable `test_percentage` represents the percentage of items in the dataset that are used for testing. In this example, a value of 0.2 corresponds to test set that contains 20% of the full dataset and a train set that contains 80% of the full dataset. The integer number assigned to the variable `batch_size` specifies the number of data items grouped into a batch. A high batch size is usually preferred to increase the stability of training. The float value assigned to the variable `learning_rate` specifies the learning rate employed at the beginning of training. The learning rate should be large enough to achieve quick training but small enough to avoid training instabilities. As training progresses, this learning rate halves every ten epochs. The integer assigned to the variable `epochs` specifies the number of epochs used for training. The bool value assigned to the variable `load_weights` specifies if the weights from a previous training run should be loaded. The integer assigned to the variable `load_weights_epoch` specifies the number of the epoch from which the weights from a previous training should be loaded. If `load_weights` is set to true, then the path and name of the weights file that will be loaded is: `./results/weights/classifier_epoch_<integer>`with the `<integer>`  part replaced by the value of the `load_weights_epoch` variable. 
+The float value assigned to the variable `test_percentage` represents the percentage of items in the dataset that are used for testing. In this example, a value of 0.2 corresponds to test set that contains 20% of the full dataset and a train set that contains 80% of the full dataset. The integer number assigned to the variable `batch_size` specifies the number of data items grouped into a batch. A high batch size is usually preferred to increase the stability of training. The float value assigned to the variable `learning_rate` specifies the learning rate employed at the beginning of training. The learning rate should be large enough to achieve quick training but small enough to avoid training instabilities. As training progresses, this learning rate halves every ten epochs. The integer assigned to the variable `epochs` specifies the number of epochs used for training. The bool value assigned to the variable `load_weights` specifies if the weights from a previous training run should be loaded. The integer assigned to the variable `load_weights_epoch` specifies the number of the epoch from which the weights from a previous training should be loaded. If `load_weights` is set to true, then the path and name of the weights file that will be loaded is: `results/weights/classifier_epoch_<integer>`with the `<integer>`  part replaced by the value of the `load_weights_epoch` variable. 
 
 Once the dataset has been created and the model initialised, training begins and runs for the number of epochs specified by the user. During training, the tool prints for each epoch a log message to the console that provide information about the training progress. An example log message looks like this:
 
