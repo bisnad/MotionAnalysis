@@ -1,4 +1,4 @@
-# AI-Toolbox - Motion Analysis - Motion Capture Analysis Python
+# AI-Toolbox - Motion Analysis - Mocap Analysis Python
 
 ![analysis_screenshot](./data/media/MocapAnalysisPython.JPG)
 

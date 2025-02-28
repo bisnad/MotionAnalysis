@@ -28,7 +28,7 @@ print('Using {} device'.format(device))
 Dataset
 """
 
-data_file_path = "C:/Users/dbisig/Projects/IMM/HandySensor_Record/recordings/"
+data_file_path = "../../AIToolbox/Data/Mocap/Stocos/Solos/MovementQualities_IMU/"
 data_file_extensions = ["pkl"] 
 data_sensor_ids = ["/accelerometer", "/gyroscope"]
 data_window_length = 60
@@ -49,6 +49,7 @@ Training settings
 
 test_percentage = 0.2
 batch_size = 32
+learning_rate = 1e-3
 epochs = 100
 
 load_weights = False
@@ -268,7 +269,7 @@ Training
 """
 
 class_loss = nn.NLLLoss()
-optimizer = optim.Adam(classifier.parameters(), lr=1e-3, weight_decay=0.0001)
+optimizer = optim.Adam(classifier.parameters(), lr=learning_rate, weight_decay=0.0001)
 scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.5) # reduce the learning every 20 epochs by a factor of 10
 
 data_mean = torch.tensor(data_mean, dtype=torch.float32).reshape(1, 1, -1).to(device)
