@@ -43,7 +43,6 @@ data_window_length = 60
 
 ...
 
-input_dim = sum(data_sensor_dims)
 hidden_dim = 32
 layer_count = 3
 class_count = 3
@@ -53,65 +52,48 @@ class_count = 3
 load_weights_epoch = 100
 ```
 
-
+The string assigned to the variable data_path represents the parent path that contains the exported mean and standard deviations used for normalising the motion data and the exported model weights of the trained classifier. 
+The list of strings that are assigned to the variable `data_sensor_ids` refers to the address part of the OSC messages that are extracted from the recordings. 
+The list of integers that are assigned to the variable `data_sensor_dims` refers to the number of values contained in each OSC messages (which corresponds to the dimension of the sensor values stored in the OSC messages).
+The integer value assigned to the variable `data_window_length`specifies the length of the motion excerpt. This value must be identical with the one used when training the classifier.
+The integer value assigned to the variable `hidden_dim` specifies the number of LSMT units. This value must be identical with the one used when training the classifier.
+The integer value assigned to the variable `layer_count` specifies the number of LSTM layers. This value must be identical with the one used when training the classifier.
+The integer assigned to the variable `load_weights_epoch` specifies the number of the epoch from which the weights from a previous training should be loaded.
 
 #### Functionality
 
+The tool receives short motion excerpts in the form of OSC messages that are generated when live capturing a performer. The tool used the previously trained classifier model to estimate the probability that the motion excerpts belong to any of the classes that the model is supposed to distinguish. These class probabilities are then sent as OSC messages. 
 
+### Graphical User Interface
 
+The tool provides a minimal GUI  for starting and stopping the classifier and for displaying the class probabilities are bar graph (see Figure 1). 
 
+### OSC Communication
 
-The tool loads motion capture data in the form of recorded OSC messages that have been stored together with class labels in a python dictionary and exported to as a `.pkl` file . Such recordings can be created using the [MocapRecorder tool](https://github.com/bisnad/MotionUtilities/tree/main/MocapRecorder). 
+The tool receives motion data as OSC messages, with one message for each type of motion data. The address part of these OSC messages must correspond to the list of string values assigned to the variable `data_sensor_ids`. The arguments part of the OSC messages consists of a number of float values. This number corresponds to the list of integer values assigned to the variable `data_sensor_dims`. In this example, the following two types of OSC messages are received by the tool:
 
-To change the recording files that are used for training, the following source code has to be changed in the `mocap_classifier.py` file. 
+- acceleration sensor data : ` /accelerometer <float j> <float 2> <float 3>` 
+- gyroscope sensor data : `/gyroscope<float j> <float 2> <float 3>` 
 
-```
-data_file_path = "../../AIToolbox/Data/Mocap/Stocos/Solos/MovementQualities_IMU/"
-data_sensor_ids = ["/accelerometer", "/gyroscope"]
-```
+By default, the tool receives its OSC messages from any IP address and on port 9000. To change this port, the following source code in the file clustering_interactive.py has to be modified:
 
-The string assigned to the variable `data_file_path` contains the path to the directory that contains the recording files that should be loaded. Any file in this directory that has the suffix `.pkl` will be loaded. 
-The list of strings that are assigned to the variable `data_sensor_ids` refer to the address part of the OSC messages that are extracted from the recordings. 
+    osc_receive_ip = "0.0.0.0"
+    osc_receive_port = 9000
 
-The tool reads the recorded OSC messages by concatenating their values into a timeseries of motion values. These values are subsequently normalised so that their mean value is zero and their standard deviation is 1. To create a dataset, the normalised timeseries is then split into short motion excerpts that possess a user specified length and that are offset from each other in the timeseries by a user specified value. To change the length and offset of the motion excerpts, the following source code has to be changed in the `mocap_classifier.py` file. 
+The string value assigned to the variable `osc_receive_ip` represents the IP address from which the OSC messages are received from. The string "0.0.0.0" represents any IP address.
+The integer value assigned to the variable `osc_receive_port` represents the port in which the tool receives the OSC messages.
 
-```
-data_window_length = 60
-data_window_offset = 1
-```
+The tool sends the class probabilities predicated by the classifier as OSC messages. The address part of this messages is /motion/class and the arguments are float values. The number of float values corresponds to the number of classes that the classifier distinguishes. The format of these messages is as follows:
 
-The integer value assigned to the variable `data_window_length`specifies the length of the motion excerpt. The integer value assigned to the variable `data_window_offset` specifies the offset between motion excerpts.
+- class probabilities : `/motion/class <float 1> .... <float N>` 
 
-The model used for classifying the motion sequences consists of a simple [long short term memory](https://en.wikipedia.org/wiki/Long_short-term_memory) (LSTM) network. For this network, the tool employs by default 3 layers and 32 nodes. To change these settings, the following source code has to be changed in the `mocap_classifier.py` file. 
+By default, the tool sends its OSC messages to IP address 127.0.0.1 and port 10000. To change the address and/or port, the following source code in the file clustering_interactive.py has to be modified:
 
-```
-hidden_dim = 32
-layer_count = 3
-```
+    osc_send_ip = "127.0.0.1"
+    osc_send_port = 10000
 
-The integer value assigned to the variable `hidden_dim` specifies the number of LSMT units. This value should typically be higher than the dimension of the motion capture values. The integer value assigned to the variable `layer_count` specifies the number of LSTM layers. This value has to be estimated through trial and error and should be low enough to avoid overfitting but high enough to achieve a high classification accuracy. 
-
-For training the model, the tool uses the following default settings: a train test split of the dataset of 80% and 20%, a batch_size of 32, an initial learning rate of 10^-3, a number of epochs of 100. Also, the training starts by default with randomly initialised model weights. To change these settings, the following source code has to be changed in the `mocap_classifier.py` file. 
-
-```
-test_percentage = 0.2
-batch_size = 32
-learning_rate = 1e-3
-epochs = 100
-
-load_weights = False
-load_weights_epoch = 100
-```
-
-The float value assigned to the variable `test_percentage` represents the percentage of items in the dataset that are used for testing. In this example, a value of 0.2 corresponds to test set that contains 20% of the full dataset and a train set that contains 80% of the full dataset. The integer number assigned to the variable `batch_size` specifies the number of data items grouped into a batch. A high batch size is usually preferred to increase the stability of training. The float value assigned to the variable `learning_rate` specifies the learning rate employed at the beginning of training. The learning rate should be large enough to achieve quick training but small enough to avoid training instabilities. As training progresses, this learning rate halves every ten epochs. The integer assigned to the variable `epochs` specifies the number of epochs used for training. The bool value assigned to the variable `load_weights` specifies if the weights from a previous training run should be loaded. The integer assigned to the variable `load_weights_epoch` specifies the number of the epoch from which the weights from a previous training should be loaded. If `load_weights` is set to true, then the path and name of the weights file that will be loaded is: `results/weights/classifier_epoch_<integer>`with the `<integer>`  part replaced by the value of the `load_weights_epoch` variable. 
-
-Once the dataset has been created and the model initialised, training begins and runs for the number of epochs specified by the user. During training, the tool prints for each epoch a log message to the console that provide information about the training progress. An example log message looks like this:
-
-`epoch 1 : train: loss 1.0418 corr 63.72 test: loss 0.7590 correct 66.38 time 0.21`
-
-The information specifies, from left to right: the epoch number, the loss on the train set, the loss on the test set, the percentage of correct classification on the test set, and the time elapsed.
-
-At the end of training, the tool displays the training history as graph plot, and stores the training history both as image and `.csv` file, the last model weights, and the mean and standard deviation values used for normalisation. It also prints on the console 
+The string value assigned to the variable `osc_send_ip` represents the IP address to which the tool sends OSC messages. The string "127.0.0.1" represents the same computer the tool is running on.
+The integer value assigned to the variable `osc_send_port` represents the port in which the tool sends OSC messages.
 
 ### Limitations and Bugs
 

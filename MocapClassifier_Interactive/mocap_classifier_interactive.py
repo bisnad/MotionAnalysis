@@ -304,7 +304,6 @@ if __name__ == "__main__":
     # osc
     osc_receive_ip = "0.0.0.0"
     osc_receive_port = 9000
-    osc_record_active = False
     
     osc_send_ip = "127.0.0.1"
     osc_send_port = 10000
