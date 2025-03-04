@@ -21,7 +21,7 @@ Mocap Settings
 """
 
 # Example: Qualisys Mocap Recording
-mocap_file_path = "../../../Data/Mocap/Qualisys/Stocos/Solos/fbx_50hz"
+mocap_file_path = "data/mocap"
 mocap_files = ["polytopia_fullbody_take2.fbx"]
 mocap_valid_frame_ranges = [ [ 200, 6400 ] ]
 mocap_pos_scale = 1.0
@@ -38,9 +38,7 @@ mocap_excerpt_length = 80 # 80
 mocap_excerpt_offset = 40 # 40
 mocap_smooth_length = 25 # 25
 
-motion_feature_names = ["bsphere"]
-motion_feature_names = ["space_effort"]
-
+motion_feature_names = ["bsphere", "space_effort"]
 motion_feature_average = True # average motion features in the time domain
 
 """
@@ -158,7 +156,7 @@ Compute Motion Features
 motion_features = {}
 
 motion_features["rot_local"] = mocap_rot_excerpts
-motion_features["pos_world"] = mocap_pos_excerpts
+motion_features["pos_world_m"] = mocap_pos_excerpts
 
 # pos world smooth
 features = []
