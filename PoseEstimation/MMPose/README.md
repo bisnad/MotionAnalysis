@@ -44,13 +44,13 @@ python demo/premiere_mmpose.py <argument1> ---pose2D <argument2> ( --pose3D <arg
 
 The `<argument>` statements refers to a list of arguments that have to be passed to the mmpose python script to configure its mode of operation. 
 
-The first argument specifies the source image(s) that the model used to detect keypoints. Possible options for argument1 are: 
+`<argument1>` specifies the source image(s) that the model used to detect keypoints. Possible options for argument1 are: 
 
 - `webcam` : use a webcam as image source 
 - `path to directory` : use a folder of still images as image source
 - `path to a movie file` : use a movie recording as image source
 
-The second argument specifies the model to be used for 2D pose estimation. MMPose offers a wide variety of models for 2D pose estimation. These models employ different body representations for 2D keypoint detection. The following images show a selection of body representations for 2D keypoint detections. This selection corresponds to the models that have been tested by the author of this repository. 
+`<argument2>` specifies the model to be used for 2D pose estimation. MMPose offers a wide variety of models for 2D pose estimation. These models employ different body representations for 2D keypoint detection. The following images show a selection of body representations for 2D keypoint detections. This selection corresponds to the models that have been tested by the author of this repository. 
 
 <img src="data/media/2DPoseEstimation_Skeletons.png" style="zoom: 40%;" />
 
