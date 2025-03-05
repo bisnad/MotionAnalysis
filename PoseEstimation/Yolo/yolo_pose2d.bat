@@ -11,7 +11,7 @@ set CONDA_ENV=ultralytics
 call %ANACONDA_PATH%\Scripts\activate.bat %CONDA_ENV%
 
 :: Run Python in the activated environment
-python pose_2d.py
+python yolo_pose2d.py webcam --pose2d yolov8x-pose.pt
 
 :: Deactivate the environment
 call conda deactivate

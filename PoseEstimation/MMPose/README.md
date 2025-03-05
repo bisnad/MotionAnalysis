@@ -37,12 +37,12 @@ The tool can started in a variety of ways that differ from each other in the sou
 Alternatively, the tool can be started from the Anaconda terminal by running the demo/premiere_mmpose.py python script. To do this, the following commands have to be typed into the Anaconda terminal.
 
 ```
-conda activate premiere
+conda activate openmmlab
 cd PoseEstimation/MMPose
-python demo/premiere_mmpose.py <argument1> ---pose2D <argument2> ( --pose3D) <argument3>
+python demo/premiere_mmpose.py <argument1> ---pose2D <argument2> ( --pose3D <argument3>)
 ```
 
-The `<arguments>` statement refers to a list of arguments that have to be passed to the mmpose python script to configure its mode of operation. 
+The `<argument>` statements refers to a list of arguments that have to be passed to the mmpose python script to configure its mode of operation. 
 
 The first argument specifies the source image(s) that the model used to detect keypoints. Possible options for argument1 are: 
 
@@ -52,7 +52,7 @@ The first argument specifies the source image(s) that the model used to detect k
 
 The second argument specifies the model to be used for 2D pose estimation. MMPose offers a wide variety of models for 2D pose estimation. These models employ different body representations for 2D keypoint detection. The following images show a selection of body representations for 2D keypoint detections. This selection corresponds to the models that have been tested by the author of this repository. 
 
-<img src="data/media/2DPoseEstimation_Skeletons.png" style="zoom: 25%;" />
+<img src="data/media/2DPoseEstimation_Skeletons.png" style="zoom: 40%;" />
 
 Figure 2: Skeleton conventions for 2D pose estimation. From left to right, the conventions are: COCO, Halpe26, AIC, HumanArt. The images have been taken from https://mmpose.readthedocs.io/en/latest/dataset_zoo/2d_body_keypoint.html
 
