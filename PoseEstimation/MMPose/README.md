@@ -52,7 +52,7 @@ The first argument specifies the source image(s) that the model used to detect k
 
 The second argument specifies the model to be used for 2D pose estimation. MMPose offers a wide variety of models for 2D pose estimation. These models employ different body representations for 2D keypoint detection. The following images show a selection of body representations for 2D keypoint detections. This selection corresponds to the models that have been tested by the author of this repository. 
 
-<img src="data/media/2DPoseEstimation_Skeletons.png" style="zoom:40%;" />
+<img src="data/media/2DPoseEstimation_Skeletons.png" style="zoom: 25%;" />
 
 Figure 2: Skeleton conventions for 2D pose estimation. From left to right, the conventions are: COCO, Halpe26, AIC, HumanArt. The images have been taken from https://mmpose.readthedocs.io/en/latest/dataset_zoo/2d_body_keypoint.html
 
