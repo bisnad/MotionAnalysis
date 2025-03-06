@@ -34,6 +34,9 @@ import motion_sender
 
 # joint map for boddy 34 to match joint numbers from live capture with those in an fbx recording
 joint_map = [ 0, 1, 2, 11, 12, 13, 14, 15, 16, 17, 3, 26, 27, 28, 29, 30, 31, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20, 21, 32, 22, 23, 24, 25, 33 ]
+# joint map for body 38 to match joint numbers from live capture with those in an fbx recording
+# joint_map = [ 0, 1, 2, 3, 4, 5, 6, 8, 7, 9, 10, 12, 14, 16, 30, 32, 34, 36, 11, 13, 15, 17, 31, 33, 35, 37, 18, 20, 22, 24, 26, 28, 19, 21, 23, 25, 27, 29 ]
+
 
 def parse_args(init):
     if len(opt.input_svo_file)>0 and opt.input_svo_file.endswith(".svo"):
@@ -107,7 +110,7 @@ def update_osc(_bodies, sender):
         if root_pos_world is not None:
             print("root_pos_world s ", root_pos_world.shape)  
         """
-        
+
 
         joint_pos2d_world_osc = joint_pos2d_world[joint_map, :]
         joint_pos3d_world_osc = joint_pos3d_world[joint_map, :]
@@ -174,8 +177,16 @@ def main():
     body_param.detection_model = sl.BODY_TRACKING_MODEL.HUMAN_BODY_FAST 
     #body_param.detection_model = sl.BODY_TRACKING_MODEL.HUMAN_BODY_MEDIUM 
     #body_param.detection_model = sl.BODY_TRACKING_MODEL.HUMAN_BODY_ACCURATE 
+
+    if len(joint_map) == 34:
+        body_param.body_format = sl.BODY_FORMAT.BODY_34  # Choose the BODY_FORMAT you wish to use
+    elif len(joint_map) == 38:
+        body_param.body_format = sl.BODY_FORMAT.BODY_38  # Choose the BODY_FORMAT you wish to use
+    else:
+        print("number of joints not supported")
+
     #body_param.body_format = sl.BODY_FORMAT.BODY_18  # Choose the BODY_FORMAT you wish to use
-    body_param.body_format = sl.BODY_FORMAT.BODY_34  # Choose the BODY_FORMAT you wish to use
+    #body_param.body_format = sl.BODY_FORMAT.BODY_34  # Choose the BODY_FORMAT you wish to use
     #body_param.body_format = sl.BODY_FORMAT.BODY_38  # Choose the BODY_FORMAT you wish to use
 
     # Enable Object Detection module
