@@ -114,3 +114,19 @@ PoseEstimation/ZED/Incubatio_test.svo
 /PoseEstimation/ZED_C++/body tracking_osc_v4.2/cpp/build/ZED_Body_Tracking_Viewer.dir
 /PoseEstimation/ZED_C++/body_tracking_multi-camera_osc_v4.2/cpp/build/CMakeFiles
 /PoseEstimation/ZED_C++/body_tracking_multi-camera_osc_v4.2/cpp/build/x64/Release/ZERO_CHECK
+/PoseEstimation/ZED_C++/body tracking_osc/cpp/build/.vs
+/PoseEstimation/ZED_C++/body tracking_osc/cpp/build/CMakeFiles
+/PoseEstimation/ZED_C++/body tracking_osc/cpp/build/x64/Release/ZERO_CHECK
+/PoseEstimation/ZED_C++/body tracking_osc/cpp/build/ZED_Body_Tracking_Viewer.dir
+/PoseEstimation/ZED_C++/body tracking_osc_v4.2/cpp/build/CMakeFiles
+/PoseEstimation/ZED_C++/body_tracking_multi-camera/cpp/build/.vs
+/PoseEstimation/ZED_C++/body_tracking_multi-camera/cpp/build/CMakeFiles
+/PoseEstimation/ZED_C++/body_tracking_multi-camera/cpp/build/x64/Release/ZERO_CHECK
+/PoseEstimation/ZED_C++/body_tracking_multi-camera/cpp/build/ZED_BodyFusion.dir
+/PoseEstimation/ZED_C++/fbx_export/cpp/build/CMakeFiles
+/PoseEstimation/ZED_C++/fbx_export/cpp/build/x64/Release/ZERO_CHECK
+/PoseEstimation/ZED_C++/fbx_export/cpp/build/ZED_Body_export_FBX.dir
+/PoseEstimation/ZED_C++/fbx_export_multi-camera/cpp/build/.vs
+/PoseEstimation/ZED_C++/fbx_export_multi-camera/cpp/build/CMakeFiles
+/PoseEstimation/ZED_C++/fbx_export_multi-camera/cpp/build/x64/Release/ZERO_CHECK
+/PoseEstimation/ZED_C++/fbx_export_multi-camera/cpp/build/ZED_BodyFusion.dir

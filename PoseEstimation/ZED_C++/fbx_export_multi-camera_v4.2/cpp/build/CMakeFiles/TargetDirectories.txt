@@ -1,3 +1,0 @@
-C:/Users/dbisig/Programming/testing/ZED/fbx_export_multi-camera_v4.2/cpp/build/CMakeFiles/ZED_BodyFusion.dir
-C:/Users/dbisig/Programming/testing/ZED/fbx_export_multi-camera_v4.2/cpp/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/dbisig/Programming/testing/ZED/fbx_export_multi-camera_v4.2/cpp/build/CMakeFiles/ZERO_CHECK.dir
