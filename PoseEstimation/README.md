@@ -12,6 +12,10 @@ The following tools are available:
 
   A Python script that Employs one of the many 2D or 3D pose estimation models included in MMPose on images, movie recordings, or a live camera input
 
-- [ZED Pose Estimation](PoseEstimation/ZED_C++)
+- [ZED Python Pose Estimation](PoseEstimation/ZED_Python)
 
-​	Several C++ applications that employ the Stereolabs 3D pose estimation model on recordings or live camera input from a ZED stereovision camera
+  Several Python based applications employ the ZED SDK to conduct pose estimation on recordings or live camera input from a ZED stereovision camera
+
+- [ZED Python Pose Estimation](PoseEstimation/ZED_C++)
+
+​	Several C++ based applications employ the ZED SDK to conduct pose estimation on recordings or live camera input from a ZED stereovision camera

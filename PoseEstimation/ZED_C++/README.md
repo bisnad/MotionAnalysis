@@ -1,17 +1,23 @@
-# AI-Toolbox - Motion Analysis - Pose Estimation
+# AI-Toolbox - Motion Analysis - Pose Estimation - ZED_C++
 
-The "Motion Analysis" category of the AI-Toolbox contains a collection of mostly python-based utilities for detecting body key-points in video. These tools are grouped together in the `PoseEstimation` directory of this repository.
+The AI-Toolbox offers several C++-based tools that simplify using the [Stereolab](https://www.stereolabs.com/en-ch)'s [ZED camera](https://www.stereolabs.com/en-ch/products/zed-2) as a low-end motion capture system.  All tools are based on the excellent tutorial examples provided by Stereolabs. 
 
 The following tools are available:
 
-- [Yolo Pose Estimation](PoseEstimation/Yolo)
+- [body tracking_osc](body_tracking_osc)
 
-  A Python script that employs the Yolo 2D pose estimation model on images, movie recordings, or a live camera input
+  A C++-based tool for tracking performers with a single ZED camera and sending tracking data via OSC messages.
 
-- [MMPose Pose Estimation](PoseEstimation/MMPose)
+- [body_tracking_multi-camera_osc](body_tracking_multi-camera_osc)
 
-  A Python script that Employs one of the many 2D or 3D pose estimation models included in MMPose on images, movie recordings, or a live camera input
+  A C++-based tool for tracking performers with multiple ZED cameras and sending tracking data via OSC messages.
 
-- [ZED Pose Estimation](PoseEstimation/ZED_C++)
+- [fbx_export](fbx_export)
 
-​	Several C++ applications that employ the Stereolabs 3D pose estimation model on recordings or live camera input from a ZED stereovision camera
+  A C++-based tool for exporting live captures or stored recordings from a single ZED camera as motion capture files in FBX format.
+
+- [fbx_export_multi-camera](fbx_export_multi-camera)
+
+  A C++-based tool for exporting live captures or stored recordings from multiple ZED cameras as motion capture files in FBX format.
+
+  

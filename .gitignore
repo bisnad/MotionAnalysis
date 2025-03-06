@@ -134,3 +134,15 @@ PoseEstimation/ZED/Incubatio_test.svo
 /PoseEstimation/ZED_C++/body_tracking_multi-camera_osc/cpp/build/CMakeFiles
 /PoseEstimation/ZED_C++/body_tracking_multi-camera_osc/cpp/build/x64/Release/ZERO_CHECK
 /PoseEstimation/ZED_C++/body_tracking_multi-camera_osc/cpp/build/ZED_BodyFusion.dir
+/PoseEstimation/ZED_C++/body_tracking_osc/cpp/build/.vs
+/PoseEstimation/ZED_C++/body_tracking_osc/cpp/build/CMakeFiles
+/PoseEstimation/ZED_C++/body_tracking_osc/cpp/build/x64/Release/ZERO_CHECK
+/PoseEstimation/ZED_C++/body_tracking_osc/cpp/build/ZED_Body_Tracking_Viewer.dir
+/PoseEstimation/ZED_Python/body_tracking_multi-camera_osc/.spyproject
+/PoseEstimation/ZED_Python/body_tracking_multi-camera_osc/__pycache__
+/PoseEstimation/ZED_Python/body_tracking_multi-camera_osc/cv_viewer/__pycache__
+/PoseEstimation/ZED_Python/body_tracking_multi-camera_osc/ogl_viewer/__pycache__
+/PoseEstimation/ZED_Python/body_tracking_osc/.spyproject
+/PoseEstimation/ZED_Python/body_tracking_osc/__pycache__
+/PoseEstimation/ZED_Python/body_tracking_osc/cv_viewer/__pycache__
+/PoseEstimation/ZED_Python/body_tracking_osc/ogl_viewer/__pycache__
