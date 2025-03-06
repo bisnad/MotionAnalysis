@@ -130,3 +130,7 @@ PoseEstimation/ZED/Incubatio_test.svo
 /PoseEstimation/ZED_C++/fbx_export_multi-camera/cpp/build/CMakeFiles
 /PoseEstimation/ZED_C++/fbx_export_multi-camera/cpp/build/x64/Release/ZERO_CHECK
 /PoseEstimation/ZED_C++/fbx_export_multi-camera/cpp/build/ZED_BodyFusion.dir
+/PoseEstimation/ZED_C++/body_tracking_multi-camera_osc/cpp/build/.vs
+/PoseEstimation/ZED_C++/body_tracking_multi-camera_osc/cpp/build/CMakeFiles
+/PoseEstimation/ZED_C++/body_tracking_multi-camera_osc/cpp/build/x64/Release/ZERO_CHECK
+/PoseEstimation/ZED_C++/body_tracking_multi-camera_osc/cpp/build/ZED_BodyFusion.dir
