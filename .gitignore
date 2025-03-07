@@ -146,3 +146,4 @@ PoseEstimation/ZED/Incubatio_test.svo
 /PoseEstimation/ZED_Python/body_tracking_osc/__pycache__
 /PoseEstimation/ZED_Python/body_tracking_osc/cv_viewer/__pycache__
 /PoseEstimation/ZED_Python/body_tracking_osc/ogl_viewer/__pycache__
+/PoseEstimation/ZED_C++/fbx_export/cpp/build/.vs
