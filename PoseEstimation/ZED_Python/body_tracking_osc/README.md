@@ -6,7 +6,7 @@ Figure 1: Screenshot of the Python-based pose estimation tool that employs the b
 
 ## Summary
 
-This Python-based tool employs the body tracking functionality of the [ZED SDK](https://www.stereolabs.com/docs) to detect both 2D and 3D keypoints. To this, tool adds functionality to send the positions of the detected keypoints as [OSC](https://en.wikipedia.org/wiki/Open_Sound_Control) messages. The tool operates in real-time and takes as input either a live stream from a [ZED camera](https://www.stereolabs.com/en-ch/products/zed-2) or a recording stored in the Stereolab's custom [SVO format](https://www.stereolabs.com/docs/video/recording). Since the ZED SDK supports only Windows and Linux operating systems, no MacOS version of the tool is provided. 
+This Python-based tool employs the body tracking functionality of the [ZED SDK](https://www.stereolabs.com/docs) to detect both 2D and 3D keypoints. To this, the tool adds functionality to send the positions of the detected keypoints as [OSC](https://en.wikipedia.org/wiki/Open_Sound_Control) messages. The tool operates in real-time and takes as input either a live stream from a [ZED camera](https://www.stereolabs.com/en-ch/products/zed-2) or a recording stored in the Stereolab's custom [SVO format](https://www.stereolabs.com/docs/video/recording). Since the ZED SDK supports only Windows and Linux operating systems, no MacOS version of the tool is provided. 
 
 ### Installation
 

@@ -65,7 +65,7 @@
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\build\Release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Release\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ZED_BodyFusion.dir\Release\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ZED_BodyFusion</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
@@ -130,7 +130,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8\include;C:\Program Files (x86)\ZED SDK\include;C:\Program Files (x86)\ZED SDK\dependencies\glew-1.12.0\include;C:\Program Files (x86)\ZED SDK\dependencies\freeglut_2.8\include;C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\include;C:\Program Files (x86)\ZED SDK\dependencies\opencv_3.1.0\include;C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\libs\oscpack\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8\include;C:\Program Files (x86)\ZED SDK\include;C:\Program Files (x86)\ZED SDK\dependencies\glew-1.12.0\include;C:\Program Files (x86)\ZED SDK\dependencies\freeglut_2.8\include;C:\Program Files (x86)\ZED SDK\dependencies\opencv_3.1.0\include;..\include;..\libs\oscpack\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -317,6 +317,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\ClientPublisher.hpp" />
+    <ClInclude Include="..\include\GLViewer.hpp" />
+    <ClInclude Include="..\include\utils.hpp" />
     <ClInclude Include="..\libs\oscpack\src\ip\IpEndpointName.h" />
     <ClInclude Include="..\libs\oscpack\src\ip\NetworkingUtils.h" />
     <ClInclude Include="..\libs\oscpack\src\ip\PacketListener.h" />
@@ -330,9 +333,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="..\libs\oscpack\src\osc\OscPrintReceivedElements.h" />
     <ClInclude Include="..\libs\oscpack\src\osc\OscReceivedElements.h" />
     <ClInclude Include="..\libs\oscpack\src\osc\OscTypes.h" />
-    <ClInclude Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\include\ClientPublisher.hpp" />
-    <ClInclude Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\include\GLViewer.hpp" />
-    <ClInclude Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\include\utils.hpp" />
     <ClCompile Include="..\libs\oscpack\src\ip\IpEndpointName.cpp" />
     <ClCompile Include="..\libs\oscpack\src\ip\win32\NetworkingUtils.cpp" />
     <ClCompile Include="..\libs\oscpack\src\ip\win32\UdpSocket.cpp" />
@@ -340,8 +340,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\libs\oscpack\src\osc\OscPrintReceivedElements.cpp" />
     <ClCompile Include="..\libs\oscpack\src\osc\OscReceivedElements.cpp" />
     <ClCompile Include="..\libs\oscpack\src\osc\OscTypes.cpp" />
-    <ClCompile Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\src\ClientPublisher.cpp" />
-    <ClCompile Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\src\GLViewer.cpp" />
+    <ClCompile Include="..\src\ClientPublisher.cpp" />
+    <ClCompile Include="..\src\GLViewer.cpp" />
     <ClCompile Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>

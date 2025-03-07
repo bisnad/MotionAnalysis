@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\src\ClientPublisher.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\src\GLViewer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -31,17 +25,14 @@
     <ClCompile Include="..\libs\oscpack\src\osc\OscTypes.cpp">
       <Filter>libs\oscpack</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ClientPublisher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GLViewer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\include\ClientPublisher.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\include\GLViewer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\include\utils.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\libs\oscpack\src\ip\IpEndpointName.h">
       <Filter>libs\oscpack</Filter>
     </ClInclude>
@@ -80,6 +71,15 @@
     </ClInclude>
     <ClInclude Include="..\libs\oscpack\src\osc\OscTypes.h">
       <Filter>libs\oscpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ClientPublisher.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\GLViewer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\utils.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

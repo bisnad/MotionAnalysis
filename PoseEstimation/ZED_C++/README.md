@@ -1,6 +1,6 @@
 # AI-Toolbox - Motion Analysis - Pose Estimation - ZED_C++
 
-The AI-Toolbox offers several C++-based tools that simplify using the [Stereolab](https://www.stereolabs.com/en-ch)'s [ZED camera](https://www.stereolabs.com/en-ch/products/zed-2) as a low-end motion capture system.  All tools are based on the excellent tutorial examples provided by Stereolabs. 
+The AI-Toolbox offers several C++-based tools that simplify using the [Stereolab](https://www.stereolabs.com/en-ch)'s [ZED camera](https://www.stereolabs.com/en-ch/products/zed-2) as a low-end motion capture system.  All tools are based on the excellent sample examples provided by Stereolabs. 
 
 The following tools are available:
 

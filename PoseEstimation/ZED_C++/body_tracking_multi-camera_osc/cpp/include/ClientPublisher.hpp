@@ -39,7 +39,7 @@ public:
     ClientPublisher();
     ~ClientPublisher();
 
-    bool open(sl::InputType, Trigger* ref);
+    bool open(sl::InputType, sl::BodyTrackingParameters bodyTrackingParameters, Trigger* ref);
     void start();
     void stop();
     void setStartSVOPosition(unsigned pos);
