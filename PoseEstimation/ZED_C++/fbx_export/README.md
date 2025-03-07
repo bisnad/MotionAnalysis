@@ -2,7 +2,7 @@
 
 ![analysis_screenshot](./data/media/fbx_export_screenshot.JPG)
 
-Figure 1: Screenshot of the C++-based export tool that exports body tracking data either from a ZED Camera live stream or recording as FBX file. 
+Figure 1: Screenshot of the C++-based tool that exports body tracking data either from a ZED Camera live stream or recording as FBX file. 
 
 ## Summary
 

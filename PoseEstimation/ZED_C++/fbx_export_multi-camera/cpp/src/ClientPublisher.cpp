@@ -7,7 +7,7 @@ ClientPublisher::~ClientPublisher()
     zed.close();
 }
 
-bool ClientPublisher::open(sl::InputType input, Trigger* ref) {
+bool ClientPublisher::open(sl::InputType input, sl::BodyTrackingParameters bodyTrackingParameters, Trigger* ref) {
 
     p_trigger = ref;
 
@@ -30,7 +30,7 @@ bool ClientPublisher::open(sl::InputType input, Trigger* ref) {
     sl::PositionalTrackingParameters positional_tracking_parameters;
     // in most cases for body detection application the camera is static:
     positional_tracking_parameters.set_as_static = true;
-    
+
     state = zed.enablePositionalTracking(positional_tracking_parameters);
     if (state != sl::ERROR_CODE::SUCCESS)
     {
@@ -38,6 +38,7 @@ bool ClientPublisher::open(sl::InputType input, Trigger* ref) {
         return false;
     }
 
+    /*
     // define the body tracking parameters, as the fusion can does the tracking and fitting you don't need to enable them here, unless you need it for your app
     sl::BodyTrackingParameters body_tracking_parameters;
     body_tracking_parameters.detection_model = sl::BODY_TRACKING_MODEL::HUMAN_BODY_MEDIUM;
@@ -45,6 +46,15 @@ bool ClientPublisher::open(sl::InputType input, Trigger* ref) {
     body_tracking_parameters.enable_body_fitting = false;
     body_tracking_parameters.enable_tracking = false;
     state = zed.enableBodyTracking(body_tracking_parameters);
+    if (state != sl::ERROR_CODE::SUCCESS)
+    {
+        std::cout << "Error: " << state << std::endl;
+        return false;
+    }
+    */
+
+    // define the body tracking parameters, as the fusion can does the tracking and fitting you don't need to enable them here, unless you need it for your app
+    state = zed.enableBodyTracking(bodyTrackingParameters);
     if (state != sl::ERROR_CODE::SUCCESS)
     {
         std::cout << "Error: " << state << std::endl;
