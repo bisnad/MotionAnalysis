@@ -44,6 +44,8 @@ python mocap_classifier.py
 
 The tool loads motion capture data in the form of recorded OSC messages that have been stored together with class labels in a python dictionary and exported to as a `.pkl` file . Such recordings can be created using the [MocapRecorder tool](https://github.com/bisnad/MotionUtilities/tree/main/MocapRecorder). 
 
+##### Data Settings
+
 To change the recording files that are used for training, the following source code has to be changed in the `mocap_classifier.py` file. 
 
 ```
@@ -54,6 +56,8 @@ data_sensor_ids = ["/accelerometer", "/gyroscope"]
 The string assigned to the variable `data_file_path` contains the path to the directory that contains the recording files that should be loaded. Any file in this directory that has the suffix `.pkl` will be loaded. 
 The list of strings that are assigned to the variable `data_sensor_ids` refer to the address part of the OSC messages that are extracted from the recordings. 
 
+##### Dataset Settings
+
 The tool reads the recorded OSC messages by concatenating their values into a timeseries of motion values. These values are subsequently normalised so that their mean value is zero and their standard deviation is 1. To create a dataset, the normalised timeseries is then split into short motion excerpts that possess a user specified length and that are offset from each other in the timeseries by a user specified value. To change the length and offset of the motion excerpts, the following source code has to be changed in the `mocap_classifier.py` file. 
 
 ```
@@ -63,6 +67,8 @@ data_window_offset = 1
 
 The integer value assigned to the variable `data_window_length`specifies the length of the motion excerpt. The integer value assigned to the variable `data_window_offset` specifies the offset between motion excerpts.
 
+##### Model Settings
+
 The model used for classifying the motion sequences consists of a simple [long short term memory](https://en.wikipedia.org/wiki/Long_short-term_memory) (LSTM) network. For this network, the tool employs by default 3 layers and 32 nodes. To change these settings, the following source code has to be changed in the `mocap_classifier.py` file. 
 
 ```
@@ -71,6 +77,8 @@ layer_count = 3
 ```
 
 The integer value assigned to the variable `hidden_dim` specifies the number of LSMT units. This value should typically be higher than the dimension of the motion capture values. The integer value assigned to the variable `layer_count` specifies the number of LSTM layers. This value has to be estimated through trial and error and should be low enough to avoid overfitting but high enough to achieve a high classification accuracy. 
+
+##### Training Settings
 
 For training the model, the tool uses the following default settings: a train test split of the dataset of 80% and 20%, a batch_size of 32, an initial learning rate of 10^-3, a number of epochs of 100. Also, the training starts by default with randomly initialised model weights. To change these settings, the following source code has to be changed in the `mocap_classifier.py` file. 
 
@@ -86,13 +94,15 @@ load_weights_epoch = 100
 
 The float value assigned to the variable `test_percentage` represents the percentage of items in the dataset that are used for testing. In this example, a value of 0.2 corresponds to test set that contains 20% of the full dataset and a train set that contains 80% of the full dataset. The integer number assigned to the variable `batch_size` specifies the number of data items grouped into a batch. A high batch size is usually preferred to increase the stability of training. The float value assigned to the variable `learning_rate` specifies the learning rate employed at the beginning of training. The learning rate should be large enough to achieve quick training but small enough to avoid training instabilities. As training progresses, this learning rate halves every ten epochs. The integer assigned to the variable `epochs` specifies the number of epochs used for training. The bool value assigned to the variable `load_weights` specifies if the weights from a previous training run should be loaded. The integer assigned to the variable `load_weights_epoch` specifies the number of the epoch from which the weights from a previous training should be loaded. If `load_weights` is set to true, then the path and name of the weights file that will be loaded is: `./results/weights/classifier_epoch_<integer>`with the `<integer>`  part replaced by the value of the `load_weights_epoch` variable. 
 
+##### Training 
+
 Once the dataset has been created and the model initialised, training begins and runs for the number of epochs specified by the user. During training, the tool prints for each epoch a log message to the console that provide information about the training progress. An example log message looks like this:
 
 `epoch 1 : train: loss 1.0418 corr 63.72 test: loss 0.7590 correct 66.38 time 0.21`
 
 The information specifies, from left to right: the epoch number, the loss on the train set, the loss on the test set, the percentage of correct classification on the test set, and the time elapsed.
 
-At the end of training, the tool displays the training history as graph plot, and stores the training history both as image and `.csv` file, the last model weights, and the mean and standard deviation values used for normalisation. It also prints on the console 
+At the end of training, the tool displays the training history as graph plot, and stores the training history both as image and `.csv` file, the last model weights, and the mean and standard deviation values used for normalisation. It also prints on the console the original and predicted classes for the test set.
 
 ### Limitations and Bugs
 
