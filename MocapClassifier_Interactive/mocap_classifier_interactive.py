@@ -28,6 +28,7 @@ from vispy.app import use_app, Timer
 from vispy.scene import SceneCanvas, visuals
 import colorsys
 
+
 """
 Device
 """
@@ -39,15 +40,15 @@ print('Using {} device'.format(device))
 Data
 """
 
-data_path = "../../AIToolbox/Data/Models/MotionAnalysis/MocapClassifier/results_Stococs_Solos_MovementQualities_IMU"
+data_norm_path = "data/results/data/"
 data_sensor_ids = ["/accelerometer", "/gyroscope"]
 data_sensor_dims = [3, 3]
 data_window_length = 60
 
 # load sensor dara mean and std
-with open(data_path + "/data/mean.pkl", 'rb') as f:
+with open(data_norm_path + "mean.pkl", 'rb') as f:
     data_mean = pickle.load(f)
-with open(data_path + "/data/std.pkl", 'rb') as f:
+with open(data_norm_path + "std.pkl", 'rb') as f:
     data_std = pickle.load(f)  
     
 """
@@ -58,15 +59,7 @@ input_dim = sum(data_sensor_dims)
 hidden_dim = 32
 layer_count = 3
 class_count = 3
-
-"""
-Training settings
-"""
-
-load_weights_epoch = 100
-
-model_weights_file = "{}/weights/classifier_weights_epoch_{}.pth".format(data_path, load_weights_epoch)
-
+model_weights_file = "data/results/weights/classifier_weights_epoch_100.pth"
 
 """
 Create Model
@@ -297,13 +290,18 @@ if __name__ == "__main__":
     
     classifier = Classifier(input_dim, hidden_dim, layer_count, class_count)
     classifier.to(device)
-    classifier.load_state_dict(torch.load(model_weights_file))
+        
+    if device == 'cuda':
+        classifier.load_state_dict(torch.load(model_weights_file))
+    else:
+        classifier.load_state_dict(torch.load(model_weights_file, map_location=torch.device("cpu")))
     
     liveClassifier = LiveClassifier(classifier)
     
     # osc
     osc_receive_ip = "0.0.0.0"
-    osc_receive_port = 9000
+    osc_receive_port = 12000
+    osc_record_active = False
     
     osc_send_ip = "127.0.0.1"
     osc_send_port = 10000
@@ -315,7 +313,7 @@ if __name__ == "__main__":
     #gui
     app = use_app("pyqt5")
     app.create()
-
+    
     bar_colors = [ colorsys.hsv_to_rgb(1.0 / class_count * cI, 1.0, 1.0) for cI in range(class_count) ]
     canvas = Canvas(bar_colors, (400, 300))
     win = MainWindow(canvas)

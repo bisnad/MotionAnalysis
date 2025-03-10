@@ -15,6 +15,7 @@ import numpy as np
 import pickle
 import csv
 import matplotlib.pyplot as plt
+import pathlib
 
 
 """
@@ -28,8 +29,8 @@ print('Using {} device'.format(device))
 Dataset
 """
 
-data_file_path = "../../AIToolbox/Data/Mocap/Stocos/Solos/MovementQualities_IMU/"
-data_file_extensions = ["pkl"] 
+data_file_path = "data/mocap/"
+data_file_extensions = [".pkl"] 
 data_sensor_ids = ["/accelerometer", "/gyroscope"]
 data_window_length = 60
 data_window_offset = 1
@@ -49,7 +50,6 @@ Training settings
 
 test_percentage = 0.2
 batch_size = 32
-learning_rate = 1e-3
 epochs = 100
 
 load_weights = False
@@ -70,9 +70,13 @@ def load_recordings(data_file_path, extensions):
     
     for root, _, file_names in sorted(os.walk(data_file_path, followlinks=True)):
         for file_name in sorted(file_names):
+            
+            if pathlib.Path(file_name).suffix not in data_file_extensions:
+                continue
+            
             file_path = root + "/" + file_name
                         
-            #print("file_path: ", file_path)
+            print("file_path: ", file_path)
             
             with open(file_path, "rb") as input_file:
                 file_data = pickle.load(input_file)
@@ -94,20 +98,32 @@ def process_recordings(data_files, data_sensor_ids):
         
         recording = {}
         recording["class_id"] = data_file["class_id"]
+        min_data_count = None
         
         sensor_values_combined = []
         
         for sensor_id in data_sensor_ids:
             
-            #print("sensor_id ", sensor_id)
+            print("sensor_id ", sensor_id)
 
             sensor_indices = [i for i, x in enumerate(data_file["sensor_ids"]) if x == sensor_id]
             sensor_values = [data_file["sensor_values"][i] for i in sensor_indices]
             sensor_values = np.array(sensor_values)
             
-            #print("sensor_values s ", sensor_values.shape)
+            print("sensor_values s ", sensor_values.shape)
+            
+            if min_data_count is None:
+                min_data_count = sensor_values.shape[0]
+            elif min_data_count > sensor_values.shape[0]:
+                min_data_count = sensor_values.shape[0]
+                
+            sensor_values = sensor_values[:min_data_count, ...]
+            
+            #print("sensor_values2 s ", sensor_values.shape)
         
             sensor_values_combined.append(sensor_values)
+            
+            
             
         recording["sensor_values"] = np.concatenate(sensor_values_combined, axis=1)
 
@@ -262,14 +278,14 @@ batch_yhat = classifier(batch_x)
 print("batch_yhat s ", batch_yhat.shape)
 
 if load_weights and load_weights_epoch > 0:
-    classifier.load_state_dict(torch.load("results/weights/classifier_epoch_{}.pth".format(load_weights_epoch)))
+    classifier.load_state_dict(torch.load("results/weights/classifier_epoch_{}".format(load_weights_epoch)))
 
 """
 Training
 """
 
 class_loss = nn.NLLLoss()
-optimizer = optim.Adam(classifier.parameters(), lr=learning_rate, weight_decay=0.0001)
+optimizer = optim.Adam(classifier.parameters(), lr=1e-3, weight_decay=0.0001)
 scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.5) # reduce the learning every 20 epochs by a factor of 10
 
 data_mean = torch.tensor(data_mean, dtype=torch.float32).reshape(1, 1, -1).to(device)

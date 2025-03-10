@@ -25,7 +25,7 @@ MocapClassifier_Interactive (contains tool specific python scripts)
 ## Usage
 #### Start
 
-The tool can be started either by double clicking the mocap_classifier.bat (Windows) or mocap_classifier.sh (MacOS) shell scripts or by typing the following commands into the Anaconda terminal:
+The tool can be started either by double clicking the `mocap_classifier.bat` (Windows) or `mocap_classifier.sh` (MacOS) shell scripts or by typing the following commands into the Anaconda terminal:
 
 ```
 conda activate premiere
