@@ -20,6 +20,9 @@ MocapClassifier_Interactive (contains tool specific python scripts)
 
 - data
   - media (contains media used in this Readme)
+  - results
+    - data (mean and standard deviation to normalise motion data)
+    - weights (weights of a previously trained model)
 
 
 ## Usage
@@ -33,10 +36,10 @@ cd MocapClassifier_Interactive
 python mocap_classifier.py
 ```
 
-During startup, the tool loads both the model weights from a previous training run and the mean and standard deviation values that were calculated prior to training to normalise the motion capture data from files that are stored in the results directory of the MotionClassifer. By default, the tool loads these files from an example training run whose results are stored in the following folder relativ to the tool's own directory: ../../AIToolbox/Data/Models/MotionAnalysis/MocapClassifier/results_Stococs_Solos_MovementQualities_IMU. This training run used as motion capture data recordings of sensor data (acceleration and gyroscope) from a mobile phone. The model was trained on this data to recognise three different motion types. To load a different training run, the following source code has to be modified in the file `mocap_classifier.py.` 
+During startup, the tool loads both the model weights from a previous training run and the mean and standard deviation values that were calculated prior to training to normalise the motion capture data from the local data/results folder. This training run used as motion capture data recordings of sensor data (acceleration and gyroscope) from a mobile phone. The model was trained on this data to recognise three different movement qualities. To load a different training run, the following source code has to be modified in the file `mocap_classifier.py.` 
 
 ```
-data_path = "../../AIToolbox/Data/Models/MotionAnalysis/MocapClassifier/results_Stococs_Solos_MovementQualities_IMU"
+data_norm_path = "data/results/data/"
 data_sensor_ids = ["/accelerometer", "/gyroscope"]
 data_sensor_dims = [3, 3]
 data_window_length = 60
@@ -46,19 +49,11 @@ data_window_length = 60
 hidden_dim = 32
 layer_count = 3
 class_count = 3
-
-...
-
-load_weights_epoch = 100
+model_weights_file = "data/results/weights/classifier_weights_epoch_100.pth"
 ```
 
-The string assigned to the variable data_path represents the parent path that contains the exported mean and standard deviations used for normalising the motion data and the exported model weights of the trained classifier. 
-The list of strings that are assigned to the variable `data_sensor_ids` refers to the address part of the OSC messages that are extracted from the recordings. 
-The list of integers that are assigned to the variable `data_sensor_dims` refers to the number of values contained in each OSC messages (which corresponds to the dimension of the sensor values stored in the OSC messages).
-The integer value assigned to the variable `data_window_length`specifies the length of the motion excerpt. This value must be identical with the one used when training the classifier.
-The integer value assigned to the variable `hidden_dim` specifies the number of LSMT units. This value must be identical with the one used when training the classifier.
-The integer value assigned to the variable `layer_count` specifies the number of LSTM layers. This value must be identical with the one used when training the classifier.
-The integer assigned to the variable `load_weights_epoch` specifies the number of the epoch from which the weights from a previous training should be loaded.
+The string assigned to the variable `data_norm_path` represents the parent path that contains the exported mean and standard deviations used for normalising the motion data.  The list of strings that are assigned to the variable `data_sensor_ids` refers to the address part of the OSC messages that are extracted from the recordings.  The list of integers that are assigned to the variable `data_sensor_dims` refers to the number of values contained in each OSC messages (which corresponds to the dimension of the sensor values stored in the OSC messages). The integer value assigned to the variable `data_window_length`specifies the length of the motion excerpt. This value must be identical with the one used when training the classifier. The integer value assigned to the variable `hidden_dim` specifies the number of LSMT units. This value must be identical with the one used when training the classifier. The integer value assigned to the variable `layer_count` specifies the number of LSTM layers. This value must be identical with the one used when training the classifier. The integer value assigned to the variable `class_count` specifies the number of classes the model was trained to recognise. This value must be identical with the one used when training the classifier.
+The string value assigned to the variable `model_weights_file` specifies the file from which the weights from a previous training should be loaded.
 
 #### Functionality
 
