@@ -340,8 +340,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\libs\oscpack\src\osc\OscReceivedElements.cpp" />
     <ClCompile Include="..\libs\oscpack\src\osc\OscTypes.cpp" />
     <ClCompile Include="..\src\GLViewer.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\TrackingViewer.cpp" />
-    <ClCompile Include="C:\Users\dbisig\Programming\testing\ZED\body tracking_osc_v4.2\cpp\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:\Users\dbisig\Programming\testing\ZED\body tracking_osc_v4.2\cpp\build\ZERO_CHECK.vcxproj">

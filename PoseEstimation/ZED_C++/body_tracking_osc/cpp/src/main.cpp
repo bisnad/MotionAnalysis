@@ -32,12 +32,12 @@
 #include "ip/UdpSocket.h"
 
 std::string osc_send_address = "127.0.0.1";
-int osc_send_port = 7000;
+int osc_send_port = 9007;
 
 // joint map for body 34 to match joint numbers from live capture with those in an fbx recording
-std::array<int, 34> joint_map = { 0, 1, 2, 11, 12, 13, 14, 15, 16, 17, 3, 26, 27, 28, 29, 30, 31, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20, 21, 32, 22, 23, 24, 25, 33 };
+//std::array<int, 34> joint_map = { 0, 1, 2, 11, 12, 13, 14, 15, 16, 17, 3, 26, 27, 28, 29, 30, 31, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20, 21, 32, 22, 23, 24, 25, 33 };
 // joint map for body 38 to match joint numbers from live capture with those in an fbx recording
-//std::array<int, 38> joint_map = { 0, 1, 2, 3, 4, 5, 6, 8, 7, 9, 10, 12, 14, 16, 30, 32, 34, 36, 11, 13, 15, 17, 31, 33, 35, 37, 18, 20, 22, 24, 26, 28, 19, 21, 23, 25, 27, 29 };
+std::array<int, 38> joint_map = { 0, 1, 2, 3, 4, 5, 6, 8, 7, 9, 10, 12, 14, 16, 30, 32, 34, 36, 11, 13, 15, 17, 31, 33, 35, 37, 18, 20, 22, 24, 26, 28, 19, 21, 23, 25, 27, 29 };
 
 // ZED includes
 #include <sl/Camera.hpp>
@@ -221,7 +221,17 @@ int main(int argc, char **argv) {
     BodyTrackingParameters body_tracker_params;
     body_tracker_params.enable_tracking = true; // track people across images flow
     body_tracker_params.enable_body_fitting = true; // smooth skeletons moves
-    body_tracker_params.body_format = sl::BODY_FORMAT::BODY_34;
+
+    if (joint_map.size() == 34)
+    {
+        body_tracker_params.body_format = sl::BODY_FORMAT::BODY_34;
+    }
+    else if (joint_map.size() == 38)
+    {
+        body_tracker_params.body_format = sl::BODY_FORMAT::BODY_38;
+    }
+
+    //body_tracker_params.body_format = sl::BODY_FORMAT::BODY_34;
     //body_tracker_params.body_format = sl::BODY_FORMAT::BODY_38;
     body_tracker_params.detection_model = isJetson ? BODY_TRACKING_MODEL::HUMAN_BODY_FAST : BODY_TRACKING_MODEL::HUMAN_BODY_ACCURATE;
     //body_tracker_params.allow_reduced_precision_inference = true;
@@ -353,7 +363,8 @@ void parseArgs(int argc, char **argv, InitParameters& param) {
             cout << "[Sample] Using Camera in resolution VGA" << endl;
         }
     }
-    else if (argc == 3)
+    
+    if (argc == 3)
     {
         osc_send_address = argv[1];
         osc_send_port = std::stoi(argv[2]);

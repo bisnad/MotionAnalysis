@@ -317,6 +317,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\main.cpp" />
     <ClInclude Include="..\include\ClientPublisher.hpp" />
     <ClInclude Include="..\include\GLViewer.hpp" />
     <ClInclude Include="..\include\utils.hpp" />
@@ -342,7 +343,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\libs\oscpack\src\osc\OscTypes.cpp" />
     <ClCompile Include="..\src\ClientPublisher.cpp" />
     <ClCompile Include="..\src\GLViewer.cpp" />
-    <ClCompile Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:\Users\dbisig\Programming\testing\ZED\body_tracking_multi-camera_osc_v4.2\cpp\build\ZERO_CHECK.vcxproj">

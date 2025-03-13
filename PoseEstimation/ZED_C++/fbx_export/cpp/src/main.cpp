@@ -83,7 +83,8 @@ int main(int argc, char** argv) {
     body_tracking_parameters.enable_tracking = true;
     body_tracking_parameters.enable_body_fitting = true;
     // Compatible with body_34 or body_38 formats
-    body_tracking_parameters.body_format = sl::BODY_FORMAT::BODY_38;
+    body_tracking_parameters.body_format = sl::BODY_FORMAT::BODY_34;
+    //body_tracking_parameters.body_format = sl::BODY_FORMAT::BODY_38;
 
     // Only HUMAN_BODY_X models are compatible.
     body_tracking_parameters.detection_model = sl::BODY_TRACKING_MODEL::HUMAN_BODY_ACCURATE;

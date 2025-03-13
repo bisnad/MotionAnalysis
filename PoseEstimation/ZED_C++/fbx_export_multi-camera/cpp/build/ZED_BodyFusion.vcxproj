@@ -322,7 +322,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\src\Common.cxx" />
     <ClCompile Include="..\src\GeometryUtility.cxx" />
     <ClCompile Include="..\src\GLViewer.cpp" />
-    <ClCompile Include="C:\Users\dbisig\Programming\testing\ZED\fbx_export_multi-camera_v4.2\cpp\src\main.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:\Users\dbisig\Programming\testing\ZED\fbx_export_multi-camera_v4.2\cpp\build\ZERO_CHECK.vcxproj">

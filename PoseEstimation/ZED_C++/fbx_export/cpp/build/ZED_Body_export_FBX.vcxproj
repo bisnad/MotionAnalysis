@@ -320,7 +320,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\src\AnimationUtility.cxx" />
     <ClCompile Include="..\src\Common.cxx" />
     <ClCompile Include="..\src\GeometryUtility.cxx" />
-    <ClCompile Include="C:\Users\dbisig\Programming\testing\ZED\fbx_export_v4.x\cpp\src\main.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:\Users\dbisig\Programming\testing\ZED\fbx_export_v4.x\cpp\build\ZERO_CHECK.vcxproj">
