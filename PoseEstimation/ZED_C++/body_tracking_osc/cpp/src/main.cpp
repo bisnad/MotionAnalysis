@@ -35,9 +35,9 @@ std::string osc_send_address = "127.0.0.1";
 int osc_send_port = 9007;
 
 // joint map for body 34 to match joint numbers from live capture with those in an fbx recording
-//std::array<int, 34> joint_map = { 0, 1, 2, 11, 12, 13, 14, 15, 16, 17, 3, 26, 27, 28, 29, 30, 31, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20, 21, 32, 22, 23, 24, 25, 33 };
+std::array<int, 34> joint_map = { 0, 1, 2, 11, 12, 13, 14, 15, 16, 17, 3, 26, 27, 28, 29, 30, 31, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20, 21, 32, 22, 23, 24, 25, 33 };
 // joint map for body 38 to match joint numbers from live capture with those in an fbx recording
-std::array<int, 38> joint_map = { 0, 1, 2, 3, 4, 5, 6, 8, 7, 9, 10, 12, 14, 16, 30, 32, 34, 36, 11, 13, 15, 17, 31, 33, 35, 37, 18, 20, 22, 24, 26, 28, 19, 21, 23, 25, 27, 29 };
+//std::array<int, 38> joint_map = { 0, 1, 2, 3, 4, 5, 6, 8, 7, 9, 10, 12, 14, 16, 30, 32, 34, 36, 11, 13, 15, 17, 31, 33, 35, 37, 18, 20, 22, 24, 26, 28, 19, 21, 23, 25, 27, 29 };
 
 // ZED includes
 #include <sl/Camera.hpp>
@@ -113,15 +113,26 @@ void update_osc(sl::Bodies& bodies, osc::UdpTransmitSocket& pSocket, osc::Outbou
             joint_rot_local_osc[jI] = joint_rot_local[joint_map[jI]];
             joint_pos_local_osc[jI] = joint_pos_local[joint_map[jI]];
 
+            /*
+            // pos scale
+            sl::float3 pos_world = joint_pos3d_world_osc[jI];
+            joint_pos3d_world_osc[jI] = sl::float3(pos_world[0] / 10.0, pos_world[1] / 10.0, pos_world[2] / 10.0);
+
+            sl::float3 pos_local = joint_pos_local_osc[jI];
+            joint_pos_local_osc[jI] = sl::float3(pos_local[0] / 10.0, pos_local[1] / 10.0, pos_local[2] / 10.0);
+            */
+
             // quat conversion from x y z w to w x y z
             sl::float4 rot_xyzw = joint_rot_local_osc[jI];
             joint_rot_local_osc[jI] = sl::float4(rot_xyzw[3], rot_xyzw[0], rot_xyzw[1], rot_xyzw[2]);
+            //joint_rot_local_osc[jI] = sl::float4(rot_xyzw[0], rot_xyzw[1], rot_xyzw[2], rot_xyzw[3]);
         }
 
-
+ 
         // quat conversion from x y z w to w x y z
         sl::float4 rot_xyzw = root_rot_world;
         sl::float4 root_rot_world_osc = sl::float4(rot_xyzw[3], rot_xyzw[0], rot_xyzw[1], rot_xyzw[2]);
+        //sl::float4 root_rot_world_osc = sl::float4(rot_xyzw[0], rot_xyzw[1], rot_xyzw[2], rot_xyzw[3]);
 
         // send pos2d_world
         pStream.Clear();
@@ -281,6 +292,8 @@ int main(int argc, char **argv) {
         if (err == ERROR_CODE::SUCCESS) {
             // Retrieve Detected Human Bodies
             zed.retrieveBodies(bodies, body_tracker_parameters_rt);
+
+            // TODO: forward kinematics to obtain rot world
 
             // update osc
             update_osc(bodies, osc_transmit_socket, osc_stream);

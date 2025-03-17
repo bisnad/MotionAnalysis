@@ -1,6 +1,6 @@
 # AI-Toolbox - Motion Analysis - Pose Estimation - Yolo
 
-![analysis_screenshot](./data/media/YOLO_2D_Screenshot.JPG)
+![analysis_screenshot](./data/media/Yolo_2D_Screenshot.JPG)
 
 Figure 1: Screenshot of the pose estimation tool that employs the Yolo system to detect 2D. The 2D keypoints, bounding box, and classifier label are shown superimposed on the input video image.
 
