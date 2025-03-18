@@ -2,6 +2,8 @@
 
 ![analysis_screenshot](./data/media/MocapAnalysisPython.JPG)
 
+Figure 1: Screenshot of the Python-version of the motion analysis tool. In this screenshot , the bounding box is shown as bar graph and the four Laban Efforts (Flow, Time, Weight, Space) have been selected for OSC sending. 
+
 ## Summary
 
 This Python-based tool provides a set of algorithms for analysing motion capture recordings in real-time. The following analysis functions are provided: positional derivatives (velocity, acceleration, jerk, and quantity of motion),  pose expansion (bounding box, bounding sphere) and Laban Effort Factors (Flow, Time,  Space, Weight). The tool receives motion capture data via [OSC](https://en.wikipedia.org/wiki/Open_Sound_Control) and sends the analysis results also via [OSC](https://en.wikipedia.org/wiki/Open_Sound_Control). 

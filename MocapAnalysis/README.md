@@ -2,6 +2,8 @@
 
 ![analysis_screenshot](./data/media/analysis_screenshot.png)
 
+Figure 1: Screenshot of the C++-based Motion Analysis tool. In this screenshot, the tool shows plots for all joints the motion jerk as time series, with each spatial component depicted in a separate plot. 
+
 ## Summary
 
 This C++-based tool provides a set of algorithms for analysing motion capture recordings in real-time. The following analysis functions are provided: positional and rotational derivatives (velocity, acceleration, and jerk) and Laban Effort Factors (Flow, Time,  Space, Weight). The software receives motion capture data via [OSC](https://en.wikipedia.org/wiki/Open_Sound_Control) and sends the analysis results also via [OSC](https://en.wikipedia.org/wiki/Open_Sound_Control). 

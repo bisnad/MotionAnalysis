@@ -1,12 +1,12 @@
-# AI-Toolbox - Motion Analysis - Clustering Interactive
+# AI-Toolbox - Motion Analysis - Clustering Interactive Pos 2D
 
 ![ClusteringInteractive](./data/media/ClusteringInteractive.JPG)
 
-
+Figure 1:  Screenshot of the Motion Clustering Pos 2D tool. The window on the left shows the output of the tool as simple 2D or 3D stick figure. The window on the right is a Max/MSP patch that demonstrates how to send OSC messages to control the Motion Clustering Pos 2D tool. 
 
 ### Summary
 
-This tool is a Python-based software for extracting motion segments from a pose estimation recording that contains only joint positions but no joint rotations. The tool groups the segments according to their similarity with regards to a chosen set of motion descriptors.  While running, it sends skeleton joint data of the currently displayed motion segment in the form of local and global positions and local and global rotations via [OSC](https://en.wikipedia.org/wiki/Open_Sound_Control) to any destination address. Clustering Interactive can also be remote controlled via [OSC](https://en.wikipedia.org/wiki/Open_Sound_Control).
+This tool is a Python-based software for extracting motion segments from a 2D pose estimation recording and grouping the segments according to their similarity with regards to a chosen set of motion descriptors. While running, it sends skeleton joint data of the currently displayed motion segment in the form of local and global positions and local and global rotations via [OSC](https://en.wikipedia.org/wiki/Open_Sound_Control) to any destination address. Clustering Interactive can also be remote controlled via OSC.
 
 ### Installation
 

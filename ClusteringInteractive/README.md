@@ -2,7 +2,7 @@
 
 ![ClusteringInteractive](./data/media/ClusteringInteractive.JPG)
 
-
+Figure 1: Screenshot of the Motion Clustering tool. The window on the left shows the output of the tool as simple 3D stick figure. The window on the right is a Max/MSP patch that demonstrates how to send OSC messages to control the Motion Clustering tool. 
 
 ### Summary
 
