@@ -6,7 +6,7 @@ Figure 1: Screenshot of the C++-based pose estimation tool that employs the body
 
 ## Summary
 
-This C++-based tool employs the body tracking functionality of the [ZED SDK](https://www.stereolabs.com/docs) to detect both 2D and 3D keypoints. The tool also sends the positions of the detected keypoints as [OSC](https://en.wikipedia.org/wiki/Open_Sound_Control) messages. The tool operates in real-time and takes as input live streams from several [ZED cameras](https://www.stereolabs.com/en-ch/products/zed-2)https://www.stereolabs.com/docs/video/recording). Since the ZED SDK supports only Windows and Linux operating systems, no MacOS version of the tool is provided. 
+This C++-based tool employs the body tracking functionality of the [ZED SDK](https://www.stereolabs.com/docs) to detect both 2D and 3D keypoints. The tool also sends the positions of the detected keypoints as [OSC](https://en.wikipedia.org/wiki/Open_Sound_Control) messages. The tool operates in real-time and takes as input live streams from several [ZED cameras](https://www.stereolabs.com/en-ch/products/zed-2). Since the ZED SDK supports only Windows and Linux operating systems, no MacOS version of the tool is provided. 
 
 ### Installation
 
