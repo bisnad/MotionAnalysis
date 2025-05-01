@@ -699,15 +699,16 @@ def joint_travel_distance(joints):
 
     directions = joints[1:, ...] - joints[:-1, ...]
     lengths = np.linalg.norm(directions, axis = 2 if len(joints.shape) == 3 else 1, keepdims=True)
+    distance = np.sum(lengths, axis=0, keepdims=True)
     
-    return lengths
+    return distance
 
 def windowed_joint_travel_distance(joints, window_size):
     """
     Calculates the distance travel by joints
     joints: time x joint_count x joint_dimension or time x joint_dimension
     
-    the distances are averaged within each window
+    the distances are summed within each window
     """
     
     # calc travel lengths for each time-step and joint
@@ -721,7 +722,7 @@ def windowed_joint_travel_distance(joints, window_size):
     
     for tI in range(lengths.shape[0] - window_size):
         length_excerpt = lengths[tI:tI + window_size]
-        windowed_value = np.mean(length_excerpt, axis=0, keepdims=True)
+        windowed_value = np.sum(length_excerpt, axis=0, keepdims=True)
         windowed_lengths.append(windowed_value)
         
     windowed_lengths = np.concatenate(windowed_lengths, axis=0)

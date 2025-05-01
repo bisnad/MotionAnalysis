@@ -73,12 +73,14 @@ def on_predict_batch_end(predictor):
     keypoints_np = keypoints_xyn.cpu().numpy()
 
     keypoints_conf = keypoints.conf
-    keypoints_conf_np = keypoints_conf.cpu().numpy()
-
-    for skel_index in range(keypoints_np.shape[0]):
-
-        osc_sender.send("/mocap/{}/joint/pos_world".format(skel_index), keypoints_np[skel_index])
-        osc_sender.send("/mocap/{}/joint/visibility".format(skel_index), keypoints_conf_np[skel_index])
+    
+    if keypoints_conf is not None:
+        keypoints_conf_np = keypoints_conf.cpu().numpy()
+    
+        for skel_index in range(keypoints_np.shape[0]):
+    
+            osc_sender.send("/mocap/{}/joint/pos_world".format(skel_index), keypoints_np[skel_index])
+            osc_sender.send("/mocap/{}/joint/visibility".format(skel_index), keypoints_conf_np[skel_index])
 
 
 # load a pretrained YOLOv8m model

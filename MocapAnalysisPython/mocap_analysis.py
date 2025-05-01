@@ -27,26 +27,17 @@ import numpy as np
 Mocap Settings
 """
 
-mocap_joint_weights_path = "configs/joint_weights_xsens_fbx.json"
-mocap_pos_dim = 3
-mocap_fps = 50
+mocap_config_path = "configs/xsens_fbx_config.json"
 
-# load joint weights 
-if mocap_joint_weights_path is None: # 
-    mocap_joint_count = 17 # COCO
-    mocap_joint_weights = [1] * mocap_joint_count
-else:
-    with open(mocap_joint_weights_path) as json_data:
-        mocap_joint_weights = json.load(json_data)["jointWeights"]
-    mocap_joint_weights = np.array(mocap_joint_weights, dtype=np.float32)
-    
-    mocap_joint_count = len(mocap_joint_weights)
+# load mocap config
+with open(mocap_config_path) as json_data:
+    mocap_config = json.load(json_data)
 
 """
 OSC Receiver
 """
 
-input_pos_data = np.zeros((mocap_joint_count, mocap_pos_dim), dtype=np.float32)
+input_pos_data = np.zeros((len(mocap_config["joint_names"]), mocap_config["pos_dim"]), dtype=np.float32)
 
 motion_receiver.config["ip"] = "0.0.0.0"
 motion_receiver.config["port"] = 9007
@@ -68,8 +59,7 @@ osc_sender = motion_sender.OscSender(motion_sender.config)
 Data Pipeline
 """
 
-pipeline = motion_pipeline.MotionPipeline(osc_receiver, mocap_joint_weights, 0.02)
-pipeline.posScale = 1.0
+pipeline = motion_pipeline.MotionPipeline(osc_receiver, mocap_config)
 
 """
 GUI

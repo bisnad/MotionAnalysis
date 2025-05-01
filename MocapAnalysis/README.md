@@ -16,13 +16,13 @@ The software can be downloaded by cloning the [MotionUtilities Github repository
 
 ### Directory Structure
 
-- MocapAnalysis (contains the XCode and Visual Studio project files)
-  - bin (contains the software  executable and dynamic libraries)
-    - data (contains a configuration file that specifies several software settings)
-  - data 
-    - media (contains media used in this Readme)
-  - max (contains an example Max patch for forwarding OSC messages received by the MocapAnalysis tool to multiple IP addresses and ports)
-  - src (contains the source code files)
+MocapAnalysis (contains the XCode and Visual Studio project files)
+- bin (contains the software  executable and dynamic libraries)
+  - data (contains a configuration file that specifies several software settings)
+- data 
+  - media (contains media used in this Readme)
+- max (contains an example Max patch for forwarding OSC messages received by the MocapAnalysis tool to multiple IP addresses and ports)
+- src (contains the source code files)
 
 ## Usage
 #### Start

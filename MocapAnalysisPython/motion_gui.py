@@ -229,10 +229,13 @@ class MotionGui(QtWidgets.QWidget):
                           "qom": False,
                           "bbox": False,
                           "bsphere": False,
+                          "bvolume": False,
                           "flow_effort": False,
                           "time_effort": False,
                           "weight_effort": False,
-                          "space_effort": False}
+                          "space_effort": False,
+                          "travel_distance": False,
+                          "area_covered": False}
         self.showItem = ""
         
         self.q_sendItems = QtWidgets.QListWidget()
@@ -396,6 +399,10 @@ class MotionGui(QtWidgets.QWidget):
         if self.sendItems["bsphere"] == True:
             osc_values = np.reshape(self.pipeline.bsphere, (-1)).tolist()
             self.sender.send("/mocap/0/bsphere", osc_values)
+        if self.sendItems["bvolume"] == True:
+            osc_values = np.concatenate((self.pipeline.vol_fullbody, self.pipeline.vol_upperbody, self.pipeline.vol_lowerbody, self.pipeline.vol_rightbody, self.pipeline.vol_leftbody), axis=0).flatten().tolist()
+            osc_values = np.reshape(self.pipeline.bsphere, (-1)).tolist()
+            self.sender.send("/mocap/0/bvolume", osc_values)     
         if self.sendItems["flow_effort"] == True:
             osc_values = np.reshape(self.pipeline.flow_effort, (-1)).tolist()
             self.sender.send("/mocap/0/flow_effort", osc_values)
@@ -408,6 +415,12 @@ class MotionGui(QtWidgets.QWidget):
         if self.sendItems["space_effort"] == True:
             osc_values = np.reshape(self.pipeline.space_effort, (-1)).tolist()
             self.sender.send("/mocap/0/space_effort", osc_values)
+        if self.sendItems["travel_distance"] == True:
+            osc_values = np.reshape(self.pipeline.travel_distance, (-1)).tolist()
+            self.sender.send("/mocap/0/travel_distance", osc_values)
+        if self.sendItems["area_covered"] == True:
+            osc_values = np.reshape(self.pipeline.area_covered, (-1)).tolist()
+            self.sender.send("/mocap/0/area_covered", osc_values)
 
     def update_view(self):
         
@@ -469,6 +482,9 @@ class MotionGui(QtWidgets.QWidget):
                 elif self.showItem == "bsphere":
                     view_data = {"data": self.pipeline.bsphere.flatten()}
                     self.canvas.update_data(view_data)
+                elif self.showItem == "bvolume":
+                    view_data = {"data": np.concatenate((self.pipeline.vol_fullbody, self.pipeline.vol_upperbody, self.pipeline.vol_lowerbody, self.pipeline.vol_rightbody, self.pipeline.vol_leftbody), axis=0).flatten()}
+                    self.canvas.update_data(view_data)
                 elif self.showItem == "flow_effort":
                     view_data = {"data": self.pipeline.flow_effort.flatten()}
                     self.canvas.update_data(view_data)
@@ -481,7 +497,12 @@ class MotionGui(QtWidgets.QWidget):
                 elif self.showItem == "space_effort":
                     view_data = {"data": self.pipeline.space_effort.flatten()}
                     self.canvas.update_data(view_data)
-
+                elif self.showItem == "travel_distance":
+                    view_data = {"data": self.pipeline.travel_distance.flatten()}
+                    self.canvas.update_data(view_data)
+                elif self.showItem == "area_covered":
+                    view_data = {"data": self.pipeline.area_covered.flatten()}
+                    self.canvas.update_data(view_data)
                 
                 break
         
