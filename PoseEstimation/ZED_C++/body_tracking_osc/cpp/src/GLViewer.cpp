@@ -316,7 +316,7 @@ void GLViewer::draw() {
     glUseProgram(shaderLine.it.getProgramId());
     glUniformMatrix4fv(shaderLine.MVP_Mat, 1, GL_TRUE, vpMatrix.m);
     glLineWidth(1.f);
-    floor_grid.draw();
+    //floor_grid.draw();
     glUseProgram(0);
 
     // Apply IMU Rotation compensation
