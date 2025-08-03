@@ -88,6 +88,8 @@ class MMPoseInferencer(BaseMMPoseInferencer):
                  det_cat_ids: Optional[Union[int, List]] = None,
                  show_progress: bool = False) -> None:
 
+        print("device ", device)
+
         self.visualizer = None
         self.show_progress = show_progress
         if pose3d is not None:
@@ -131,6 +133,7 @@ class MMPoseInferencer(BaseMMPoseInferencer):
             Any: Data processed by the ``pipeline`` and ``collate_fn``.
             List[str or np.ndarray]: List of original inputs in the batch
         """
+        
         for data in self.inferencer.preprocess(inputs, batch_size, **kwargs):
             yield data
 

@@ -267,4 +267,5 @@ def closeEvent():
 app.lastWindowClosed.connect(closeEvent) # myExitHandler is a callable
 
 gui.show()
+gui.start()
 app.exec_()

@@ -10,7 +10,7 @@ void ofApp::setup()
 	try
 	{
 		loadConfig(ofToDataPath("config.json"));
-
+        
 		setupData();
 		setupDataProc();
 		setupOsc();
@@ -132,9 +132,9 @@ ofApp::loadConfig(const std::string& pFileName) throw (dab::Exception)
 		std::string jointWeightsFileName = jsonHelper.getString(restoreData, "jointWeights");
 		std::string jointConnectivityFileName = jsonHelper.getString(restoreData, "jointConnectivity");
 
-		loadJointBodyPartFilters(jointBodyPartFiltersFileName);
-		loadJointWeights(jointWeightsFileName);
-		loadJointConnectivity(jointConnectivityFileName);
+		loadJointBodyPartFilters(ofToDataPath(jointBodyPartFiltersFileName));
+		loadJointWeights(ofToDataPath(jointWeightsFileName));
+		loadJointConnectivity(ofToDataPath(jointConnectivityFileName));
 	}
 	catch (dab::Exception& e)
 	{

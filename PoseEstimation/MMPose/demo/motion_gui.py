@@ -294,7 +294,7 @@ class MotionGui(QtWidgets.QWidget):
         self.setWindowTitle("Motion Capture")
     
     def start(self):
-        
+
         self.motion_model.start()
         
         self.pose_thread_event = Event()
