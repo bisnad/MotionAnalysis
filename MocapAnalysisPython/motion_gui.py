@@ -1,132 +1,183 @@
 import torch
 import numpy as np
-
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
-
 from vispy import scene
 from vispy.app import use_app, Timer
 from vispy.scene import SceneCanvas, visuals
-
-
 from pathlib import Path
 from threading import Thread, Event
 import time
 from time import sleep
 import datetime
-
 import motion_pipeline
 
-config = {"pipeline": None,
-          "sender": None}
+config = {"pipeline": None, "sender": None}
 
-class BarView:
+class BarViewOptimized:
     def __init__(self, max_value_count, colors, parent_view=None):
-        
         self.max_value_count = max_value_count
         self.value_count = max_value_count
         self.colors = colors
         self.parent_view = parent_view
+
+        self.bar_width = 1.0 / self.value_count
+        self.bar_centers_x = np.linspace(self.bar_width / 2, 1.0 - self.bar_width / 2, self.value_count)
+
+        # 4 vertices per rectangle (bar), creating proper faces
+        self.vertices = np.zeros((self.value_count * 4, 3), dtype=np.float32)
+        self.colors_arr = np.zeros((self.value_count * 4, 4), dtype=np.float32)
+
+        # Faces: Two triangles per rectangle (each face references 3 vertices)
+        self.faces = np.zeros((self.value_count * 2, 3), dtype=np.uint32)
         
-        bar_width = 1.0 / self.value_count
-        bar_centers_x = np.linspace(bar_width / 2, 1.0 - bar_width / 2, self.value_count)
-        
-        self.bars = [ visuals.Rectangle(center=(bar_centers_x[i], 0.0), width=bar_width, height=0.01, color=colors[i]) for i in range(self.value_count) ]
-        self.compound = visuals.Compound(self.bars, parent=self.parent_view)
-        
+        # Generate faces for rectangles
+        for i in range(self.value_count):
+            base_face = i * 2
+            base_vert = i * 4
+            # Triangle 1: bottom-left, bottom-right, top-right
+            self.faces[base_face] = [base_vert, base_vert + 1, base_vert + 2]
+            # Triangle 2: bottom-left, top-right, top-left
+            self.faces[base_face + 1] = [base_vert, base_vert + 2, base_vert + 3]
+
+        self._initialize_geometry()
+
+        # Create mesh with explicit faces
+        self.mesh = visuals.Mesh(
+            vertices=self.vertices,
+            faces=self.faces,
+            vertex_colors=self.colors_arr,
+            mode='triangles',
+            parent=self.parent_view
+        )
+
+    def _initialize_geometry(self):
+        """Initialize vertex positions and colors for all bars"""
+        half_width = self.bar_width / 2
+
+        for i, center_x in enumerate(self.bar_centers_x):
+            base_index = i * 4
+            bottom_y = 0.0
+            top_y = 0.01
+
+            # Rectangle corners (4 vertices per bar)
+            bl = (center_x - half_width, bottom_y, 0)  # bottom-left
+            br = (center_x + half_width, bottom_y, 0)  # bottom-right
+            tr = (center_x + half_width, top_y, 0)     # top-right
+            tl = (center_x - half_width, top_y, 0)     # top-left
+
+            self.vertices[base_index] = bl
+            self.vertices[base_index + 1] = br
+            self.vertices[base_index + 2] = tr
+            self.vertices[base_index + 3] = tl
+
+            # Set colors for all 4 vertices of this bar
+            color = self.colors[i] if i < len(self.colors) else (1, 1, 1, 0.8)
+            self.colors_arr[base_index:base_index+4] = color
+
     def resetValueCount(self, value_count):
-        
-        #print("BarView resetValueCount value_count ", value_count)
-        
+        """Optimize: only recalculate if count actually changed"""
+        if value_count == self.value_count:
+            return
+
         self.value_count = value_count
+        self.bar_width = 0.9 / self.value_count
+        self.bar_centers_x = np.linspace(self.bar_width / 2, 1.0 - self.bar_width / 2, self.value_count)
         
-        bar_width = 0.9 / self.value_count
-        bar_centers_x = np.linspace(bar_width / 2, 1.0 - bar_width / 2, self.value_count)
+        # Recreate faces for new bar count
+        self.faces = np.zeros((self.value_count * 2, 3), dtype=np.uint32)
+        for i in range(self.value_count):
+            base_face = i * 2
+            base_vert = i * 4
+            self.faces[base_face] = [base_vert, base_vert + 1, base_vert + 2]
+            self.faces[base_face + 1] = [base_vert, base_vert + 2, base_vert + 3]
         
-        for vI in range(self.max_value_count ):
-            
-            if vI < self.value_count:
-                self.bars[vI].center = (bar_centers_x[vI], 0.0)
-                self.bars[vI].width = bar_width
-                self.bars[vI].color = self.colors[vI]
-            
-            if vI >= self.value_count:
-                self.bars[vI].center = (2.0, 0.0)
-                self.bars[vI].width = 0.01
-                self.bars[vI].color = [0.0, 0.0, 0.0, 0.0]
-        
+        self._initialize_geometry()
+
     def update(self, values):
-        
-        #print("BarView update values ", values)
-        
-        value_count = values.shape[0]
-        value_count = min(value_count, self.max_value_count )
-        
-        #print("value_count ", value_count, " self.value_count ", self.value_count)
-        
+        """Batch update all bar heights"""
+        value_count = min(values.shape[0], self.max_value_count)
+
         if value_count != self.value_count:
             self.resetValueCount(value_count)
-            
-        for vI in range(self.value_count):
-            bar = self.bars[vI]
-            value = values[vI]
 
-            bar.center = (bar.center[0], value / 2)
-            bar.height = abs(value) + 0.0001
-            
-class DataView:
+        half_width = self.bar_width / 2
+
+        # Update vertex positions for all bars
+        for i in range(self.value_count):
+            base_index = i * 4
+            center_x = self.bar_centers_x[i]
+            value = values[i] if i < len(values) else 0
+
+            #bottom_y = 0
+            bottom_y = min(value, -0.0001)   # Ensure minimum height
+            #top_y = max(abs(value), 0.0001)  # Ensure minimum height
+            top_y = max(value, 0.0001)  # Ensure minimum height
+
+            # Rectangle corners
+            bl = (center_x - half_width, bottom_y, 0)
+            br = (center_x + half_width, bottom_y, 0)
+            tr = (center_x + half_width, top_y, 0)
+            tl = (center_x - half_width, top_y, 0)
+
+            self.vertices[base_index] = bl
+            self.vertices[base_index + 1] = br
+            self.vertices[base_index + 2] = tr
+            self.vertices[base_index + 3] = tl
+
+        # Single GPU update for all bars
+        self.mesh.set_data(vertices=self.vertices, faces=self.faces, vertex_colors=self.colors_arr)
+
+class DataViewOptimized:
     def __init__(self, title, max_value_dim, value_range, time_steps, colors):
-        
         self.title = title
         self.max_value_dim = max_value_dim
         self.value_dim = max_value_dim
         self.value_range = value_range
         self.time_steps = time_steps
         self.colors = colors
-        
+
         if value_range[0] > value_range[1]:
             self.autoscale = True
         else:
             self.autoscale = False
-        
+
         self.canvas = SceneCanvas()
         self.grid = self.canvas.central_widget.add_grid()
 
-        yaxis = scene.AxisWidget(orientation='left',
-                                 axis_font_size=12,
-                                 axis_label_margin=50,
-                                 tick_label_margin=5)
+        yaxis = scene.AxisWidget(
+            orientation='left',
+            axis_font_size=12,
+            axis_label_margin=50,
+            tick_label_margin=5
+        )
         yaxis.width_max = 80
         self.grid.add_widget(yaxis, row=0, col=0)
-        
+
         self.bar_view = self.grid.add_view(0, 1, bgcolor="black")
 
-        self.bars = BarView(self.max_value_dim, self.colors, self.bar_view.scene)
+        # Use optimized bar view
+        self.bars = BarViewOptimized(self.max_value_dim, self.colors, self.bar_view.scene)
 
         self.bar_view.camera = "panzoom"
         self.bar_view.camera.set_range(x=(0.0, 1.0), y=(self.value_range[0], self.value_range[1]))
 
         yaxis.link_view(self.bar_view)
-        
-    def set_value_range(self, value_range):
 
+    def set_value_range(self, value_range):
         self.value_range = value_range
         if value_range[0] > value_range[1]:
             self.autoscale = True
         else:
             self.autoscale = False
-        
         self.bar_view.camera.set_range(x=(0.0, 1.0), y=(value_range[0], value_range[1]))
-        
+
     def update_data(self, data):
-        
+
         data_dim = min(data.shape[0], self.max_value_dim)
         data = data[:data_dim]
-        
-        #print("DataView update_data ", data)
 
-        if self.autoscale == True:
-            
+        if self.autoscale:
             range_changed = False
             min_value = np.min(data)
             max_value = np.max(data)
@@ -138,38 +189,34 @@ class DataView:
                 self.value_range[1] = max_value
                 range_changed = True
 
-            if range_changed == True:
+            if range_changed:
                 self.bar_view.camera.set_range(x=(0.0, 1.0), y=(self.value_range[0], self.value_range[1]))
-        
+
         self.bars.update(data)
 
-class Canvas:
+class CanvasOptimized:
     def __init__(self, size):
         self.size = size
-        #self.canvas = SceneCanvas(size = size, keys="interactive")
-        self.canvas = SceneCanvas(size = size)
+        self.canvas = SceneCanvas(size=size)
         self.grid = self.canvas.central_widget.add_grid()
         self.views = {}
-        
-        #self.canvas.measure_fps(window=1, callback='%1.1f FPS')
-        
+
     def add_sensor_view(self, name, max_value_dim, value_range, time_steps, colors):
-        sensor_view = DataView(name, max_value_dim, value_range, time_steps, colors)
+        sensor_view = DataViewOptimized(name, max_value_dim, value_range, time_steps, colors)
         self.grid.add_widget(sensor_view.canvas.central_widget, len(self.views), 0)
         self.views[name] = sensor_view
-        
-    def set_value_range(self, name, value_range):
 
-        self.views[name].set_value_range(value_range)
+    def set_value_range(self, name, value_range):
+        if name in self.views:
+            self.views[name].set_value_range(value_range)
 
     def update_data(self, new_data):
-        
+
         key = list(new_data.keys())[0]
         value = list(new_data.values())[0]
-        
+
         if key in self.views:
             self.views[key].update_data(value)
-            
 
 class MotionGui(QtWidgets.QWidget):
     
@@ -199,7 +246,7 @@ class MotionGui(QtWidgets.QWidget):
         self.q_button_grid.addWidget(self.q_fps,0,2)
         
         # canvas
-        self.canvas = Canvas((400, 400))
+        self.canvas = CanvasOptimized((400, 400))
         self.canvas.add_sensor_view("data", 100, [1000.0, -1000.0], 100, [(1.0, 1.0, 1.0, 0.8)] * 100)
         
         self.canvas_active = True
@@ -435,12 +482,14 @@ class MotionGui(QtWidgets.QWidget):
                 if self.showItem != q_text:
                     self.canvas.set_value_range("data", [1000, -1000])
                     self.showItem = q_text
+
+                print("self.showItem ", self.showItem)
                 
                 # show values of select item
-                if self.showItem == "position_scaled":
+                if self.showItem == "pos_scaled":
                     view_data = {"data": self.pipeline.posScaled.flatten()}
                     self.canvas.update_data(view_data)
-                elif self.showItem == "position_smooth":
+                elif self.showItem == "pos_smooth":
                     view_data = {"data": self.pipeline.posSmooth.flatten()}
                     self.canvas.update_data(view_data)                
                 elif self.showItem == "velocity":
@@ -461,7 +510,7 @@ class MotionGui(QtWidgets.QWidget):
                 elif self.showItem == "jerk_smooth":
                     view_data = {"data": self.pipeline.jerkSmooth.flatten()}
                     self.canvas.update_data(view_data)   
-                elif self.showItem == "position_scalar":
+                elif self.showItem == "pos_scalar":
                     view_data = {"data": self.pipeline.pos_scalar.flatten()}
                     self.canvas.update_data(view_data)   
                 elif self.showItem == "velocity_scalar":
@@ -575,3 +624,4 @@ class MotionGui(QtWidgets.QWidget):
         if sender_active == True:
             self.sender.set_active(True)
             
+
