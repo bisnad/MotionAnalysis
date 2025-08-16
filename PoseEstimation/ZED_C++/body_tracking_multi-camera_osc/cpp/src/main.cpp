@@ -34,10 +34,24 @@
 
 
 // joint map for body 34 to match joint numbers from live capture with those in an fbx recording
-//std::array<int, 34> joint_map = { 0, 1, 2, 11, 12, 13, 14, 15, 16, 17, 3, 26, 27, 28, 29, 30, 31, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20, 21, 32, 22, 23, 24, 25, 33 };
+std::array<int, 34> joint_map = { 0, 1, 2, 11, 12, 13, 14, 15, 16, 17, 3, 26, 27, 28, 29, 30, 31, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20, 21, 32, 22, 23, 24, 25, 33 };
 // joint map for body 38 to match joint numbers from live capture with those in an fbx recording
-std::array<int, 38> joint_map = { 0, 1, 2, 3, 4, 5, 6, 8, 7, 9, 10, 12, 14, 16, 30, 32, 34, 36, 11, 13, 15, 17, 31, 33, 35, 37, 18, 20, 22, 24, 26, 28, 19, 21, 23, 25, 27, 29 };
+//std::array<int, 38> joint_map = { 0, 1, 2, 3, 4, 5, 6, 8, 7, 9, 10, 12, 14, 16, 30, 32, 34, 36, 11, 13, 15, 17, 31, 33, 35, 37, 18, 20, 22, 24, 26, 28, 19, 21, 23, 25, 27, 29 };
 
+// joint parent indices for body 34
+std::array<int, 34> joint_parent_indices = { -1, 0, 1, 2, 3, 4, 5, 6, 7, 6, 2, 10, 11, 11, 11, 11, 11, 2, 17, 18, 19, 20, 21, 20, 0, 24, 25, 26, 26, 0, 29, 30, 31, 31 };
+// joint parent indices for body 38
+//std::array<int, 38> joint_parent_indices = { -1, 0, 1, 2, 3, 4, 5, 6, 5, 8, 3, 10, 11, 12, 13, 13, 13, 13, 3, 18, 19, 20, 21, 21, 21, 21, 0, 26, 27, 28, 28, 28, 0, 32, 33, 34, 34, 34 };
+
+// Quaternion multiplication helper (w,x,y,z order)
+sl::float4 quatMul(const sl::float4& q1, const sl::float4& q2) {
+    return sl::float4(
+        q1[0] * q2[0] - q1[1] * q2[1] - q1[2] * q2[2] - q1[3] * q2[3], // w
+        q1[0] * q2[1] + q1[1] * q2[0] + q1[2] * q2[3] - q1[3] * q2[2], // x
+        q1[0] * q2[2] - q1[1] * q2[3] + q1[2] * q2[0] + q1[3] * q2[1], // y
+        q1[0] * q2[3] + q1[1] * q2[2] - q1[2] * q2[1] + q1[3] * q2[0]  // z
+    );
+}
 
 void update_osc(sl::Bodies& bodies, osc::UdpTransmitSocket& pSocket, osc::OutboundPacketStream& pStream)
 {
@@ -75,6 +89,7 @@ void update_osc(sl::Bodies& bodies, osc::UdpTransmitSocket& pSocket, osc::Outbou
         std::vector<sl::float3> joint_pos3d_world_osc(joint_count);
         std::vector<sl::float4> joint_rot_local_osc(joint_count);
         std::vector<sl::float3> joint_pos_local_osc(joint_count);
+        std::vector<sl::float4> joint_rot_world_osc(joint_count);
 
         for (int jI = 0; jI < joint_count; ++jI)
         {
@@ -98,6 +113,21 @@ void update_osc(sl::Bodies& bodies, osc::UdpTransmitSocket& pSocket, osc::Outbou
         sl::float4 rot_xyzw = root_rot_world;
         sl::float4 root_rot_world_osc = sl::float4(rot_xyzw[3], rot_xyzw[0], rot_xyzw[1], rot_xyzw[2]);
 
+        // ---- Compute GLOBAL ROTATIONS ----
+        auto parents = joint_parent_indices;
+
+        for (int jI = 0; jI < joint_count; ++jI) {
+            int parent = parents[jI];
+            if (parent == -1) {
+                // Root joint gets global_root_orientation
+                joint_rot_world_osc[jI] = root_rot_world_osc;
+            }
+            else {
+                // Combine parent world rotation with this joint's local rotation
+                joint_rot_world_osc[jI] = quatMul(joint_rot_world_osc[parent], joint_rot_local_osc[jI]);
+            }
+        }
+
         // send pos2d_world
         pStream.Clear();
         pStream << osc::BeginMessage((std::string("/mocap/") + std::to_string(body_id) + "/joint/pos2d_world").c_str());
@@ -109,6 +139,13 @@ void update_osc(sl::Bodies& bodies, osc::UdpTransmitSocket& pSocket, osc::Outbou
         pStream.Clear();
         pStream << osc::BeginMessage((std::string("/mocap/") + std::to_string(body_id) + "/joint/pos_world").c_str());
         for (int jI = 0; jI < joint_count; ++jI) pStream << joint_pos3d_world_osc[jI][0] << joint_pos3d_world_osc[jI][1] << joint_pos3d_world_osc[jI][2];
+        pStream << osc::EndMessage;
+        pSocket.Send(pStream.Data(), pStream.Size());
+
+        // send rot_local
+        pStream.Clear();
+        pStream << osc::BeginMessage((std::string("/mocap/") + std::to_string(body_id) + "/joint/rot_local").c_str());
+        for (int jI = 0; jI < joint_count; ++jI) pStream << joint_rot_local_osc[jI][0] << joint_rot_local_osc[jI][1] << joint_rot_local_osc[jI][2] << joint_rot_local_osc[jI][3];
         pStream << osc::EndMessage;
         pSocket.Send(pStream.Data(), pStream.Size());
 

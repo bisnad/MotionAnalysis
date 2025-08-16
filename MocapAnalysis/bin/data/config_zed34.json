@@ -1,0 +1,8 @@
+{
+    "jointWeights": "joint_weights_zed34.json",
+    "jointFilters": "joint_body_part_filters_zed34.json",
+    "jointConnectivity": "joint_connectivity_zed34.json",
+    "oscReceivePort": 9007,
+    "oscSendAddress": "127.0.0.1",
+    "oscSendPort": 9006
+}
