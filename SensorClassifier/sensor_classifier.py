@@ -1,8 +1,8 @@
 """
-Motion Capture Classification using LSTM Networks
+Sensor Classification using LSTM Networks
 
-This module implements a neural network classifier for motion capture data using PyTorch.
-The classifier processes windowed motion data from various file formats (BVH, FBX) and
+This module implements a neural network classifier for sensor data using PyTorch.
+The classifier processes windowed motion data and
 trains an LSTM-based network to classify different motion types.
 """
 
@@ -11,51 +11,39 @@ imports
 """
 
 # General imports
-
-import os
-import sys
-import time
+import os, sys, time, subprocess
+import numpy as np
 import pickle
 import csv
-from pathlib import Path
-from typing import List, Tuple, Dict, Any, Optional
-from collections import OrderedDict
-
-import numpy as np
 import matplotlib.pyplot as plt
+import pathlib
+from collections import OrderedDict
 
 # Pytorch imports
 
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
+from torch.utils.data import Dataset
+from torch.utils.data import DataLoader
+from torch import nn
+import torch.nn.functional as nnF
 import torch.optim as optim
-from torch.utils.data import Dataset, DataLoader
-
-# Mocap imports
-
-from common import utils
-from common import bvh_tools as bvh
-from common import fbx_tools as fbx
-from common import mocap_tools as mocap
-from common.quaternion import qmul, qrot, qnormalize_np, slerp, qfix
 
 """
-Configurations
+Configuration
 """
+
+# Device settings
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 print('Using {} device'.format(device))
 
-# Mocap Settings
+# Sensor data settings
 
-mocap_data_file_path = "E:/Data/mocap/Daniel/Zed/fbx/"
-mocap_data_file_extensions = [".fbx"] 
-mocap_joint_indices = [ 3, 4, 5, 6, 7 ] # right arm only
-mocap_data_ids = ["rot_local"]
-mocap_data_window_length = 90
-mocap_data_window_offset = 15
-mocap_pos_scale = 1.0
+sensor_data_file_path = "data/sensors/"
+sensor_data_file_extensions = [".pkl"] 
+sensor_data_ids = ["/accelerometer", "/gyroscope"]
+sensor_data_window_length = 90
+sensor_data_window_offset = 15
 
 # Model settings
 
@@ -69,7 +57,9 @@ model_dropout = 0.3
 load_weights = False
 load_weights_epoch = 100
 
-# Training settings
+"""
+Training settings
+"""
 
 test_percentage = 0.2
 batch_size = 64
@@ -77,138 +67,145 @@ epochs = 200
 learning_rate = 1e-4
 weight_decay = 0.001
 
+load_weights = False
+load_weights_epoch = 100
+
+"""
+Create Results Directories
+"""
+
+os.makedirs("results/data", exist_ok=True)
+os.makedirs("results/histories", exist_ok=True)
+os.makedirs("results/weights", exist_ok=True)
 
 """
 Load Data
 """
 
-# verify that filename has allowed extension
+"""Check if filename has one of the allowed extensions."""
 def file_has_allowed_extension(filename, extensions):
     return filename.lower().endswith(tuple(extensions))
 
-# find the class folders
+"""Find class folders and create class-to-index mapping."""
 def find_classes(directory):
     classes = sorted(entry.name for entry in os.scandir(directory) if entry.is_dir())
     class_to_idx = {class_name: i for i, class_name in enumerate(classes)}
     return classes, class_to_idx
 
-# generates a list of tuples (path_to_file, class_index)
+"""Generate list of tuples (path_to_file, class_index)."""
 def load_class_filenames(directory, extensions):
 
     _, class_to_idx = find_classes(directory)
-    
-    def is_valid_file(x: str) -> bool:
-        return file_has_allowed_extension(x, extensions)
-    
+        
     instances = []
     available_classes = set()
+    
     for target_class in sorted(class_to_idx.keys()):
         class_index = class_to_idx[target_class]
-        target_dir = directory + "/" + target_class
-
+        target_dir = os.path.join(directory, target_class)
+        
         if not os.path.isdir(target_dir):
             continue
+            
         for root, _, fnames in sorted(os.walk(target_dir, followlinks=True)):
             for fname in sorted(fnames):
-                
-                path = root + "/" + fname
-                if is_valid_file(path):
-                    item = path, class_index
-                    instances.append(item)
-
-                    if target_class not in available_classes:
-                        available_classes.add(target_class)
-
-    empty_classes = set(class_to_idx.keys()) - available_classes
+                path = os.path.join(root, fname)
+                if file_has_allowed_extension(path, extensions):
+                    instances.append((path, class_index))
+                    available_classes.add(target_class)
     
+    # Check for empty classes
+    empty_classes = set(class_to_idx.keys()) - available_classes
     if empty_classes:
-        msg = f"Found no valid file for the classes {', '.join(sorted(empty_classes))}. "
-        if extensions is not None:
-            msg += f"Supported extensions are: {extensions if isinstance(extensions, str) else ', '.join(extensions)}"
-        raise FileNotFoundError(msg)
-
+        extensions_str = ', '.join(extensions) if isinstance(extensions, list) else extensions
+        raise FileNotFoundError(
+            f"Found no valid files for classes {', '.join(sorted(empty_classes))}. "
+            f"Supported extensions: {extensions_str}"
+        )
+    
     return instances
 
-bvh_tools = bvh.BVH_Tools()
-fbx_tools = fbx.FBX_Tools()
-mocap_tools = mocap.Mocap_Tools()
-
-def load_mocap_file(mocap_file_path):
+def load_sensor_recording(file_path):
     
-    print("process file path ", mocap_file_path)
-
-    if mocap_file_path.endswith(".bvh") or mocap_file_path.endswith(".BVH"):
-        bvh_data = bvh_tools.load(mocap_file_path)
-        mocap_data = mocap_tools.bvh_to_mocap(bvh_data)
-    elif mocap_file_path.endswith(".fbx") or mocap_file_path.endswith(".FBX"):
-        fbx_data = fbx_tools.load(mocap_file_path)
-        mocap_data = mocap_tools.fbx_to_mocap(fbx_data)[0] # first skeleton only
+    print(f"Processing file: {file_path}")
         
-    mocap_data["skeleton"]["offsets"] *= mocap_pos_scale
-    mocap_data["motion"]["pos_local"] *= mocap_pos_scale
+    file_ext = file_path.lower()
     
-    # set x and z offset of root joint to zero
-    mocap_data["skeleton"]["offsets"][0, 0] = 0.0 
-    mocap_data["skeleton"]["offsets"][0, 2] = 0.0 
-    
-    if mocap_file_path.endswith(".bvh") or mocap_file_path.endswith(".BVH"):
-        mocap_data["motion"]["rot_local"] = mocap_tools.euler_to_quat_bvh(mocap_data["motion"]["rot_local_euler"], mocap_data["rot_sequence"])
-    elif mocap_file_path.endswith(".fbx") or mocap_file_path.endswith(".FBX"):
-        mocap_data["motion"]["rot_local"] = mocap_tools.euler_to_quat(mocap_data["motion"]["rot_local_euler"], mocap_data["rot_sequence"])
+    with open(file_path, "rb") as input_file:
+        sensor_data = pickle.load(input_file)
+        
+    return sensor_data
 
-    return mocap_data
+def load_sensor_recordings(class_files):
     
-# generates a list of tuples (data, class_index)
-def load_class_data(class_files):
+    recording_data = []
+    
+    for file_path, class_index in class_files:
+        file_data = load_sensor_recording(file_path)
+        
+        recording_data.append(file_data)
+        
+    return recording_data
+
+# filter and concatenate sensor values
+def process_sensor_recordings(recording_data, sensor_data_ids):
     
     class_data = []
     
-    for class_file, class_index in class_files:
+    for file_data in recording_data:
         
-        #print("class_file: ", class_file, " class_index ", class_index)
+        class_id = file_data["class_id"]
         
-        mocap_file_data = load_mocap_file(class_file)
+        min_data_count = None
         
-        mocap_data = []
+        sensor_values_combined = []
         
-        for mocap_data_id in mocap_data_ids:
+        for sensor_id in sensor_data_ids:
             
-            data = mocap_file_data["motion"][mocap_data_id]
+            print("sensor_id ", sensor_id)
+
+            sensor_indices = [i for i, x in enumerate(file_data["sensor_ids"]) if x == sensor_id]
+            sensor_values = [file_data["sensor_values"][i] for i in sensor_indices]
+            sensor_values = np.array(sensor_values)
             
-            #print("data 1 s ", data.shape)
+            print("sensor_values s ", sensor_values.shape)
             
-            # filter joints
-            data = data[:, mocap_joint_indices, :]
-            
-            #print("data 2 s ", data.shape)
-            
-            # combine joint count and joint dim into one dimension
-            if len(data.shape) > 2:
-                data = np.reshape(data, (data.shape[0], -1))
+            if min_data_count is None:
+                min_data_count = sensor_values.shape[0]
+            elif min_data_count > sensor_values.shape[0]:
+                min_data_count = sensor_values.shape[0]
                 
-            #print("data 3 s ", data.shape)
+            sensor_values = sensor_values[:min_data_count, ...]
             
-            mocap_data.append(data)
+            #print("sensor_values2 s ", sensor_values.shape)
+        
+            sensor_values_combined.append(sensor_values)
             
-            #print("mocap_data_id ", mocap_data_id, " data s ", data.shape)
+        sensor_values_combined = np.concatenate(sensor_values_combined, axis=1)
+        
+        class_data.append( (sensor_values_combined, class_id) )
+                  
+    return class_data
 
-        mocap_data = np.concatenate(mocap_data, axis=1)
-
-        #print("mocap_data s ", mocap_data.shape)
-
-        class_data.append( (mocap_data, class_index) )
+def load_class_data(class_files, sensor_data_ids):
+    recording_data = load_sensor_recordings(class_files)
+    class_data = process_sensor_recordings(recording_data, sensor_data_ids)
 
     return class_data
 
-        
-classes, class_to_idx = find_classes(mocap_data_file_path)
-class_files = load_class_filenames(mocap_data_file_path, mocap_data_file_extensions)
-class_data = load_class_data(class_files)
+"""
+Load and Process Sensor Data Recordings
+"""
+
+classes, class_to_idx = find_classes(sensor_data_file_path)
+class_files = load_class_filenames(sensor_data_file_path, sensor_data_file_extensions)
+class_data = load_class_data(class_files, sensor_data_ids)
 
 """
 Create Dataset
 """
 
+# create train and test data split
 def create_dataset_with_split(class_data, window_length, window_offset, test_percentage):
     
     # Split files first, then create windows
@@ -272,25 +269,29 @@ def calc_norm_values(train_motion_data):
     
     return data_mean, data_std
 
-
 class MotionDataset(Dataset):
+    """PyTorch Dataset for motion capture data."""
     
-    def __init__(self, class_labels, motion_data):
+    def __init__(self, class_labels: np.ndarray, motion_data: np.ndarray):
+        """
+        Initialize dataset.
         
+        Args:
+            class_labels: Array of class indices
+            motion_data: Array of motion sequences
+        """
         self.class_labels = class_labels
         self.motion_data = motion_data
-        
+    
     def __getitem__(self, index):
-
-        x = self.motion_data[index]
-        y = self.class_labels[index]
-        
-        return x, y
-
+        """Get a single item from the dataset."""
+        return self.motion_data[index], self.class_labels[index]
+    
     def __len__(self):
-        return len(self.class_labels)    
-       
-train_class_labels, train_motion_data, test_class_labels, test_motion_data = create_dataset_with_split(class_data, mocap_data_window_length, mocap_data_window_offset, test_percentage)
+        """Return dataset length."""
+        return len(self.class_labels)
+        
+train_class_labels, train_motion_data, test_class_labels, test_motion_data = create_dataset_with_split(class_data, sensor_data_window_length, sensor_data_window_offset, test_percentage)
 check_class_distribution(train_class_labels, test_class_labels)
 data_mean, data_std = calc_norm_values(train_motion_data)
 class_weights = calculate_class_weights(train_class_labels, len(classes))
@@ -302,14 +303,12 @@ with open("results/data/mean.pkl", 'wb') as f:
 with open("results/data/std.pkl", 'wb') as f:
     pickle.dump(data_std, f)
 
-
 train_dataset = MotionDataset(train_class_labels, train_motion_data)
 test_dataset = MotionDataset(test_class_labels, test_motion_data)
 
 item_x, item_y = train_dataset[0]
 print("item_x s ", item_x.shape)
 print("item_y s ", item_y.shape)
-
 
 # create dataloader
 trainloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
@@ -554,4 +553,3 @@ _, pred_labels = torch.max(batch_yhat, 1)
 for i in range(batch_size):
     print("motion {} pred class {} true class {}".format(i, pred_labels[i], batch_y[i]))
     
-

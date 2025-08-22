@@ -149,3 +149,5 @@ PoseEstimation/ZED/Incubatio_test.svo
 /PoseEstimation/ZED_C++/fbx_export/cpp/build/.vs
 *.pyc
 ObjectDetection/Yolo/yolov8x.pt
+/SensorClassifier_Interactive/.spyproject
+/SensorClassifier/.spyproject

@@ -1,8 +1,8 @@
 """
-Real-time Motion Capture Classifier
+Real-time Sensor Classifier
 ===================================
 
-This application receives motion capture data via OSC (Open Sound Control), 
+This application receives sensor data via OSC (Open Sound Control), 
 classifies motion patterns using a trained LSTM neural network, and displays 
 the classification results in real-time through a bar chart visualization.
 
@@ -28,21 +28,19 @@ from typing import List, Dict, Optional, Tuple
 import numpy as np
 import colorsys
 
-#mocap
-from common import utils
-from common import bvh_tools as bvh
-from common import fbx_tools as fbx
-from common import mocap_tools as mocap
-from common.quaternion import qmul, qrot, qnormalize_np, slerp, qfix
-
 #osc
-from pythonosc import dispatcher, osc_server
+from pythonosc import dispatcher
+from pythonosc import osc_server
 from pythonosc.udp_client import SimpleUDPClient
 
 # pytorch
 import torch
+from torch.utils.data import Dataset
+from torch.utils.data import DataLoader
 from torch import nn
 import torch.nn.functional as F
+import torch.optim as optim
+from collections import OrderedDict
 
 #gui
 from PyQt5 import QtWidgets, QtCore, QtGui
@@ -54,34 +52,37 @@ from vispy.scene import SceneCanvas, visuals
 Confgurations
 """
 
-
 # Device Settings
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 print('Using {} device'.format(device))
 
-# Mocap Settings
+# Sensor data settings
 
-mocap_data_file_path = "E:/Data/mocap/Daniel/Zed/fbx/"
-mocap_data_file_extensions = [".fbx"] 
-mocap_joint_count = 34
-mocap_joint_indices = [ 3, 4, 5, 6, 7 ] # right arm only
-mocap_data_ids = ["/mocap/0/joint/rot_local"]
-mocap_data_window_length = 90
-mocap_data_window_offset = 15
-mocap_pos_scale = 1.0
-mocap_data_norm_path = "../MocapClassifier/results/data/"
+sensor_data_norm_path = "data/results/data/"
+sensor_data_ids = ["/accelerometer", "/gyroscope"]
+sensor_data_dims = [3, 3]
+sensor_data_window_length = 60
 
-# Model Settings
+# load sensor dara mean and std
+with open(sensor_data_norm_path + "mean.pkl", 'rb') as f:
+    data_mean = pickle.load(f)
+with open(sensor_data_norm_path + "std.pkl", 'rb') as f:
+    data_std = pickle.load(f)  
+    
+# Classification Settings
 
-class_count = 5
+class_names = [ "fluidity", "staccato", "thrusting"]
+class_count = len(class_names)
+
+# Model settings
 
 model_input_dim = data_mean.shape[0]
 model_hidden_dim = 128
 model_layer_count = 3
 model_dropout = 0.3
 
-model_weights_file = "../MocapClassifier/results/weights/classifier_weights_epoch_200.pth"
+model_weights_file = "../SensorClassifier/results/weights/classifier_weights_epoch_200.pth"
 
 # OSC Settings
 
@@ -93,22 +94,26 @@ osc_send_port = 10000
 # GUI Settings
 
 canvas_size = (600, 400)
-class_labels = ["Class 1", "Class 2", "Class 3", "Class 4", "Class 5"]
+class_labels = class_names
 
 """
-Load Mocap Normalization Parameters
+Load Sensor Normalization Parameters
 """
 
 try:
-    with open(mocap_data_norm_path + "mean.pkl", 'rb') as f:
+    with open(sensor_data_norm_path + "mean.pkl", 'rb') as f:
         data_mean = pickle.load(f)
-    with open(mocap_data_norm_path + "std.pkl", 'rb') as f:
+    with open(sensor_data_norm_path + "std.pkl", 'rb') as f:
         data_std = pickle.load(f)
     input_dim = data_mean.shape[0]
 except FileNotFoundError as e:
     print(f"Could not load normalization data: {e}")
     sys.exit(1)
 
+
+"""
+Create Model
+"""
 
 """
 Create Model
@@ -229,166 +234,85 @@ class LiveClassifier(QtCore.QObject):
 OSC Communication
 """
 
-class OSCReceiver(QtCore.QObject):
-    """Handles incoming OSC messages in a separate thread."""
+class OscReceiver(QtCore.QObject):
     
     new_data = QtCore.pyqtSignal(dict)
     
-    def __init__(self, ip: str, port: int, parent=None):
-        """
-        Initialize OSC receiver.
-        
-        Args:
-            ip: IP address to listen on
-            port: Port number to listen on
-            parent: Parent Qt object
-        """
+    def __init__(self, ip, port, parent=None):
         super().__init__(parent=parent)
+        
         self.ip = ip
         self.port = port
-        self.server = None
-        self._setup_server()
         
-    def _setup_server(self):
-        """Setup OSC server with message dispatcher."""
         self.dispatcher = dispatcher.Dispatcher()
-        self.dispatcher.map("/*", self._handle_message)
-        self.server = osc_server.BlockingOSCUDPServer(
-            (self.ip, self.port), self.dispatcher
-        )
+        self.dispatcher.map("/*", self.receive)
+        self.server = osc_server.BlockingOSCUDPServer((self.ip, self.port), self.dispatcher)
         
     def start(self):
-        """Start the OSC server."""
-        print(f"Starting OSC receiver on {self.ip}:{self.port}")
-        try:
-            self.server.serve_forever()
-        except Exception as e:
-            print(f"OSC server error: {e}")
-            
+        print("OscReceiver start")
+        self.server.serve_forever()
+    
     def stop(self):
-        """Stop the OSC server."""
-        print("Stopping OSC receiver")
-        if self.server:
-            self.server.shutdown()
-            
-    def _handle_message(self, addr: str, *args):
-        """
-        Handle incoming OSC message.
+        print("OscReceiver stop")
+        self.server.shutdown()
+    
+    def receive(self, addr, *args):
         
-        Args:
-            addr: OSC address
-            *args: OSC message arguments
-        """
-        try:
-            values_dict = {
-                addr: np.array(args, dtype=np.float32)
+        osc_address = addr
+        osc_values = args
+        
+        #print("osc_address ", osc_address, " osc_values ", osc_values)
+        
+        values_dict = {
+            osc_address: osc_values
             }
-            self.new_data.emit(values_dict)
-        except Exception as e:
-            print(f"Error handling OSC message: {e}")
+        
+        self.new_data.emit(values_dict)
 
-class MotionDataReceiver(QtCore.QObject):
-    """Processes motion capture data and maintains a sliding window."""
+class SensorDataReceiver(QtCore.QObject):
     
     new_data = QtCore.pyqtSignal(np.ndarray)
     
-    def __init__(self, data_ids: List[str], joint_count: int, 
-                 joint_indices: List[int], window_length: int, parent=None):
-        """
-        Initialize motion data receiver.
-        
-        Args:
-            data_ids: List of expected OSC addresses
-            joint_count: Total number of joints in motion data
-            joint_indices: Indices of joints to use for classification
-            window_length: Length of sliding window
-            parent: Parent Qt object
-        """
+    def __init__(self, sensor_ids, sensor_data_dims, window_length, parent=None):
         super().__init__(parent=parent)
-        self.data_ids = data_ids
-        self.joint_count = joint_count
-        self.joint_indices = joint_indices
-        self.window_length = window_length
         
-        # Initialize data structures
-        self.data_dims = [None] * len(self.data_ids)
-        self.data_dim_total = None
-        self.data_updated = [False] * len(self.data_ids)
-        self.data_window = None
-        self.is_running = False
+        self.sensor_ids = sensor_ids
+        self.sensor_data_dims = sensor_data_dims
+        self.window_length = window_length
+        self.sensor_values = [ np.zeros((self.window_length, self.sensor_data_dims[sI])) for sI in range(len(self.sensor_data_dims)) ]
+        self.sensor_updated = [ False ] * len(self.sensor_ids)
+        
+        self.running = False
         
     def start(self):
-        """Start receiving motion data."""
-        self.is_running = True
-        print("Motion data receiver started")
+        self.running = True
         
     def stop(self):
-        """Stop receiving motion data."""
-        self.is_running = False
-        print("Motion data receiver stopped")
+        self.running = False
+
+    def receive(self, new_data):
         
-    def receive(self, new_data: Dict[str, np.ndarray]):
-        """
-        Process incoming motion data.
-        
-        Args:
-            new_data: Dictionary containing OSC address and data values
-        """
-        if not self.is_running:
+        if self.running  == False:
             return
-            
-        try:
-            data_id = list(new_data.keys())[0]
-            
-            if data_id not in self.data_ids:
-                return
-                
-            data_values = list(new_data.values())
-            
-            # Filter data based on joint indices
-            data_values = np.reshape(data_values, (self.joint_count, -1))
-            data_values = data_values[self.joint_indices, :]
-            data_values = np.reshape(data_values, (-1))
-            
-            data_index = self.data_ids.index(data_id)
-            
-            # Initialize data structures on first reception
-            if self.data_dim_total is None:
-                self._initialize_data_structures(data_values, data_index)
-                if self.data_dim_total is None:
-                    return
-                    
-            # Update sliding window
-            self._update_sliding_window(data_values, data_index)
-            
-        except Exception as e:
-            print(f"Error processing motion data: {e}")
-            
-    def _initialize_data_structures(self, data_values: np.ndarray, data_index: int):
-        """Initialize data structures based on received data dimensions."""
-        self.data_dims[data_index] = data_values.shape[0]
+
+        sensor_id = list(new_data.keys())[0]
+        sensor_value = list(new_data.values())[0]
         
-        if None not in self.data_dims:
-            self.data_dim_total = sum(self.data_dims)
-            self.data_window = np.zeros((self.window_length, self.data_dim_total), dtype=np.float32)
-            print(f"Initialized data window: {self.data_window.shape}")
-            
-    def _update_sliding_window(self, data_values: np.ndarray, data_index: int):
-        """Update the sliding window with new data."""
-        start_pos = sum(self.data_dims[:data_index])
-        end_pos = start_pos + self.data_dims[data_index]
+        if sensor_id not in self.sensor_ids:
+            return
+    
+        sensor_index = self.sensor_ids.index(sensor_id)
         
-        self.data_window[-1, start_pos:end_pos] = data_values
-        self.data_updated[data_index] = True
-        
-        # Check if all data streams have been updated
-        if False not in self.data_updated:
-            self.new_data.emit(self.data_window.copy())
+        self.sensor_values[sensor_index] = np.roll(self.sensor_values[sensor_index], -1, axis=0)
+        self.sensor_values[sensor_index][-1] = sensor_value
+        self.sensor_updated[sensor_index] = True
+ 
+        if self.sensor_updated.count(True) == len(self.sensor_ids):
             
-            # Slide window and reset update flags
-            self.data_window = np.roll(self.data_window, shift=-1, axis=0)
-            self.data_window[-1, :] = 0.0
-            self.data_updated = [False] * len(self.data_updated)
+            sensor_values_combined = np.concatenate(self.sensor_values, axis=1)
+            self.new_data.emit(sensor_values_combined)
+            
+            self.sensor_updated = [ False ] * len(self.sensor_ids)
 
 class ClassificationSender:
     """Sends classification results via OSC."""
@@ -416,6 +340,7 @@ class ClassificationSender:
             self.osc_sender.send_message("/motion/class", osc_values)
         except Exception as e:
             print(f"Error sending classification data: {e}")
+        
 
 """
 GUI Components
@@ -657,16 +582,15 @@ class MotionClassifierApp(QtCore.QObject):
     def _initialize_osc_components(self):
         """Initialize OSC communication components."""
         # OSC receiver
-        self.components['osc_receiver'] = OSCReceiver(
+        self.components['osc_receiver'] = OscReceiver(
             osc_receive_ip, osc_receive_port
         )
         
         # Motion data processor
-        self.components['mocap_receiver'] = MotionDataReceiver(
-            mocap_data_ids,
-            mocap_joint_count,
-            mocap_joint_indices,
-            mocap_data_window_length
+        self.components['sensor_receiver'] = SensorDataReceiver(
+            sensor_data_ids,
+            sensor_data_dims,
+            sensor_data_window_length
         )
         
         # Classification result sender
@@ -698,11 +622,11 @@ class MotionClassifierApp(QtCore.QObject):
         
         # OSC data flow
         self.components['osc_receiver'].new_data.connect(
-            self.components['mocap_receiver'].receive
+            self.components['sensor_receiver'].receive
         )
         
         # Classification data flow
-        self.components['mocap_receiver'].new_data.connect(
+        self.components['sensor_receiver'].new_data.connect(
             self.components['classifier'].update
         )
         self.components['classifier'].new_data.connect(
@@ -714,10 +638,10 @@ class MotionClassifierApp(QtCore.QObject):
         
         # GUI controls
         self.components['main_window'].start_classification.connect(
-            self.components['mocap_receiver'].start
+            self.components['sensor_receiver'].start
         )
         self.components['main_window'].stop_classification.connect(
-            self.components['mocap_receiver'].stop
+            self.components['sensor_receiver'].stop
         )
         
         # Thread management
@@ -742,9 +666,9 @@ class MotionClassifierApp(QtCore.QObject):
         """Gracefully shutdown the application."""
         print("Shutting down application...")
         
-        # Stop motion data receiver
-        if 'mocap_receiver' in self.components:
-            self.components['mocap_receiver'].stop()
+        # Stop sensor data receiver
+        if 'sensor_receiver' in self.components:
+            self.components['sensor_receiver'].stop()
             
         # Stop OSC receiver
         if 'osc_receiver' in self.components:
