@@ -27,6 +27,7 @@ import logging
 from typing import List, Dict, Optional, Tuple
 import numpy as np
 import colorsys
+import re
 
 #mocap
 from common import utils
@@ -66,7 +67,7 @@ mocap_data_file_path = "E:/Data/mocap/Daniel/Zed/fbx/"
 mocap_data_file_extensions = [".fbx"] 
 mocap_joint_count = 34
 mocap_joint_indices = [ 3, 4, 5, 6, 7 ] # right arm only
-mocap_data_ids = ["/mocap/0/joint/rot_local"]
+mocap_data_ids = ["/mocap/*/joint/rot_local"]
 mocap_data_window_length = 90
 mocap_data_window_offset = 15
 mocap_pos_scale = 1.0
@@ -76,7 +77,7 @@ mocap_data_norm_path = "../MocapClassifier/results/data/"
 
 class_count = 5
 
-model_input_dim = data_mean.shape[0]
+model_input_dim = None
 model_hidden_dim = 128
 model_layer_count = 3
 model_dropout = 0.3
@@ -109,6 +110,7 @@ except FileNotFoundError as e:
     print(f"Could not load normalization data: {e}")
     sys.exit(1)
 
+model_input_dim = data_mean.shape[0]
 
 """
 Create Model
@@ -339,10 +341,22 @@ class MotionDataReceiver(QtCore.QObject):
             
         try:
             data_id = list(new_data.keys())[0]
-            
-            if data_id not in self.data_ids:
+
+            def osc_pattern_to_regex(pattern):
+                # Convert OSC wildcard pattern to regex
+                return re.compile('^' + re.escape(pattern).replace('\\*', '.*') + '$')
+
+            matched_index = None
+            for idx, pattern in enumerate(self.data_ids):
+                regex = osc_pattern_to_regex(pattern)
+                if regex.match(data_id):
+                    matched_index = idx
+                    break
+
+            if matched_index is None:
                 return
-                
+
+
             data_values = list(new_data.values())
             
             # Filter data based on joint indices
@@ -350,7 +364,7 @@ class MotionDataReceiver(QtCore.QObject):
             data_values = data_values[self.joint_indices, :]
             data_values = np.reshape(data_values, (-1))
             
-            data_index = self.data_ids.index(data_id)
+            data_index = matched_index
             
             # Initialize data structures on first reception
             if self.data_dim_total is None:

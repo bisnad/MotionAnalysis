@@ -1,5 +1,6 @@
 import threading
 import numpy as np
+import re
 import transforms3d as t3d
 
 from pythonosc import dispatcher
@@ -45,10 +46,22 @@ class MotionReceiver():
 
         #print("receive address ", address)
 
-        values = np.array(args)
-        data_index = self.messages.index(address)
-        data_shape = self.data[data_index].shape
-        
-        values = np.reshape(values,data_shape)
+        # Convert OSC patterns to regex (replace * with .*)
+        def osc_pattern_to_regex(pattern):
+            return re.compile('^' + re.escape(pattern).replace('\\*', '.*') + '$')
 
-        np.copyto(self.data[data_index], values )
+        matching_index = None
+        for idx, pattern in enumerate(self.messages):
+            regex = osc_pattern_to_regex(pattern)
+            if regex.match(address):
+                matching_index = idx
+                break
+
+        if matching_index is None:
+            # If no pattern matches, ignore the message or handle error
+            return
+        
+        values = np.array(args)
+        data_shape = self.data[matching_index].shape
+        values = np.reshape(values, data_shape)
+        np.copyto(self.data[matching_index], values)

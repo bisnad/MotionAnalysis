@@ -4,6 +4,7 @@
 #include "dab_data_receiver.h"
 #include "dab_data.h"
 #include "ofUtils.h"
+#include <regex>
 
 using namespace dab;
 
@@ -38,6 +39,27 @@ DataReceiver::data()
 	return mData;
 }
 
+bool 
+DataReceiver::matchWildcard(const std::string& pPattern, const std::string& pString) 
+{
+	// Escape any regex special chars except '*'
+	std::string regexPattern;
+	for (char c : pPattern) {
+		if (c == '*') {
+			regexPattern += ".*";
+		}
+		else if (std::string(".^$|()[]{}+?\\").find(c) != std::string::npos) {
+			regexPattern += '\\';
+			regexPattern += c;
+		}
+		else {
+			regexPattern += c;
+		}
+	}
+	std::regex re(regexPattern);
+	return std::regex_match(pString, re);
+}
+
 void 
 DataReceiver::notify(std::shared_ptr<OscMessage> pMessage)
 {
@@ -50,7 +72,8 @@ DataReceiver::notify(std::shared_ptr<OscMessage> pMessage)
 
 		//std::cout << "mAddressPattern " << mAddressPattern << " addressPattern " << addressPattern << "\n";
 
-		if (addressPattern == mAddressPattern) update(messageArguments);
+		if (matchWildcard(mAddressPattern, addressPattern)) update(messageArguments);
+		//if (addressPattern == mAddressPattern) update(messageArguments);
 	}
 	catch (dab::Exception& e)
 	{

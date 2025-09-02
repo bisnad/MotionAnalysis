@@ -22,6 +22,8 @@ namespace dab
 		void resetUpdated();
 		std::shared_ptr<Data> data();
 
+		bool matchWildcard(const std::string& pPattern, const std::string& pString);
+
 		void notify(std::shared_ptr<OscMessage> pMessage);
 		void update(const std::vector<_OscArg*>& pMessageArguments) throw (Exception);
 

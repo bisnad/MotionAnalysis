@@ -41,9 +41,11 @@ print('Using {} device'.format(device))
 
 sensor_data_file_path = "data/sensors/"
 sensor_data_file_extensions = [".pkl"] 
-sensor_data_ids = ["/accelerometer", "/gyroscope"]
+#sensor_data_ids = ["/accelerometer", "/gyroscope"]
+sensor_data_ids = ["/accelerometer"]
 sensor_data_window_length = 90
-sensor_data_window_offset = 15
+#sensor_data_window_offset = 15
+sensor_data_window_offset = 5
 
 # Model settings
 

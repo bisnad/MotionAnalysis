@@ -39,7 +39,7 @@
         "LEFT_HEEL",
         "RIGHT_HEEL"
     ],
-	"jointWeights" : [
+	"joint_weights" : [
             14.28,
             8.568,
             9.52,

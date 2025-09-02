@@ -914,8 +914,8 @@ ofApp::setupOsc() throw (dab::Exception)
 		mDataMessenger = std::make_shared<dab::DataMessenger>();
 
 		mDataMessenger->createReceiver("MocapReceiver", mOscReceivePort);
-		mDataMessenger->createDataReceiver(mJointPosData, "/mocap/0/joint/pos_world", "MocapReceiver");
-		mDataMessenger->createDataReceiver(mJointRotData, "/mocap/0/joint/rot_world", "MocapReceiver");
+		mDataMessenger->createDataReceiver(mJointPosData, "/mocap/*/joint/pos_world", "MocapReceiver");
+		mDataMessenger->createDataReceiver(mJointRotData, "/mocap/*/joint/rot_world", "MocapReceiver");
 
 		mDataMessenger->createSender("MocapProcSender", mOscSendAddress, mOscSendPort);
 

@@ -59,10 +59,12 @@ print('Using {} device'.format(device))
 
 # Sensor data settings
 
-sensor_data_norm_path = "data/results/data/"
-sensor_data_ids = ["/accelerometer", "/gyroscope"]
-sensor_data_dims = [3, 3]
-sensor_data_window_length = 60
+sensor_data_norm_path = "../SensorClassifier/results/data/"
+#sensor_data_ids = ["/accelerometer", "/gyroscope"]
+#sensor_data_dims = [3, 3]
+sensor_data_ids = ["/accelerometer"]
+sensor_data_dims = [3]
+sensor_data_window_length = 90
 
 # load sensor dara mean and std
 with open(sensor_data_norm_path + "mean.pkl", 'rb') as f:
@@ -72,7 +74,8 @@ with open(sensor_data_norm_path + "std.pkl", 'rb') as f:
     
 # Classification Settings
 
-class_names = [ "fluidity", "staccato", "thrusting"]
+#class_names = [ "fluidity", "staccato", "thrusting"]
+class_names = [ "shake", "tilt"]
 class_count = len(class_names)
 
 # Model settings

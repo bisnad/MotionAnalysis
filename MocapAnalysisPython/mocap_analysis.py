@@ -27,7 +27,8 @@ import numpy as np
 Mocap Settings
 """
 
-mocap_config_path = "configs/xsens_fbx_config.json"
+#mocap_config_path = "configs/xsens_fbx_config.json"
+mocap_config_path = "configs/zed34_fbx_config.json"
 
 # load mocap config
 with open(mocap_config_path) as json_data:
@@ -42,7 +43,7 @@ input_pos_data = np.zeros((len(mocap_config["joint_names"]), mocap_config["pos_d
 motion_receiver.config["ip"] = "0.0.0.0"
 motion_receiver.config["port"] = 9007
 motion_receiver.config["data"] = [ input_pos_data ]
-motion_receiver.config["messages"] = ["/mocap/0/joint/pos_world"]
+motion_receiver.config["messages"] = ["/mocap/*/joint/pos_world"]
 
 osc_receiver = motion_receiver.MotionReceiver(motion_receiver.config)
 

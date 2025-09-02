@@ -35,14 +35,16 @@ std::string osc_send_address = "127.0.0.1";
 int osc_send_port = 9007;
 
 // joint map for body 34 to match joint numbers from live capture with those in an fbx recording
-//std::array<int, 34> joint_map = { 0, 1, 2, 11, 12, 13, 14, 15, 16, 17, 3, 26, 27, 28, 29, 30, 31, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20, 21, 32, 22, 23, 24, 25, 33 };
+std::array<int, 34> joint_map = { 0, 1, 2, 11, 12, 13, 14, 15, 16, 17, 3, 26, 27, 28, 29, 30, 31, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20, 21, 32, 22, 23, 24, 25, 33 };
 // joint map for body 38 to match joint numbers from live capture with those in an fbx recording
-std::array<int, 38> joint_map = { 0, 1, 2, 3, 4, 5, 6, 8, 7, 9, 10, 12, 14, 16, 30, 32, 34, 36, 11, 13, 15, 17, 31, 33, 35, 37, 18, 20, 22, 24, 26, 28, 19, 21, 23, 25, 27, 29 };
+// std::array<int, 38> joint_map = { 0, 1, 2, 3, 4, 5, 6, 8, 7, 9, 10, 12, 14, 16, 30, 32, 34, 36, 11, 13, 15, 17, 31, 33, 35, 37, 18, 20, 22, 24, 26, 28, 19, 21, 23, 25, 27, 29 };
 
 // joint parent indices for body 34
-//std::array<int, 34> joint_parent_indices = { -1, 0, 1, 2, 3, 4, 5, 6, 7, 6, 2, 10, 11, 11, 11, 11, 11, 2, 17, 18, 19, 20, 21, 20, 0, 24, 25, 26, 26, 0, 29, 30, 31, 31 };
+std::array<int, 34> joint_parent_indices = { -1, 0, 1, 2, 3, 4, 5, 6, 7, 6, 2, 10, 11, 11, 11, 11, 11, 2, 17, 18, 19, 20, 21, 20, 0, 24, 25, 26, 26, 0, 29, 30, 31, 31 };
 // joint parent indices for body 38
-std::array<int, 38> joint_parent_indices = { -1, 0, 1, 2, 3, 4, 5, 6, 5, 8, 3, 10, 11, 12, 13, 13, 13, 13, 3, 18, 19, 20, 21, 21, 21, 21, 0, 26, 27, 28, 28, 28, 0, 32, 33, 34, 34, 34 };
+//std::array<int, 38> joint_parent_indices = { -1, 0, 1, 2, 3, 4, 5, 6, 5, 8, 3, 10, 11, 12, 13, 13, 13, 13, 3, 18, 19, 20, 21, 21, 21, 21, 0, 26, 27, 28, 28, 28, 0, 32, 33, 34, 34, 34 };
+
+float joint_pos_scale = 0.1;
 
 // ZED includes
 #include <sl/Camera.hpp>
@@ -125,8 +127,10 @@ void update_osc(sl::Bodies& bodies, osc::UdpTransmitSocket& pSocket, osc::Outbou
             //std::cout << "jI " << jI << " pos2d orig " << joint_pos2d_world[jI] << " mapped " << joint_pos2d_world[joint_map[jI]] << "\n";
 
             joint_pos3d_world_osc[jI] = joint_pos3d_world[joint_map[jI]];
+            joint_pos3d_world_osc[jI] *= joint_pos_scale;
             joint_rot_local_osc[jI] = joint_rot_local[joint_map[jI]];
             joint_pos_local_osc[jI] = joint_pos_local[joint_map[jI]];
+            joint_pos_local_osc[jI] *= joint_pos_scale;
 
             // quat conversion from x y z w to w x y z
             sl::float4 rot_xyzw = joint_rot_local_osc[jI];
@@ -319,8 +323,6 @@ int main(int argc, char **argv) {
         if (err == ERROR_CODE::SUCCESS) {
             // Retrieve Detected Human Bodies
             zed.retrieveBodies(bodies, body_tracker_parameters_rt);
-
-            // TODO: forward kinematics to obtain rot world
 
             // update osc
             update_osc(bodies, osc_transmit_socket, osc_stream);
