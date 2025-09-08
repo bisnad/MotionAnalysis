@@ -36,7 +36,7 @@ TEST*.xml
 Thumbs.db
 
 # Applications
-*.app
+#*.app
 #*.exe
 *.war
 
