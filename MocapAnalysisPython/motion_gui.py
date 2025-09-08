@@ -482,8 +482,6 @@ class MotionGui(QtWidgets.QWidget):
                 if self.showItem != q_text:
                     self.canvas.set_value_range("data", [1000, -1000])
                     self.showItem = q_text
-
-                print("self.showItem ", self.showItem)
                 
                 # show values of select item
                 if self.showItem == "pos_scaled":
