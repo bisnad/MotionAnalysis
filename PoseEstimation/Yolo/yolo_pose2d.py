@@ -84,16 +84,16 @@ def on_predict_batch_end(predictor):
 
 
 # load a pretrained YOLOv8m model
-model = YOLO("models/{}".format(model_args)).to(device)
+with torch.inference_mode():
+    model = YOLO("models/{}".format(model_args)).to(device)
 
 # Add the custom callback to the model
 model.add_callback("on_predict_batch_end", on_predict_batch_end)
 
-
 if input_args == "webcam":
     # Run inference from webcam
     print("Run inference from webcam")
-    results = model(source=0, show=True, conf=0.3)
+    results = model(source=5, show=True, conf=0.3)
 else:
     # Run inference from image or video
     print("Run inference from image or video")

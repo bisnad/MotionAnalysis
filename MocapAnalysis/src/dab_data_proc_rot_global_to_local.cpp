@@ -104,6 +104,7 @@ DataProcRotGlobalToLocal::process() throw (dab::Exception)
 	}
 }
 
+/*
 void
 DataProcRotGlobalToLocal::calcLocalRotation(const std::vector<int>& pChildJointIndices, const glm::quat& pParentRotation)
 {
@@ -115,4 +116,36 @@ DataProcRotGlobalToLocal::calcLocalRotation(const std::vector<int>& pChildJointI
 		//mJointRotationsLocal[childJointIndex] = mJointRotationsGlobal[childJointIndex] * invParentRot;
 		calcLocalRotation(mJointConnectivity[childJointIndex], mJointRotationsGlobal[childJointIndex]);
 	}
+}
+*/
+
+void
+DataProcRotGlobalToLocal::calcLocalRotation(const std::vector<int>& pChildJointIndices, const glm::quat& pParentGlobalRotation)
+{
+	glm::quat invParentGlobal = glm::inverse(pParentGlobalRotation);
+
+	for (int childJointIndex : pChildJointIndices)
+	{
+		const glm::quat& childGlobal = mJointRotationsGlobal[childJointIndex];
+
+		// 1) global -> local (engine convention)
+		glm::quat childLocal = invParentGlobal * childGlobal;
+		mJointRotationsLocal[childJointIndex] = childLocal;
+
+		// 2) Recurse using the CHILD’S GLOBAL rotation as new parent global
+		calcLocalRotation(
+			mJointConnectivity[childJointIndex],
+			childGlobal);
+	}
+
+	// swap quaternion convention
+	for (int childJointIndex : pChildJointIndices)
+	{ 
+		glm::quat childLocal = mJointRotationsLocal[childJointIndex];
+		mJointRotationsLocal[childJointIndex][0] = childLocal[3];
+		mJointRotationsLocal[childJointIndex][1] = childLocal[0];
+		mJointRotationsLocal[childJointIndex][2] = childLocal[1];
+		mJointRotationsLocal[childJointIndex][3] = childLocal[2];
+	}
+
 }
