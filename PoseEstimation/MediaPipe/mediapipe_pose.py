@@ -13,7 +13,8 @@ from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
-                             QHBoxLayout, QPushButton, QLabel, QSizePolicy, QSlider, QDoubleSpinBox)
+                             QHBoxLayout, QPushButton, QLabel, QSizePolicy, 
+                             QSlider, QDoubleSpinBox, QLineEdit, QSpinBox)
 from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, Qt
 from PyQt5.QtGui import QImage, QPixmap
 
@@ -27,6 +28,9 @@ except ImportError:
 # ==============================================================================
 # 1. CONSTANTS & TOPOLOGY
 # ==============================================================================
+
+DEFAULT_OSC_IP = "127.0.0.1"
+DEFAULT_OSC_PORT = 9007
 
 VISUAL_POSE_CONNECTIONS = [
     (0, 1), (1, 2), (2, 3), (3, 7), (0, 4), (4, 5), (5, 6), (6, 8), (9, 10), 
@@ -178,20 +182,8 @@ class PoseFilter:
         return filtered_pos
 
 # ==============================================================================
-# 2. OSC & FBX EXPORT
+# 2. FBX EXPORT & KINEMATICS
 # ==============================================================================
-
-motion_sender.config["ip"] = "127.0.0.1"
-motion_sender.config["port"] = 9007
-osc_sender = motion_sender.OscSender(motion_sender.config)
-
-def osc_send_tracked_data(tracked_data):
-    if not tracked_data: return
-    pose_data = tracked_data["skeleton_0"]["pose"]
-    osc_sender.send("/mocap/0/joint/pos_world", pose_data["pos_world"])
-    osc_sender.send("/mocap/0/joint/pos_local", pose_data["pos_rel"])
-    osc_sender.send("/mocap/0/joint/rot_world", pose_data["quat_world"])
-    osc_sender.send("/mocap/0/joint/rot_local", pose_data["quat_rel"])
 
 def export_fbx(filename, frames_data, parents, fps=30.0):
     if 'fbx' not in globals(): return
@@ -286,11 +278,8 @@ def export_fbx(filename, frames_data, parents, fps=30.0):
     if exporter.Initialize(filename, -1, manager.GetIOSettings()): 
         exporter.Export(scene)
     
-    print(f"\n---> Successfully exported FBX to: {filename}")
+    print(f"\\n---> Successfully exported FBX to: {filename}")
 
-# ==============================================================================
-# 3. KINEMATICS & MATH
-# ==============================================================================
 
 def extract_landmarks(landmark_list):
     return np.array([[lm.x, -lm.y, -lm.z] for lm in landmark_list])
@@ -425,7 +414,7 @@ def draw_landmarks_custom(image, landmarks, connections, color_edge=(0, 255, 0))
             cv2.line(image, pt1, pt2, color_edge, 2)
 
 # ==============================================================================
-# 4. GUI & THREADING
+# 3. GUI & THREADING
 # ==============================================================================
 
 class VideoThread(QThread):
@@ -440,6 +429,7 @@ class VideoThread(QThread):
         self.slices = slices
         self.attachments = attachments
         self._run_flag = True
+        self._new_osc_settings = None
 
         self.is_recording = False
         self.is_counting_down = False
@@ -454,6 +444,11 @@ class VideoThread(QThread):
         self.tracking_confidence = 0.7
         self.recreate_landmarker = False
         self.pose_filter = None
+
+        # OSC Setup
+        motion_sender.config["ip"] = DEFAULT_OSC_IP
+        motion_sender.config["port"] = DEFAULT_OSC_PORT
+        self.osc_sender = motion_sender.OscSender(motion_sender.config)
 
         self.init_pose_landmarker()
 
@@ -475,6 +470,18 @@ class VideoThread(QThread):
             min_tracking_confidence=self.tracking_confidence)
         self.pose_landmarker = vision.PoseLandmarker.create_from_options(options_pose)
         self.recreate_landmarker = False
+
+    def update_osc_settings(self, ip, port):
+        """Thread-safe way to flag that OSC settings need updating."""
+        self._new_osc_settings = (ip, port)
+
+    def osc_send_tracked_data(self, tracked_data):
+        if not tracked_data: return
+        pose_data = tracked_data["skeleton_0"]["pose"]
+        self.osc_sender.send("/mocap/0/joint/pos_world", pose_data["pos_world"])
+        self.osc_sender.send("/mocap/0/joint/pos_local", pose_data["pos_rel"])
+        self.osc_sender.send("/mocap/0/joint/rot_world", pose_data["quat_world"])
+        self.osc_sender.send("/mocap/0/joint/rot_local", pose_data["quat_rel"])
 
     def set_tracking_confidence(self, conf):
         self.tracking_confidence = conf
@@ -501,6 +508,15 @@ class VideoThread(QThread):
         while self._run_flag and cap.isOpened():
             if self.recreate_landmarker:
                 self.init_pose_landmarker()
+
+            # Check for GUI updates to OSC Target
+            if self._new_osc_settings is not None:
+                new_ip, new_port = self._new_osc_settings
+                print(f"Updating OSC Sender to {new_ip}:{new_port}")
+                motion_sender.config["ip"] = new_ip
+                motion_sender.config["port"] = new_port
+                self.osc_sender = motion_sender.OscSender(motion_sender.config)
+                self._new_osc_settings = None
 
             success, frame = cap.read()
             if not success: 
@@ -612,7 +628,7 @@ class VideoThread(QThread):
             tracked_data = {"skeleton_0": {"pose": {
                 "pos_world": current_pos_world, "pos_rel": pos_rel, "quat_world": quat_world, "quat_rel": quat_rel, "parents": self.parents
             }}}
-            osc_send_tracked_data(tracked_data)
+            self.osc_send_tracked_data(tracked_data)
 
             if self.is_counting_down:
                 remaining = 5 - int(time.time() - self.countdown_start_time)
@@ -661,7 +677,7 @@ class MainWindow(QMainWindow):
     def __init__(self, args, parents, num_nodes, slices, attachments):
         super().__init__()
         self.setWindowTitle("MediaPipe Pose Estimation")
-        self.resize(800, 600)
+        self.resize(850, 650)
 
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -675,6 +691,7 @@ class MainWindow(QMainWindow):
         self.image_label.setStyleSheet("background-color: black;") 
         self.layout.addWidget(self.image_label, stretch=1) 
 
+        # --- Control Row 1: Filter Setup ---
         self.filter_layout = QHBoxLayout()
         self.filter_layout.setContentsMargins(10, 5, 10, 0)
 
@@ -699,6 +716,30 @@ class MainWindow(QMainWindow):
         self.filter_layout.addStretch(1)
         self.layout.addLayout(self.filter_layout)
 
+        # --- Control Row 2: OSC Settings ---
+        self.osc_layout = QHBoxLayout()
+        self.osc_layout.setContentsMargins(10, 5, 10, 0)
+
+        self.osc_layout.addWidget(QLabel("OSC IP:"))
+        self.ip_input = QLineEdit(DEFAULT_OSC_IP)
+        self.ip_input.setFixedWidth(120)
+        self.osc_layout.addWidget(self.ip_input)
+
+        self.osc_layout.addWidget(QLabel("Port:"))
+        self.port_spin = QSpinBox()
+        self.port_spin.setRange(1024, 65535)
+        self.port_spin.setValue(DEFAULT_OSC_PORT)
+        self.port_spin.setFixedWidth(80)
+        self.osc_layout.addWidget(self.port_spin)
+
+        self.btn_apply_osc = QPushButton("Apply OSC")
+        self.btn_apply_osc.clicked.connect(self.on_apply_osc)
+        self.osc_layout.addWidget(self.btn_apply_osc)
+
+        self.osc_layout.addStretch(1)
+        self.layout.addLayout(self.osc_layout)
+
+        # --- Control Row 3: Recording & Standard Controls ---
         self.controls_layout = QHBoxLayout()
         self.controls_layout.setContentsMargins(10, 5, 10, 10) 
 
@@ -761,6 +802,11 @@ class MainWindow(QMainWindow):
         cutoff = self.cutoff_spin.value()
         beta = self.beta_spin.value()
         self.thread.set_filter_params(cutoff, beta)
+
+    def on_apply_osc(self):
+        ip = self.ip_input.text().strip()
+        port = self.port_spin.value()
+        self.thread.update_osc_settings(ip, port)
 
     def start_recording(self):
         self.thread.start_recording()
