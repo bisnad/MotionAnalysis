@@ -59,7 +59,7 @@ print('Using {} device'.format(device))
 
 # Sensor data settings
 
-sensor_data_norm_path = "../SensorClassifier/results/data/"
+sensor_data_norm_path = "data/results/data/"
 #sensor_data_ids = ["/accelerometer", "/gyroscope"]
 #sensor_data_dims = [3, 3]
 sensor_data_ids = ["/accelerometer"]
@@ -85,14 +85,14 @@ model_hidden_dim = 128
 model_layer_count = 3
 model_dropout = 0.3
 
-model_weights_file = "../SensorClassifier/results/weights/classifier_weights_epoch_200.pth"
+model_weights_file = "data/results/weights/classifier_weights_epoch_200.pth"
 
 # OSC Settings
 
 osc_receive_ip = "0.0.0.0"
 osc_receive_port = 9007
 osc_send_ip = "127.0.0.1"
-osc_send_port = 10000
+osc_send_port = 9008
 
 # GUI Settings
 

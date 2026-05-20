@@ -536,7 +536,7 @@ def space_effort_v2(positions, joint_weights, window_length):
         
         start_end_diff = excerpt[-1, ...] - excerpt[0, ...]
         start_end_length = np.linalg.norm(start_end_diff, axis=-1) 
-        start_end_dir = start_end_diff / np.expand_dims(start_end_length, axis=1)
+        start_end_dir = start_end_diff / np.expand_dims(start_end_length + 1e-8, axis=1)
         start_end_dir = np.repeat(np.expand_dims(start_end_dir, axis=0), window_length - 1, axis=0)
         start_end_dir = np.reshape(start_end_dir, (-1, joint_dim))
         

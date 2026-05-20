@@ -1,5 +1,5 @@
 """
-Motion Capture Classification using LSTM Networks
+Motion Capture Classification using LSTM Networks - Training Script
 
 This module implements a neural network classifier for motion capture data using PyTorch.
 The classifier processes windowed motion data from various file formats (BVH, FBX) and
@@ -43,6 +43,8 @@ from common.quaternion import qmul, qrot, qnormalize_np, slerp, qfix
 """
 Configurations
 """
+
+# Device Settings
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 print('Using {} device'.format(device))
