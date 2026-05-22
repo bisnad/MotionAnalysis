@@ -360,7 +360,7 @@ class MainWindow(QtWidgets.QMainWindow):
     
     def __init__(self, canvas: VisualizationCanvas, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.setWindowTitle("Real-time Motion Classifier")
+        self.setWindowTitle("Real-Time Sensor Classifier")
         self.setWindowIcon(QtGui.QIcon())
         
         central_widget = QtWidgets.QWidget()
