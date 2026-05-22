@@ -7,26 +7,23 @@ imports
 """
 
 # General imports
-
 import os
 import sys
 import time
 import numpy as np
 from collections import deque
+import colorsys
 
 # Pytorch imports
-
 import torch
 import torch.nn as nn
 
 # OSC imports
-
 from pythonosc.dispatcher import Dispatcher
 from pythonosc.osc_server import BlockingOSCUDPServer
 from pythonosc.udp_client import SimpleUDPClient
 
 # GUI Imports
-
 from PyQt5 import QtWidgets, QtCore, QtGui
 from vispy import scene
 from vispy.app import use_app
@@ -37,25 +34,25 @@ Configurations
 """
 
 # Device Settings
-
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 # Mocap settings
-
-mocap_joint_indices = [3, 4, 5, 6, 7] # right arm only
-num_features = 21
+mocap_data_file_path = "data/mocap/classes/"
+mocap_joint_indices = [3, 4, 5, 6, 7]
 mocap_data_window_length = 90
 mocap_pos_scale = 1.0
 
-# Classification Settings
+# Pre-computed feature size (22 joints * 21 features per joint [pos(3)+rot(4)+vel_pos(3)+vel_rot(4)+acc_pos(3)+acc_rot(4)])
+num_features = len(mocap_joint_indices) * 21
 
-classes = ["Fluidity", "Levitation", "Particles", "Staccato", "Thrusting"]
-class_count = len(classes)
+# Model Settings (Matching training script)
+model_hidden_dim = 128
+model_layer_count = 2
+model_dropout = 0.3
 
-# Training Settigs
-
-save_stats_path = "data/results/stats"
-model_weights_file = "data/results/weights/classifier_weights_epoch_200.pth"
+# Training Settings / Paths
+save_stats_path = "data/results_lstm/stats"
+model_weights_file = "data/results_lstm/weights/classifier_weights_epoch_200.pth"
 
 # OSC Settings
 osc_receive_ip = "0.0.0.0"
@@ -64,13 +61,33 @@ osc_send_ip = "127.0.0.1"
 osc_send_port = 9008
 
 """
+Helper Functions to extract Classes
+"""
+
+def find_classes(directory):
+    if not os.path.exists(directory):
+        print(f"Warning: Directory {directory} not found. Creating dummy classes for visualization.")
+        return ["Class_A", "Class_B"], {"Class_A": 0, "Class_B": 1}
+    classes = sorted(entry.name for entry in os.scandir(directory) if entry.is_dir())
+    class_to_idx = {class_name: i for i, class_name in enumerate(classes)}
+    return classes, class_to_idx
+
+# Automatically detect classes from folders
+classes, _ = find_classes(mocap_data_file_path)
+class_count = len(classes)
+
+"""
 Load Normalization Stats
 """
 
-# Load normalization stats
-mean_np = np.load(os.path.join(save_stats_path, "mean.npy"))
-std_np = np.load(os.path.join(save_stats_path, "std.npy"))
-std_np[std_np == 0] = 1e-8
+if os.path.exists(save_stats_path):
+    mean_np = np.load(os.path.join(save_stats_path, "mean.npy"))
+    std_np = np.load(os.path.join(save_stats_path, "std.npy"))
+else:
+    print(f"Warning: Normalization stats not found at {save_stats_path}. Using zero mean and unit std.")
+    mean_np = np.zeros(num_features)
+    std_np = np.ones(num_features)
+
 data_mean = torch.tensor(mean_np, dtype=torch.float32).to(device)
 data_std = torch.tensor(std_np, dtype=torch.float32).to(device)
 
@@ -79,23 +96,31 @@ Classifier
 """
 
 class Classifier(nn.Module):
-    def __init__(self, num_features=21, hidden_dim=128, num_classes=5, num_layers=2):
+    def __init__(self, num_features, hidden_dim=64, num_classes=5, num_layers=1, dropout=0.3):
         super().__init__()
-        self.joint_embedding = nn.Linear(num_features, hidden_dim)
-        self.lstm = nn.LSTM(input_size=hidden_dim, hidden_size=hidden_dim, num_layers=num_layers, batch_first=True)
+        self.embedding = nn.Linear(num_features, hidden_dim)
+        self.embedding_dropout = nn.Dropout(dropout)
+        self.lstm = nn.LSTM(
+            input_size=hidden_dim,
+            hidden_size=hidden_dim,
+            num_layers=num_layers,
+            batch_first=True,
+            dropout=dropout if num_layers > 1 else 0.0
+        )
+        self.fc_dropout = nn.Dropout(dropout)
         self.classifier = nn.Linear(hidden_dim, num_classes)
 
     def forward(self, x):
-        x = self.joint_embedding(x)
-        x, _ = torch.max(x, dim=2) 
+        x = self.embedding(x)
+        x = self.embedding_dropout(x)
         out, _ = self.lstm(x)
-        return self.classifier(out[:, -1, :])
+        final_state = self.fc_dropout(out[:, -1, :])
+        return self.classifier(final_state)
 
 """
 OSC Worker
 """
 
-# --- Background Worker Thread for OSC and Inference ---
 class OSCWorker(QtCore.QThread):
     probs_signal = QtCore.pyqtSignal(np.ndarray)
     fps_signal = QtCore.pyqtSignal(float)
@@ -103,6 +128,7 @@ class OSCWorker(QtCore.QThread):
     def __init__(self, model):
         super().__init__()
         self.model = model
+        # Buffer needs +2 size to compute velocity and acceleration while keeping requested window size
         self.buffer_pos = deque(maxlen=mocap_data_window_length + 2)
         self.buffer_rot = deque(maxlen=mocap_data_window_length + 2)
         
@@ -149,18 +175,25 @@ class OSCWorker(QtCore.QThread):
             pos = np.array(self.buffer_pos)
             rot = np.array(self.buffer_rot)
             
+            # Compute derivatives over the window
             vel_pos = np.diff(pos, axis=0)
             vel_rot = np.diff(rot, axis=0)
             acc_pos = np.diff(vel_pos, axis=0)
             acc_rot = np.diff(vel_rot, axis=0)
             
+            # Extract final feature set aligning the timing (drops first 2 offset frames)
             mocap_data = np.concatenate([
                 pos[2:], rot[2:], vel_pos[1:], vel_rot[1:], acc_pos, acc_rot
             ], axis=-1)
             
+            # Flatten joints into singular vector per frame: (T, J, F) -> (T, J * F)
+            mocap_data = mocap_data.reshape(mocap_data.shape[0], -1)
+            
             with torch.no_grad():
                 batch_x = torch.FloatTensor(mocap_data).unsqueeze(0).to(device)
-                batch_x_norm = (batch_x - data_mean) / data_std
+                
+                # Apply normalization (math aligns with calc_norm_values from training script)
+                batch_x_norm = (batch_x - data_mean) / (data_std + 1e-8)
                 batch_x_norm = torch.nan_to_num(batch_x_norm)
                 
                 output = self.model(batch_x_norm)
@@ -216,17 +249,28 @@ class MainWindow(QtWidgets.QMainWindow):
         layout.addWidget(self.canvas.native, stretch=1) # Give the canvas the majority of space
         
         self.view = self.canvas.central_widget.add_view()
-        self.view.camera = scene.PanZoomCamera(rect=(-1, -0.2, class_count * 2.5, 1.4))
+        self.view.camera = scene.PanZoomCamera(rect=(-1, -0.2, class_count * 2, 1.4))
         
         self.bars = []
-        # Adjusted colors for white background
-        colors = [(0.1, 0.4, 0.7, 1), (0.8, 0.2, 0.1, 1), (0.1, 0.6, 0.3, 1)]
+
+        bar_colors = MainWindow.generate_distinct_colors(class_count)
 
         for i, cls in enumerate(classes):
             x_pos = i * 2
-            # Text label changed to black for white background
-            scene.visuals.Text(cls, pos=(x_pos, -0.1), color='black', font_size=14, parent=self.view.scene)
-            bar = scene.visuals.Rectangle(center=(x_pos, 0.001), width=1.2, height=0.002, color=colors[i % len(colors)], parent=self.view.scene)
+            scene.visuals.Text(
+                cls,
+                pos=(x_pos, -0.1),
+                color='black',
+                font_size=14,
+                parent=self.view.scene
+            )
+            bar = scene.visuals.Rectangle(
+                center=(x_pos, 0.001),
+                width=1.2,
+                height=0.002,
+                color=bar_colors[i],
+                parent=self.view.scene
+            )
             self.bars.append(bar)
 
         # 2. Bottom Control Panel
@@ -258,9 +302,33 @@ class MainWindow(QtWidgets.QMainWindow):
         # Initialize and start PyTorch Model + OSC Worker
         self.init_model_and_worker()
 
+    @staticmethod
+    def generate_distinct_colors(n, saturation=0.8, value=0.9, alpha=1.0):
+        if n <= 0:
+            return []
+        
+        colors = []
+        for i in range(n):
+            hue = i / n
+            r, g, b = colorsys.hsv_to_rgb(hue, saturation, value)
+            colors.append((r, g, b, alpha))
+        return colors
+
     def init_model_and_worker(self):
-        self.classifier = Classifier(num_features=num_features, hidden_dim=128, num_classes=class_count, num_layers=2).to(device)
-        self.classifier.load_state_dict(torch.load(model_weights_file, map_location=device))
+        # Match training network dimensions and layers
+        self.classifier = Classifier(
+            num_features=num_features, 
+            hidden_dim=model_hidden_dim, 
+            num_classes=class_count, 
+            num_layers=model_layer_count,
+            dropout=model_dropout
+        ).to(device)
+        
+        if os.path.exists(model_weights_file):
+            self.classifier.load_state_dict(torch.load(model_weights_file, map_location=device))
+        else:
+            print(f"Warning: Model weights not found at {model_weights_file}")
+            
         self.classifier.eval()
 
         self.osc_worker = OSCWorker(self.classifier)
@@ -280,12 +348,19 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def toggle_vis(self):
         self.show_visualization = not self.show_visualization
+        
         if self.show_visualization:
             self.btn_toggle_vis.setText("Disable Visualisation")
+            # Show canvas and restore standard size
+            self.canvas.native.show()
+            self.adjustSize()
         else:
             self.btn_toggle_vis.setText("Enable Visualisation")
-            
-        self.canvas.native.setVisible(self.show_visualization)
+            # Hide canvas and collapse the vertical space
+            self.canvas.native.hide()
+            self.fps_label.setText("FPS: --")
+            self.centralWidget().adjustSize()
+            self.resize(self.width(), 1)
 
     @QtCore.pyqtSlot(np.ndarray)
     def update_graph(self, probs):

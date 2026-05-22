@@ -41,7 +41,7 @@ mocap_body_weight = 60
 Cluster Settings
 """
 
-cluster_count = 20
+cluster_count = 10
 cluster_random_state = 170
 cluster_excerpt_length = 48 # number of mocap frames per mocap excerpt used for clustering
 cluster_excerpt_count = 1000 # number of mocap excerpts used for clustering
@@ -330,6 +330,7 @@ class MainWindow(QtWidgets.QMainWindow):
         super().__init__(*args, **kwargs)
         self.setWindowTitle("Real-time Motion Clustering")
         self.setWindowIcon(QtGui.QIcon())
+        self.show_visualization = True
 
         # Create central widget and main layout
         central_widget = QtWidgets.QWidget()
@@ -337,7 +338,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Add canvas to layout
         self.canvas = canvas
-        main_layout.addWidget(self.canvas.canvas.native)
+        main_layout.addWidget(self.canvas.canvas.native, stretch=1)
 
         # Create control buttons
         self._create_controls(main_layout)
@@ -353,21 +354,22 @@ class MainWindow(QtWidgets.QMainWindow):
         controls_layout = QtWidgets.QHBoxLayout()
 
         # Create buttons
-        self.start_button = QtWidgets.QPushButton("Start Clustering", self)
-        self.stop_button = QtWidgets.QPushButton("Stop Clustering", self)
+        self.start_button = QtWidgets.QPushButton("Start", self)
+        self.stop_button = QtWidgets.QPushButton("Stop", self)
         self.exit_button = QtWidgets.QPushButton("Exit", self)
-        self.vis_toggle = QtWidgets.QCheckBox("Enable Visualization", self)
-        self.vis_toggle.setChecked(True)  # On by default
+        
+        # Change from CheckBox to PushButton
+        self.vis_toggle = QtWidgets.QPushButton("Disable Visualisation", self)
         
         self.fps_label = QtWidgets.QLabel("0 FPS", self)
         font = self.fps_label.font()
         font.setBold(True)
         self.fps_label.setFont(font)
         self.fps_label.setMinimumWidth(50)
-        self.fps_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.fps_label.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
 
         # Set button properties
-        for button in [self.start_button, self.stop_button, self.exit_button]:
+        for button in [self.start_button, self.stop_button, self.exit_button, self.vis_toggle]:
             button.setMinimumWidth(120)
             button.setMinimumHeight(30)
 
@@ -375,9 +377,9 @@ class MainWindow(QtWidgets.QMainWindow):
         controls_layout.addWidget(self.start_button)
         controls_layout.addWidget(self.stop_button)
         controls_layout.addWidget(self.vis_toggle)
-        controls_layout.addWidget(self.fps_label)
         controls_layout.addWidget(self.exit_button)
         controls_layout.addStretch()
+        controls_layout.addWidget(self.fps_label)
 
         main_layout.addLayout(controls_layout)
         
@@ -389,12 +391,31 @@ class MainWindow(QtWidgets.QMainWindow):
     def _connect_signals(self):
         self.start_button.clicked.connect(self.start_clustering.emit)
         self.stop_button.clicked.connect(self.stop_clustering.emit)
-        self.vis_toggle.toggled.connect(self.canvas.set_visualization_enabled)
+        self.vis_toggle.clicked.connect(self.toggle_vis)
         self.exit_button.clicked.connect(self.close)
+        
+    def toggle_vis(self):
+        self.show_visualization = not self.show_visualization
+        
+        # Stop or start the rendering timer in the canvas
+        self.canvas.set_visualization_enabled(self.show_visualization)
+        
+        if self.show_visualization:
+            self.vis_toggle.setText("Disable Visualisation")
+            # Show canvas and restore standard size
+            self.canvas.canvas.native.show()
+            self.adjustSize()
+        else:
+            self.vis_toggle.setText("Enable Visualisation")
+            # Hide canvas and collapse the vertical space
+            self.canvas.canvas.native.hide()
+            self.centralWidget().adjustSize()
+            self.resize(self.width(), 1)
         
     def _update_fps_display(self):
         """Update the label and reset counter every second."""
-        self.fps_label.setText(f"{self.processed_frames} FPS")
+        # Optional: show "--" when stopped/hidden if you prefer
+        self.fps_label.setText(f"FPS: {self.processed_frames}")
         self.processed_frames = 0
         
     def increment_fps_counter(self, *args):

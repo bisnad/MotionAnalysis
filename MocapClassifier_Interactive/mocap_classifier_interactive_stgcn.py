@@ -7,27 +7,24 @@ Imports
 """
 
 # General imports
-
 import os
 import sys
 import time
 import numpy as np
 from collections import deque
+import colorsys
 
 # Pytorch imports
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
 # OSC imports
-
 from pythonosc.dispatcher import Dispatcher
 from pythonosc.osc_server import BlockingOSCUDPServer
 from pythonosc.udp_client import SimpleUDPClient
 
 # GUI Imports
-
 from PyQt5 import QtWidgets, QtCore, QtGui
 from vispy import scene
 from vispy.app import use_app
@@ -46,32 +43,44 @@ Configurations
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 # Mocap settings
-
 mocap_data_file_path = "E:/Data/mocap/Daniel/Zed/fbx/classes/"
 mocap_data_file_extensions = [".fbx"] 
-mocap_joint_indices = [3, 4, 5, 6, 7] # right arm only
-num_features = 21
+mocap_joint_indices = [3, 4, 5, 6, 7]
 mocap_data_window_length = 90
 mocap_pos_scale = 1.0
 
-# Training Settigs
+# Number of features per joint (pos(3) + rot(4) + vel_pos(3) + vel_rot(4) + acc_pos(3) + acc_rot(4))
+num_features = 21
 
-save_stats_path = "../MocapClassifier/results_stgcn/stats"
-model_weights_file = "../MocapClassifier/results_stgcn/weights/classifier_weights_epoch_200.pth"
+# Architecture parameters (Matching Training script)
+stgcn_channels = [64, 128] 
+stgcn_temporal_kernel = 9
+stgcn_temporal_padding = 4     # (kernel - 1) // 2
+stgcn_dropout_rate = 0.2
+stgcn_dropedge_rate = 0.1
+
+# Training Settings Paths
+save_stats_path = "data/results_stgcn/stats"
+model_weights_file = "data/results_stgcn/weights/classifier_weights_epoch_200.pth"
 
 # OSC Settings
 osc_receive_ip = "0.0.0.0"
-osc_receive_port = 5005
+osc_receive_port = 9007
 osc_send_ip = "127.0.0.1"
-osc_send_port = 9004
+osc_send_port = 9008
 
 """
 Load Normalization Stats
 """
 
-mean_np = np.load(os.path.join(save_stats_path, "mean.npy"))
-std_np = np.load(os.path.join(save_stats_path, "std.npy"))
-std_np[std_np == 0] = 1e-8
+if os.path.exists(save_stats_path):
+    mean_np = np.load(os.path.join(save_stats_path, "mean.npy"))
+    std_np = np.load(os.path.join(save_stats_path, "std.npy"))
+else:
+    print(f"Warning: Normalization stats not found at {save_stats_path}. Using zero mean and unit std.")
+    mean_np = np.zeros(num_features)
+    std_np = np.ones(num_features)
+
 data_mean = torch.tensor(mean_np, dtype=torch.float32).to(device)
 data_std = torch.tensor(std_np, dtype=torch.float32).to(device)
 
@@ -80,6 +89,9 @@ Helper Functions to extract Skeleton Topology
 """
 
 def find_classes(directory):
+    if not os.path.exists(directory):
+        print(f"Warning: Directory {directory} not found. Creating dummy classes for visualization.")
+        return ["Class_A", "Class_B"], {"Class_A": 0, "Class_B": 1}
     classes = sorted(entry.name for entry in os.scandir(directory) if entry.is_dir())
     class_to_idx = {class_name: i for i, class_name in enumerate(classes)}
     return classes, class_to_idx
@@ -102,35 +114,45 @@ classes, _ = find_classes(mocap_data_file_path)
 class_count = len(classes)
 
 # Load a single file to extract the skeleton parents array
-fbx_tools = fbx.FBX_Tools()
-mocap_tools = mocap.Mocap_Tools()
-class_files = load_class_filenames(mocap_data_file_path, mocap_data_file_extensions)
-sample_file = class_files[0][0]
-fbx_data = fbx_tools.load(sample_file)
-sample_mocap_data = mocap_tools.fbx_to_mocap(fbx_data)[0]
-skeleton_parents = sample_mocap_data["skeleton"]["parents"]
+try:
+    fbx_tools = fbx.FBX_Tools()
+    mocap_tools = mocap.Mocap_Tools()
+    class_files = load_class_filenames(mocap_data_file_path, mocap_data_file_extensions)
+    sample_file = class_files[0][0]
+    fbx_data = fbx_tools.load(sample_file)
+    sample_mocap_data = mocap_tools.fbx_to_mocap(fbx_data)[0]
+    skeleton_parents = sample_mocap_data["skeleton"]["parents"]
+except Exception as e:
+    print(f"Warning: Failed to load skeleton topology from FBX: {e}")
+    # Dummy array to allow app startup if files aren't found locally
+    skeleton_parents = [-1] + [0] * max(mocap_joint_indices) 
 
 """
-Classifier
+Classifier Model
 """
 
 class Classifier(nn.Module):
-    def __init__(self, num_features=21, parents=None, joint_indices=None, num_classes=5):
+    def __init__(self, num_features=21, parents=None, joint_indices=None, num_classes=5, 
+                 channels=[32, 64], t_kernel=5, t_pad=2, dropout_rate=0.5, dropedge_rate=0.2):
         super().__init__()
         self.num_joints = len(joint_indices)
         self.parents = parents
         self.joint_indices = joint_indices
-        
+        self.dropout_rate = dropout_rate
+        self.dropedge_rate = dropedge_rate
+
+        # Build graph structure dynamically from mocap skeleton
         A = self._build_adjacency()
         self.register_buffer('A', A)
         
-        self.gcn1 = nn.Conv2d(num_features, 64, kernel_size=1)
-        self.tcn1 = nn.Conv2d(64, 64, kernel_size=(9, 1), padding=(4, 0))
+        # Spatial Temporal Blocks (Dynamically sized)
+        self.gcn1 = nn.Conv2d(num_features, channels[0], kernel_size=1)
+        self.tcn1 = nn.Conv2d(channels[0], channels[0], kernel_size=(t_kernel, 1), padding=(t_pad, 0))
         
-        self.gcn2 = nn.Conv2d(64, 128, kernel_size=1)
-        self.tcn2 = nn.Conv2d(128, 128, kernel_size=(9, 1), padding=(4, 0))
+        self.gcn2 = nn.Conv2d(channels[0], channels[1], kernel_size=1)
+        self.tcn2 = nn.Conv2d(channels[1], channels[1], kernel_size=(t_kernel, 1), padding=(t_pad, 0))
         
-        self.classifier = nn.Linear(128, num_classes)
+        self.classifier = nn.Linear(channels[-1], num_classes)
 
     def _build_adjacency(self):
         A = np.zeros((self.num_joints, self.num_joints))
@@ -152,13 +174,25 @@ class Classifier(nn.Module):
 
     def forward(self, x):
         x = x.permute(0, 3, 1, 2)
-        x = torch.einsum('nctv,vw->nctw', x, self.A)
+
+        # Apply DropEdge during training
+        if self.training:
+            mask = (torch.rand_like(self.A) > self.dropedge_rate).float()
+            current_A = self.A * mask
+            # Ensure self-loops are kept
+            current_A = current_A + torch.eye(self.num_joints, device=self.A.device) * 1e-4
+        else:
+            current_A = self.A
+        
+        x = torch.einsum('nctv,vw->nctw', x, current_A)
         x = F.relu(self.gcn1(x))
         x = F.relu(self.tcn1(x))
+        x = F.dropout(x, p=self.dropout_rate, training=self.training)
         
-        x = torch.einsum('nctv,vw->nctw', x, self.A)
+        x = torch.einsum('nctv,vw->nctw', x, current_A)
         x = F.relu(self.gcn2(x))
         x = F.relu(self.tcn2(x))
+        x = F.dropout(x, p=self.dropout_rate, training=self.training)
         
         x = F.adaptive_avg_pool2d(x, (1, 1)).view(x.size(0), -1)
         return self.classifier(x)
@@ -167,7 +201,6 @@ class Classifier(nn.Module):
 OSC Worker
 """
 
-# --- Background Worker Thread for OSC and Inference ---
 class OSCWorker(QtCore.QThread):
     probs_signal = QtCore.pyqtSignal(np.ndarray)
     fps_signal = QtCore.pyqtSignal(float)
@@ -225,13 +258,16 @@ class OSCWorker(QtCore.QThread):
             acc_pos = np.diff(vel_pos, axis=0)
             acc_rot = np.diff(vel_rot, axis=0)
             
+            # Shape matches STGCN: (Time, Joints, Features)
             mocap_data = np.concatenate([
                 pos[2:], rot[2:], vel_pos[1:], vel_rot[1:], acc_pos, acc_rot
             ], axis=-1)
             
             with torch.no_grad():
                 batch_x = torch.FloatTensor(mocap_data).unsqueeze(0).to(device)
-                batch_x_norm = (batch_x - data_mean) / data_std
+                
+                # Apply normalization (data_mean/data_std broadcast smoothly over the last dimension)
+                batch_x_norm = (batch_x - data_mean) / (data_std + 1e-8)
                 batch_x_norm = torch.nan_to_num(batch_x_norm)
                 
                 output = self.model(batch_x_norm)
@@ -286,16 +322,30 @@ class MainWindow(QtWidgets.QMainWindow):
         layout.addWidget(self.canvas.native, stretch=1)
         
         self.view = self.canvas.central_widget.add_view()
-        self.view.camera = scene.PanZoomCamera(rect=(-1, -0.2, class_count * 2.5, 1.4))
+        self.view.camera = scene.PanZoomCamera(rect=(-1, -0.2, class_count * 2, 1.4))
         
         self.bars = []
-        colors = [(0.1, 0.4, 0.7, 1), (0.8, 0.2, 0.1, 1), (0.1, 0.6, 0.3, 1)]
+        
+        bar_colors = MainWindow.generate_distinct_colors(class_count)
 
         for i, cls in enumerate(classes):
             x_pos = i * 2
-            scene.visuals.Text(cls, pos=(x_pos, -0.1), color='black', font_size=14, parent=self.view.scene)
-            bar = scene.visuals.Rectangle(center=(x_pos, 0.001), width=1.2, height=0.002, color=colors[i % len(colors)], parent=self.view.scene)
+            scene.visuals.Text(
+                cls,
+                pos=(x_pos, -0.1),
+                color='black',
+                font_size=14,
+                parent=self.view.scene
+            )
+            bar = scene.visuals.Rectangle(
+                center=(x_pos, 0.001),
+                width=1.2,
+                height=0.002,
+                color=bar_colors[i],
+                parent=self.view.scene
+            )
             self.bars.append(bar)
+
 
         # Bottom Control Panel
         control_layout = QtWidgets.QHBoxLayout()
@@ -325,15 +375,37 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.init_model_and_worker()
 
+    @staticmethod
+    def generate_distinct_colors(n, saturation=0.8, value=0.9, alpha=1.0):
+        if n <= 0:
+            return []
+        
+        colors = []
+        for i in range(n):
+            hue = i / n
+            r, g, b = colorsys.hsv_to_rgb(hue, saturation, value)
+            colors.append((r, g, b, alpha))
+        return colors
+
     def init_model_and_worker(self):
-        # Pass the extracted skeleton parents to the classifier
+        # Pass the extracted skeleton parents and matching architectural parameters to the classifier
         self.classifier = Classifier(
             num_features=num_features, 
             parents=skeleton_parents, 
             joint_indices=mocap_joint_indices, 
-            num_classes=class_count
+            num_classes=class_count,
+            channels=stgcn_channels,
+            t_kernel=stgcn_temporal_kernel,
+            t_pad=stgcn_temporal_padding,
+            dropout_rate=stgcn_dropout_rate,
+            dropedge_rate=stgcn_dropedge_rate
         ).to(device)
-        self.classifier.load_state_dict(torch.load(model_weights_file, map_location=device))
+        
+        if os.path.exists(model_weights_file):
+            self.classifier.load_state_dict(torch.load(model_weights_file, map_location=device))
+        else:
+            print(f"Warning: Model weights not found at {model_weights_file}")
+            
         self.classifier.eval()
 
         self.osc_worker = OSCWorker(self.classifier)
@@ -352,12 +424,19 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def toggle_vis(self):
         self.show_visualization = not self.show_visualization
+        
         if self.show_visualization:
             self.btn_toggle_vis.setText("Disable Visualisation")
+            # Show canvas and restore standard size
+            self.canvas.native.show()
+            self.adjustSize()
         else:
             self.btn_toggle_vis.setText("Enable Visualisation")
-            
-        self.canvas.native.setVisible(self.show_visualization)
+            # Hide canvas and collapse the vertical space
+            self.canvas.native.hide()
+            self.fps_label.setText("FPS: --")
+            self.centralWidget().adjustSize()
+            self.resize(self.width(), 1)
 
     @QtCore.pyqtSlot(np.ndarray)
     def update_graph(self, probs):

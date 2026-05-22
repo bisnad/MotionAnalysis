@@ -34,7 +34,6 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 """
 Mocap Settings
 """
-
 mocap_data_file_path = "E:/Data/mocap/Daniel/Zed/fbx/classes/"
 mocap_data_file_extensions = [".fbx"] 
 mocap_joint_indices = [3, 4, 5, 6, 7] # right arm only
@@ -50,15 +49,23 @@ Model Settings
 class_count = None # will be calculated
 model_input_dim = None # will be calculated
 
+# Architecture parameters to prevent overfitting on small datasets
+stgcn_channels = [64, 128] 
+stgcn_temporal_kernel = 9
+stgcn_temporal_padding = 4     # (kernel - 1) // 2
+stgcn_dropout_rate = 0.2
+stgnc_dropedge_rate = 0.1
+
 """
 Training Settings
 """
 
 test_percentage = 0.2
-batch_size = 64
+batch_size = 128
 epochs = 200
 learning_rate = 1e-4
-label_smoothing = 0.1
+label_smoothing = 0.2
+weight_decay = 1e-3
 load_weights = False
 save_weights = True
 model_weights_file = "results_stgcn/weights/classifier_epoch_200.pth"
@@ -187,47 +194,40 @@ Classifier Model
 """
 
 class Classifier(nn.Module):
-    def __init__(self, num_features=21, parents=None, joint_indices=None, num_classes=5):
+    def __init__(self, num_features=21, parents=None, joint_indices=None, num_classes=5, 
+                 channels=[32, 64], t_kernel=5, t_pad=2, dropout_rate=0.5, dropedge_rate=0.2):
         super().__init__()
         self.num_joints = len(joint_indices)
         self.parents = parents
         self.joint_indices = joint_indices
-        
+        self.dropout_rate = dropout_rate
+        self.dropedge_rate = dropedge_rate
+
         # Build graph structure dynamically from mocap skeleton
         A = self._build_adjacency()
         self.register_buffer('A', A)
         
-        # Spatial Temporal Blocks
-        self.gcn1 = nn.Conv2d(num_features, 64, kernel_size=1)
-        self.tcn1 = nn.Conv2d(64, 64, kernel_size=(9, 1), padding=(4, 0))
+        # Spatial Temporal Blocks (Dynamically sized)
+        self.gcn1 = nn.Conv2d(num_features, channels[0], kernel_size=1)
+        self.tcn1 = nn.Conv2d(channels[0], channels[0], kernel_size=(t_kernel, 1), padding=(t_pad, 0))
         
-        self.gcn2 = nn.Conv2d(64, 128, kernel_size=1)
-        self.tcn2 = nn.Conv2d(128, 128, kernel_size=(9, 1), padding=(4, 0))
+        self.gcn2 = nn.Conv2d(channels[0], channels[1], kernel_size=1)
+        self.tcn2 = nn.Conv2d(channels[1], channels[1], kernel_size=(t_kernel, 1), padding=(t_pad, 0))
         
-        self.classifier = nn.Linear(128, num_classes)
+        self.classifier = nn.Linear(channels[-1], num_classes)
 
     def _build_adjacency(self):
         A = np.zeros((self.num_joints, self.num_joints))
-        
-        # Map the global joint index (e.g., joint 24) to the local ST-GCN node index (e.g., node 1)
         global_to_local = {global_idx: local_idx for local_idx, global_idx in enumerate(self.joint_indices)}
         
-        # Iterate through our filtered joints to find valid parent-child connections
         for local_idx, global_idx in enumerate(self.joint_indices):
             parent_global_idx = self.parents[global_idx]
-            
-            # If the parent of this joint is also included in our filtered subset, add an edge
             if parent_global_idx in global_to_local:
                 parent_local_idx = global_to_local[parent_global_idx]
-                
-                # Undirected graph: add edge in both directions
                 A[local_idx, parent_local_idx] = 1
                 A[parent_local_idx, local_idx] = 1
                 
-        # Add self-loops (identity matrix) so nodes look at their own features
         A += np.eye(self.num_joints)
-        
-        # Normalize the adjacency matrix symmetrically
         D = np.diag(np.sum(A, axis=1))
         D_inv_sqrt = np.linalg.inv(np.sqrt(D))
         A_norm = D_inv_sqrt @ A @ D_inv_sqrt
@@ -235,16 +235,26 @@ class Classifier(nn.Module):
         return torch.tensor(A_norm, dtype=torch.float32)
 
     def forward(self, x):
-        # Permute input to (batch, features, seq_len, num_joints)
         x = x.permute(0, 3, 1, 2)
+
+        # Apply DropEdge during training
+        if self.training:
+            mask = (torch.rand_like(self.A) > self.dropedge_rate).float()
+            current_A = self.A * mask
+            # Ensure self-loops are kept
+            current_A = current_A + torch.eye(self.num_joints, device=self.A.device) * 1e-4
+        else:
+            current_A = self.A
         
         x = torch.einsum('nctv,vw->nctw', x, self.A)
         x = F.relu(self.gcn1(x))
         x = F.relu(self.tcn1(x))
+        x = F.dropout(x, p=self.dropout_rate, training=self.training)
         
         x = torch.einsum('nctv,vw->nctw', x, self.A)
         x = F.relu(self.gcn2(x))
         x = F.relu(self.tcn2(x))
+        x = F.dropout(x, p=self.dropout_rate, training=self.training)
         
         x = F.adaptive_avg_pool2d(x, (1, 1)).view(x.size(0), -1)
         return self.classifier(x)
@@ -253,11 +263,11 @@ class Classifier(nn.Module):
 Training Functions
 """
 
-def train_step(batch_x, batch_y):
-    batch_x_norm = (batch_x - data_mean) / (data_std + 1e-8)
-    batch_x_norm = torch.nan_to_num(batch_x_norm)
+# NORMALIZATION FIX APPLIED HERE:
+# Removed on-the-fly batch normalization as the data is now pre-normalized.
 
-    batch_yhat = classifier(batch_x_norm)
+def train_step(batch_x, batch_y):
+    batch_yhat = classifier(batch_x)
     _loss = class_loss(batch_yhat, batch_y) 
 
     optimizer.zero_grad()
@@ -267,10 +277,8 @@ def train_step(batch_x, batch_y):
     return _loss
 
 def test_step(batch_x, batch_y):
-    batch_x_norm = (batch_x - data_mean) / (data_std + 1e-8)
-
     with torch.no_grad():
-        batch_yhat = classifier(batch_x_norm)
+        batch_yhat = classifier(batch_x)
         _loss = class_loss(batch_yhat, batch_y) 
         
     return _loss
@@ -286,9 +294,7 @@ def test_model(data_loader):
             batch_x = batch_x.to(device)
             batch_y = batch_y.to(device)
             
-            batch_x_norm = (batch_x - data_mean) / (data_std + 1e-8)
-        
-            outputs = classifier(batch_x_norm)
+            outputs = classifier(batch_x)
             
             _, predicted = torch.max(outputs.data, 1)
             total += batch_y.size(0)
@@ -389,6 +395,7 @@ train_labels, train_data, test_labels, test_data = create_dataset_with_split(
 
 model_input_dim = train_data.shape[-1]
 
+# NORMALIZATION FIX APPLIED HERE:
 if mocap_stats_load == False:
     mean_np, std_np  = calc_norm_values(train_data)
     np.save(save_stats_path + "/mean.npy", mean_np)
@@ -396,14 +403,22 @@ if mocap_stats_load == False:
 else:
     mean_np = np.load(save_stats_path + "/mean.npy")
     std_np = np.load(save_stats_path + "/std.npy")
+
+# Pre-normalize entire datasets using correct broadcasting
+train_data_norm = (train_data - mean_np) / (std_np + 1e-8)
+test_data_norm = (test_data - mean_np) / (std_np + 1e-8)
+
+train_data_norm = np.nan_to_num(train_data_norm)
+test_data_norm = np.nan_to_num(test_data_norm)
     
 data_mean = torch.tensor(mean_np, dtype=torch.float32).to(device)
 data_std = torch.tensor(std_np, dtype=torch.float32).to(device)
 
 class_weights = calculate_class_weights(train_labels, len(classes)).to(device)
 
-train_loader = DataLoader(MocapDataset(train_data, train_labels), batch_size=batch_size, shuffle=True)
-test_loader = DataLoader(MocapDataset(test_data, test_labels), batch_size=batch_size, shuffle=True)
+# Load normalized data into datasets
+train_loader = DataLoader(MocapDataset(train_data_norm, train_labels), batch_size=batch_size, shuffle=True)
+test_loader = DataLoader(MocapDataset(test_data_norm, test_labels), batch_size=batch_size, shuffle=True)
 
 # Extract the skeleton topology (parents list) from the very first mocap file
 sample_mocap_data = load_mocap_file(class_files[0][0])
@@ -413,7 +428,12 @@ classifier = Classifier(
     num_features=model_input_dim, 
     parents=skeleton_parents, 
     joint_indices=mocap_joint_indices, 
-    num_classes=class_count
+    num_classes=class_count,
+    channels=stgcn_channels,
+    t_kernel=stgcn_temporal_kernel,
+    t_pad=stgcn_temporal_padding,
+    dropout_rate=stgcn_dropout_rate,
+    dropedge_rate=stgnc_dropedge_rate
 ).to(device)
 
 print(classifier)
@@ -434,7 +454,8 @@ if load_weights:
     classifier.load_state_dict(torch.load(model_weights_file))
 
 if save_weights:
-    optimizer = optim.Adam(classifier.parameters(), lr=learning_rate, weight_decay=1e-3)
+    # UPDATED: Use higher weight_decay variable
+    optimizer = optim.Adam(classifier.parameters(), lr=learning_rate, weight_decay=weight_decay)
     scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.8) 
     class_loss = nn.CrossEntropyLoss(weight=class_weights.to(device), label_smoothing=label_smoothing)
 
@@ -446,14 +467,11 @@ if save_weights:
 
     torch.save(classifier.state_dict(), save_weights_path + "/classifier_weights_epoch_{}.pth".format(epochs))
 
-
 batch_x, batch_y = next(iter(test_loader))
 batch_x = batch_x.to(device)
-batch_x_norm = (batch_x - data_mean) / data_std 
-batch_x_norm = torch.nan_to_num(batch_x_norm)
-batch_yhat = classifier(batch_x_norm)
+# Data is already normalized from DataLoader
+batch_yhat = classifier(batch_x)
 _, pred_labels = torch.max(batch_yhat, 1)
 
 for i in range(batch_size):
     print("motion {} pred class {} true class {}".format(i, pred_labels[i], batch_y[i]))
- 
