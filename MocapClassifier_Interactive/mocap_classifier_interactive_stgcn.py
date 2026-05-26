@@ -43,7 +43,7 @@ Configurations
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 # Mocap settings
-mocap_data_file_path = "E:/Data/mocap/Daniel/Zed/fbx/classes/"
+mocap_data_file_path = "data/mocap/classes/"
 mocap_data_file_extensions = [".fbx"] 
 mocap_joint_indices = [3, 4, 5, 6, 7]
 mocap_data_window_length = 90
