@@ -16,7 +16,7 @@ SCRIPT_PATH=$(cd "$(dirname "$0")"; pwd -P)
 cd "$SCRIPT_PATH"
 
 # Run the Python script
-python yolo_object2d.py
+PYTORCH_ENABLE_MPS_FALLBACK=1 python yolo_object2d.py
 
 # Deactivate the Conda environemnt
 conda deactivate
