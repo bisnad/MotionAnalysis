@@ -16,7 +16,7 @@ SCRIPT_PATH=$(cd "$(dirname "$0")"; pwd -P)
 cd "$SCRIPT_PATH"
 
 # Run the Python script
-python sensor_classifier_interactive_stgcn.py
+python mocap_classifier_interactive_stgcn.py
 
 # Deactivate the Conda environemnt
 conda deactivate

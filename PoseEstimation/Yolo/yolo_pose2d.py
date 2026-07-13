@@ -153,8 +153,6 @@ class VideoThread(QThread):
 
         if torch.cuda.is_available():
             self.device = "cuda"
-        elif torch.backends.mps.is_available():
-            self.device = "mps"
         else:
             self.device = "cpu"
 
