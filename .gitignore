@@ -152,3 +152,5 @@ ObjectDetection/Yolo/yolov8x.pt
 /SensorClassifier_Interactive/.spyproject
 /SensorClassifier/.spyproject
 /MocapClustering_Interactive/.spyproject
+/MocapClassifier/results_lstm
+/MocapClassifier/results_stgcn
