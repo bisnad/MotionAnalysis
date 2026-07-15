@@ -213,7 +213,7 @@ class OscSender:
     def send_mocap(self, track_id, address_suffix, data):
         if not self.active: return
         flat_data = data.flatten().tolist()
-        address = f"/mocap/{track_id}/{address_suffix}"
+        address = f"/mocap/{track_id}/joint/{address_suffix}"
         self.client.send_message(address, flat_data)
 
 # ==========================================
@@ -838,10 +838,10 @@ class PosePipelineApp(QtWidgets.QMainWindow):
             state = self.track_states[tid]
             
             # OSC
-            self.osc.send_mocap(tid, "joint_pos_world", state['pose'])
-            self.osc.send_mocap(tid, "joint_pos_local", state['pos_rel'])
-            self.osc.send_mocap(tid, "joint_rot_world", state['quat_world'])
-            self.osc.send_mocap(tid, "joint_rot_local", state['quat_rel'])
+            self.osc.send_mocap(tid, "pos_world", state['pose'])
+            self.osc.send_mocap(tid, "pos_local", state['pos_rel'])
+            self.osc.send_mocap(tid, "rot_world", state['quat_world'])
+            self.osc.send_mocap(tid, "rot_local", state['quat_rel'])
 
             # FBX
             if self.is_recording and tid in self.recorded_frames:
