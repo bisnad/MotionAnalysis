@@ -154,3 +154,4 @@ ObjectDetection/Yolo/yolov8x.pt
 /MocapClustering_Interactive/.spyproject
 /MocapClassifier/results_lstm
 /MocapClassifier/results_stgcn
+PoseEstimation/YoloMB/MotionBERT/ft_h36m.bin
