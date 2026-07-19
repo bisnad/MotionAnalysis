@@ -36,23 +36,41 @@ Configurations
 # Device Settings
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-# Mocap settings (Aligned with Training Script)
-mocap_data_file_path = "/Users/dbisig/Projects/IntuitionMachine/Data/Mocap/Classes"
-mocap_joint_indices = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
-mocap_data_window_length = 90
+
+
+# Mocap settings Mediapipe
+mocap_data_file_path = "E:/Data/mocap/Yurika/Mediapipe/Classes"
+mocap_joint_indices = [11, 12, 13, 14, 15, 16, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
+mocap_data_window_length = 30
+mocap_pos_scale = 100.0
+
+
+"""
+# Mocap settings Yolo MotionBert
+mocap_data_file_path = "E:/Data/mocap/Yurika/YoloMB/Classes"
+mocap_joint_indices = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+mocap_data_window_length = 30
 mocap_pos_scale = 1.0
+"""
 
 # Pre-computed feature size (22 joints * 21 features per joint [pos(3)+rot(4)+vel_pos(3)+vel_rot(4)+acc_pos(3)+acc_rot(4)])
 num_features = len(mocap_joint_indices) * 21
 
 # Model Settings (Matching training script)
-model_hidden_dim = 128
+model_hidden_dim = 64
 model_layer_count = 2
-model_dropout = 0.3 # Note: Dropout is disabled during inference via self.classifier.eval()
+model_dropout = 0.5 # Note: Dropout is disabled during inference via self.classifier.eval()
 
 # Training Settings / Paths (Aligned with Training Script output paths)
-save_stats_path = "../MocapClassifier/results_lstm/stats"
-model_weights_file = "../MocapClassifier/results_lstm/weights/classifier_weights_epoch_200.pth"
+
+save_stats_path = "../MocapClassifier/results_Yurika_Mediapipe_30_v2/stats"
+model_weights_file = "../MocapClassifier/results_Yurika_Mediapipe_30_v2/weights/classifier_weights_epoch_200.pth"
+
+
+"""
+save_stats_path = "../MocapClassifier/results_Yurika_YoloMB_30/stats"
+model_weights_file = "../MocapClassifier/results_Yurika_YoloMB_30/weights/classifier_weights_epoch_200.pth"
+"""
 
 # OSC Settings
 osc_receive_ip = "0.0.0.0"

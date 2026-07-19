@@ -38,7 +38,7 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 Mocap Settings
 """
 
-
+"""
 mocap_data_file_path = "/Users/dbisig/Projects/IntuitionMachine/Data/Mocap/Classes"
 mocap_data_file_extensions = [".npz"] 
 #mocap_data_file_path = "../../../Data/Mocap/XSens/Stocos/Solos/Classes/"
@@ -51,6 +51,34 @@ mocap_data_window_length = 90
 mocap_data_window_offset = 15
 mocap_pos_scale = 1.0
 mocap_stats_load = False
+"""
+
+# Mediapipe
+mocap_data_file_path = "E:/Data/mocap/Yurika/Mediapipe/Classes"
+mocap_data_file_extensions = [".npz"] 
+mocap_fps = 30
+mocap_parents = [-1,0,1,2,0,4,5,3,6,0,0,0,0,11,12,13,14,15,20,15,16,15,20,0,0,23,24,25,26,27,28,27,28]
+mocap_children = [[1, 4, 9, 10, 11, 12, 23, 24],[2],[3],[7],[5],[6],[8],[],[],[],[],[13],[14],[15],[16],[17, 19, 21],[18, 20, 22],[],[],[],[],[],[],[25],[26],[27],[28],[29, 31],[30, 32],[],[],[],[]]
+mocap_joint_indices = [11, 12, 13, 14, 15, 16, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32] # skeleton without face, hands
+mocap_data_window_length = 30
+mocap_data_window_offset = 10
+mocap_pos_scale = 100.0
+mocap_stats_load = False
+
+
+"""
+# Yolo MotionBert
+mocap_data_file_path = "E:/Data/mocap/Yurika/YoloMB/Classes"
+mocap_data_file_extensions = [".npz"] 
+mocap_fps = 30
+mocap_parents = [-1,0,1,2,0,4,5,0,7,8,9,8,11,12,8,14,15]
+mocap_children = [[1, 4, 7],[2],[3],[],[5],[6],[],[8],[9, 11, 14],[10],[],[12],[13],[],[15],[16],[]]
+mocap_joint_indices = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] # full skeleton without torso
+mocap_data_window_length = 30
+mocap_data_window_offset = 15
+mocap_pos_scale = 1.0
+mocap_stats_load = False
+"""
 
 """
 Model Settings
@@ -58,9 +86,9 @@ Model Settings
 
 class_count = None
 model_input_dim = None
-model_hidden_dim = 128
+model_hidden_dim = 64
 model_layer_count = 2
-model_dropout = 0.3
+model_dropout = 0.5
 
 """
 Training Settings
@@ -70,7 +98,7 @@ test_percentage = 0.2
 batch_size = 128
 epochs = 200
 learning_rate = 1e-4
-label_smoothing = 0.1
+label_smoothing = 0.4
 weight_decay = 1e-3
 load_weights = False
 save_weights = True
@@ -80,7 +108,7 @@ model_weights_file = "results_lstm/weights/classifier_epoch_200.pth"
 Save Paths Settings
 """
 
-save_path = "results_lstm"
+save_path = "results_Yurika_Mediapipe_30_v2"
 save_stats_path = save_path + "/stats"
 save_history_path = save_path + "/history"
 save_weights_path = save_path + "/weights"

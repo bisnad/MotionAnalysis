@@ -155,3 +155,15 @@ ObjectDetection/Yolo/yolov8x.pt
 /MocapClassifier/results_lstm
 /MocapClassifier/results_stgcn
 PoseEstimation/YoloMB/MotionBERT/ft_h36m.bin
+/MocapClassifier/results_Yurika_Mediapipe_30
+/MocapClassifier/results_Yurika_Mediapipe_30_v2
+/MocapClassifier/results_Yurika_Mediapipe_nopos_30_v2
+/MocapClassifier/results_Yurika_Mediapipe_nopos_30_v3
+/MocapClassifier/results_Yurika_YoloMB_30
+/MocapClassifier_Interactive_v2/.spyproject
+/MocapClassifier_v2/.spyproject
+/MocapClassifier_v2/results_stgcn_Yurika_Mediapipe_fbx
+/MocapClassifier_v2/results_stgcn_Yurika_Mediapipe_npz
+/MocapClassifier_v2/results_Yurika_Mediapipe_fbx
+/MocapClassifier_v2/results_Yurika_Mediapipe_npz
+/MocapClustering_Interactive_v2/.spyproject
